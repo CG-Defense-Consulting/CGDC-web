@@ -2,16 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CGDC Rebrand – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CG Defense Consulting | Defense Procurement Solutions</title>
+
   <!-- Google Fonts: Inter -->
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-  rel="stylesheet"
-/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <a href="#order-status">Order Status</a>
+    <a href="#customer-portal">Customer Portal</a>
+  </div>
+
   <!-- Header & Navigation -->
   <header>
     <div class="container nav-container">
@@ -44,10 +53,171 @@
     </div>
   </header>
 
-  <!-- Hero Section (to be added in Phase 4) -->
+  <!-- Carousel Hero -->
+  <div class="carousel">
+    <div class="slide active" style="background-image:url('images/hero.jpg')">
+      <div class="slide-content">
+        <h1>Trusted Procurement for U.S. Defense Contracts</h1>
+        <p>Textiles, Nuts &amp; Bolts, backed by Supplier Partnerships, Market Analysis, and Global Logistics</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image:url('images/hero2.jpg')">
+      <div class="slide-content">
+        <h1>Unlock the Full Potential of Your Business</h1>
+        <p>With our 4+ years of tested market analysis</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image:url('images/hero3.jpg')">
+      <div class="slide-content">
+        <h1>Submit Your Products</h1>
+        <p>Further enhance your pipelines with CGDC</p>
+      </div>
+    </div>
+    <div class="dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
+  </div>
+
+  <!-- Browse Our Categories -->
+  <section id="collections" class="section container">
+    <h2>Browse Our Categories</h2>
+    <div class="grid grid-auto">
+      <!-- Card 1 -->
+      <div class="card textile">
+        <img src="images/textiles.jpg" alt="Military-Grade Fabric" />
+        <div class="card-content"><h3>Military-Grade Fabric</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: High-strength fabric details, dimensions, stitching patterns, and certification info.</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="card textile">
+        <img src="images/tshirts.jpg" alt="Department T-Shirts &amp; Hoodies" />
+        <div class="card-content"><h3>Department T-Shirts &amp; Hoodies</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Fabric weight, available sizes, stitching details, and customization options.</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="card textile">
+        <img src="images/patches.jpg" alt="Branch Patches" />
+        <div class="card-content"><h3>Branch Patches</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Patch dimensions, embroidery threading details, backing types, and attachment methods.</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="card textile">
+        <img src="images/protective_gear.jpg" alt="Specialized Protective Gear" />
+        <div class="card-content"><h3>Specialized Protective Gear</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Gear specifications, material composition, protective ratings, and maintenance guidelines.</p>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="card hardware">
+        <img src="images/bolts.jpg" alt="Precision Hardware" />
+        <div class="card-content"><h3>Precision Hardware</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Thread dimensions, material grades, tolerance levels, and finish types.</p>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="card textile">
+        <img src="images/tents.jpg" alt="Military/Tactical Tents" />
+        <div class="card-content"><h3>Military/Tactical Tents</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Tent dimensions, material durability, waterproof ratings, and setup instructions.</p>
+        </div>
+      </div>
+      <!-- Card 7 -->
+      <div class="card hardware">
+        <img src="images/sieves.jpg" alt="Sieves" />
+        <div class="card-content"><h3>Sieves</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Mesh size options, frame materials, and usage guidelines.</p>
+        </div>
+      </div>
+      <!-- Card 8 -->
+      <div class="card textile">
+        <img src="images/toiletries.jpg" alt="Toiletries" />
+        <div class="card-content"><h3>Toiletries</h3></div>
+        <div class="details">
+          <span class="close-btn">&times;</span>
+          <p>Placeholder: Individual packaging details, shelf life, and compliance with military standards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manufacturing Network -->
+  <section id="suppliers" class="section container">
+    <img src="images/natomap.png" alt="Map of NATO Countries" />
+    <div class="text">
+      <h2>Manufacturing Network</h2>
+      <p>We leverage our extensive international manufacturing network, sourcing exclusively from NATO member nations that meet rigorous compliance and quality standards.</p>
+      <p>Every supplier is vetted for adherence to NATO guidelines, ensuring materials and components are approved for defense applications.</p>
+      <p>All products undergo comprehensive testing—environmental, performance, and compliance assessments—to guarantee mission readiness and operational excellence.</p>
+    </div>
+    <p class="footnote">*All products and processes are Buy American Act and Berry Amendment compliant.</p>
+  </section>
+
+  <!-- Our Services -->
+  <section id="our-services" class="section container">
+    <h2>Our Services</h2>
+    <div class="service-grid">
+      <div id="partnership" class="service-card">
+        <img src="images/icon-partnership.png" alt="Supplier Partnerships" />
+        <h3>Supplier Partnerships</h3>
+        <p>We collaborate with top-tier manufacturers to ensure exclusive access to premium materials, fostering long-term relationships that drive value and reliability.</p>
+      </div>
+      <div id="analysis" class="service-card">
+        <img src="images/icon-analysis.png" alt="Market Analysis" />
+        <h3>Market Analysis</h3>
+        <p>Our in-depth market insights identify emerging trends, cost drivers, and risk factors, empowering you with data-driven strategies for optimal procurement decisions.</p>
+      </div>
+      <div id="logistics" class="service-card">
+        <img src="images/icon-logistics.png" alt="Shipping &amp; Logistics" />
+        <h3>Shipping &amp; Logistics</h3>
+        <p>Leveraging a global network, we manage end-to-end logistics, ensuring timely delivery, cost efficiency, and full compliance with international shipping regulations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About & Contact -->
+  <section id="about-contact" class="section container">
+    <div id="about">
+      <h2>About CGDC</h2>
+      <p>CG Defense Consulting (CGDC) was founded with a mission to deliver critical mission support through market-competitive pricing, optimizing procurement budgets and enabling funding for essential initiatives.</p>
+      <p>Headquartered in New York City with a strategic office in Istanbul, we combine global reach with local insights to serve defense clients worldwide.</p>
+      <p>Leveraging over four years of experience, CGDC utilizes data-driven solutions to identify business development opportunities, streamline sourcing strategies, and drive cost savings across the defense procurement lifecycle.</p>
+    </div>
+    <div id="contact">
+      <h2>Contact Us</h2>
+      <p>Want to reach us?<br />
+        <strong>Email:</strong> <a href="mailto:info@cgdefenseconsulting.com">info@cgdefenseconsulting.com</a><br />
+        <strong>Phone:</strong> +1 (646) 893-8705
+      </p>
+      <p style="margin-top:1.5rem; font-weight:600;">Schedule a Meeting</p>
+      <button style="background:var(--color-accent); color:var(--color-primary); padding:10px 20px; border:none; border-radius:4px; cursor:pointer;" onclick="window.location.href='/schedule.html'">Schedule</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 CG Defense Consulting LLC. All Rights Reserved.
+  </footer>
 
   <!-- Main JS -->
   <script src="js/main.js" defer></script>
 </body>
-
 </html>
