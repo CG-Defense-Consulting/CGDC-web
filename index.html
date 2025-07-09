@@ -2,222 +2,166 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CG Defense Consulting | Defense Procurement Solutions</title>
-
-  <!-- Google Fonts: Inter -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CGDC – AI-Powered Defense Procurement</title>
+  <!-- 1. Inter Font -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
     rel="stylesheet"
   />
-
-  <!-- Main stylesheet -->
+  <!-- 2. Main Styles -->
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-  <!-- Top Bar -->
-  <div class="topbar">
-    <a href="#order-status">Order Status</a>
-    <a href="#customer-portal">Customer Portal</a>
-  </div>
-
-  <!-- Header & Navigation -->
+  <!-- NAVIGATION -->
   <header>
     <div class="container nav-container">
       <div class="logo">
-        <img src="images/logo.png" alt="CGDC Logo" />
+        <!-- placeholder logo -->
+        <img src="images/logo-placeholder.png" alt="CGDC Logo" />
       </div>
       <button class="hamburger" aria-label="Toggle menu">☰</button>
       <nav>
-        <ul class="menu grid-2">
-          <li>
-            <a href="#collections">Equipment</a>
-            <ul class="dropdown-menu">
-              <li><a href="#collections">Textiles</a></li>
-              <li><a href="hardware.html">Nuts &amp; Bolts</a></li>
-            </ul>
-          </li>
-          <li><a href="#suppliers">Manufacturing Network</a></li>
-          <li>
-            <a href="#our-services">Services</a>
-            <ul class="dropdown-menu">
-              <li><a href="#partnership">Supplier Partnerships</a></li>
-              <li><a href="#analysis">Market Analysis</a></li>
-              <li><a href="#logistics">Shipping &amp; Logistics</a></li>
-            </ul>
-          </li>
-          <li><a href="#about-contact">About</a></li>
-          <li><a href="#about-contact">Contact</a></li>
+        <ul class="menu">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#solutions">Solutions</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Carousel Hero -->
-  <div class="carousel">
-    <div class="slide active" style="background-image:url('images/hero.jpg')">
-      <div class="slide-content">
-        <h1>Trusted Procurement for U.S. Defense Contracts</h1>
-        <p>Textiles, Nuts &amp; Bolts, backed by Supplier Partnerships, Market Analysis, and Global Logistics</p>
-      </div>
+  <!-- HERO -->
+  <section id="hero">
+    <!-- placeholder background video -->
+    <video class="hero-video" autoplay muted loop playsinline src="videos/hero-placeholder.mp4"></video>
+    <div class="hero-overlay container">
+      <h1>AI-Driven Forecasting<br/>& Streamlined Contracting</h1>
+      <p>Automate quotes, predict demand, and close deals faster.</p>
+      <a class="btn-primary" href="#solutions">Explore Solutions</a>
     </div>
-    <div class="slide" style="background-image:url('images/hero2.jpg')">
-      <div class="slide-content">
-        <h1>Unlock the Full Potential of Your Business</h1>
-        <p>With our 4+ years of tested market analysis</p>
-      </div>
-    </div>
-    <div class="slide" style="background-image:url('images/hero3.jpg')">
-      <div class="slide-content">
-        <h1>Submit Your Products</h1>
-        <p>Further enhance your pipelines with CGDC</p>
-      </div>
-    </div>
-    <div class="dots">
-      <span class="dot active" data-index="0"></span>
-      <span class="dot" data-index="1"></span>
-      <span class="dot" data-index="2"></span>
-    </div>
-  </div>
+  </section>
 
-  <!-- Browse Our Categories -->
-  <section id="collections" class="section container">
-    <h2>Browse Our Categories</h2>
-    <div class="grid grid-auto">
-      <!-- Card 1 -->
-      <div class="card textile">
-        <img src="images/textiles.jpg" alt="Military-Grade Fabric" />
-        <div class="card-content"><h3>Military-Grade Fabric</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: High-strength fabric details, dimensions, stitching patterns, and certification info.</p>
+  <!-- SOLUTIONS -->
+  <section id="solutions" class="section container">
+    <h2>Our Solutions</h2>
+    <div class="grid-auto">
+      <div class="card">
+        <div class="card-media">
+          <!-- placeholder snippet video -->
+          <video src="videos/snippet1.mp4" muted loop playsinline poster="images/snippet1.jpg"></video>
         </div>
+        <h3>AI Forecast Engine</h3>
+        <p>Real-time demand projections powered by our proprietary models.</p>
       </div>
-      <!-- Card 2 -->
-      <div class="card textile">
-        <img src="images/tshirts.jpg" alt="Department T-Shirts &amp; Hoodies" />
-        <div class="card-content"><h3>Department T-Shirts &amp; Hoodies</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Fabric weight, available sizes, stitching details, and customization options.</p>
+      <div class="card">
+        <div class="card-media">
+          <video src="videos/snippet2.mp4" muted loop playsinline poster="images/snippet2.jpg"></video>
         </div>
+        <h3>Contract Automation</h3>
+        <p>Instant quote generation and e-signature workflows.</p>
       </div>
-      <!-- Card 3 -->
-      <div class="card textile">
-        <img src="images/patches.jpg" alt="Branch Patches" />
-        <div class="card-content"><h3>Branch Patches</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Patch dimensions, embroidery threading details, backing types, and attachment methods.</p>
+      <div class="card">
+        <div class="card-media">
+          <video src="videos/snippet3.mp4" muted loop playsinline poster="images/snippet3.jpg"></video>
         </div>
-      </div>
-      <!-- Card 4 -->
-      <div class="card textile">
-        <img src="images/protective_gear.jpg" alt="Specialized Protective Gear" />
-        <div class="card-content"><h3>Specialized Protective Gear</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Gear specifications, material composition, protective ratings, and maintenance guidelines.</p>
-        </div>
-      </div>
-      <!-- Card 5 -->
-      <div class="card hardware">
-        <img src="images/bolts.jpg" alt="Precision Hardware" />
-        <div class="card-content"><h3>Precision Hardware</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Thread dimensions, material grades, tolerance levels, and finish types.</p>
-        </div>
-      </div>
-      <!-- Card 6 -->
-      <div class="card textile">
-        <img src="images/tents.jpg" alt="Military/Tactical Tents" />
-        <div class="card-content"><h3>Military/Tactical Tents</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Tent dimensions, material durability, waterproof ratings, and setup instructions.</p>
-        </div>
-      </div>
-      <!-- Card 7 -->
-      <div class="card hardware">
-        <img src="images/sieves.jpg" alt="Sieves" />
-        <div class="card-content"><h3>Sieves</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Mesh size options, frame materials, and usage guidelines.</p>
-        </div>
-      </div>
-      <!-- Card 8 -->
-      <div class="card textile">
-        <img src="images/toiletries.jpg" alt="Toiletries" />
-        <div class="card-content"><h3>Toiletries</h3></div>
-        <div class="details">
-          <span class="close-btn">&times;</span>
-          <p>Placeholder: Individual packaging details, shelf life, and compliance with military standards.</p>
-        </div>
+        <h3>Live Data Portal</h3>
+        <p>Interactive dashboards for monitoring procurement pipelines.</p>
       </div>
     </div>
   </section>
 
-  <!-- Manufacturing Network -->
-  <section id="suppliers" class="section container">
-    <img src="images/natomap.png" alt="Map of NATO Countries" />
-    <div class="text">
-      <h2>Manufacturing Network</h2>
-      <p>We leverage our extensive international manufacturing network, sourcing exclusively from NATO member nations that meet rigorous compliance and quality standards.</p>
-      <p>Every supplier is vetted for adherence to NATO guidelines, ensuring materials and components are approved for defense applications.</p>
-      <p>All products undergo comprehensive testing—environmental, performance, and compliance assessments—to guarantee mission readiness and operational excellence.</p>
-    </div>
-    <p class="footnote">*All products and processes are Buy American Act and Berry Amendment compliant.</p>
-  </section>
-
-  <!-- Our Services -->
-  <section id="our-services" class="section container">
-    <h2>Our Services</h2>
-    <div class="service-grid">
-      <div id="partnership" class="service-card">
-        <img src="images/icon-partnership.png" alt="Supplier Partnerships" />
-        <h3>Supplier Partnerships</h3>
-        <p>We collaborate with top-tier manufacturers to ensure exclusive access to premium materials, fostering long-term relationships that drive value and reliability.</p>
+  <!-- INDUSTRIES -->
+  <section id="industries" class="section container">
+    <h2>Industries We Serve</h2>
+    <div class="grid-auto">
+      <div class="card">
+        <img src="images/industry-textiles.jpg" alt="Textiles" />
+        <h3>Textiles</h3>
       </div>
-      <div id="analysis" class="service-card">
-        <img src="images/icon-analysis.png" alt="Market Analysis" />
-        <h3>Market Analysis</h3>
-        <p>Our in-depth market insights identify emerging trends, cost drivers, and risk factors, empowering you with data-driven strategies for optimal procurement decisions.</p>
+      <div class="card">
+        <img src="images/industry-hardware.jpg" alt="Hardware" />
+        <h3>Precision Hardware</h3>
       </div>
-      <div id="logistics" class="service-card">
-        <img src="images/icon-logistics.png" alt="Shipping &amp; Logistics" />
-        <h3>Shipping &amp; Logistics</h3>
-        <p>Leveraging a global network, we manage end-to-end logistics, ensuring timely delivery, cost efficiency, and full compliance with international shipping regulations.</p>
+      <div class="card">
+        <img src="images/industry-tents.jpg" alt="Tents" />
+        <h3>Military/Tactical Tents</h3>
+      </div>
+      <div class="card">
+        <img src="images/industry-sieves.jpg" alt="Sieves" />
+        <h3>Sieves</h3>
+      </div>
+      <div class="card">
+        <img src="images/industry-toiletries.jpg" alt="Toiletries" />
+        <h3>Toiletries</h3>
       </div>
     </div>
   </section>
 
-  <!-- About & Contact -->
-  <section id="about-contact" class="section container">
-    <div id="about">
-      <h2>About CGDC</h2>
-      <p>CG Defense Consulting (CGDC) was founded with a mission to deliver critical mission support through market-competitive pricing, optimizing procurement budgets and enabling funding for essential initiatives.</p>
-      <p>Headquartered in New York City with a strategic office in Istanbul, we combine global reach with local insights to serve defense clients worldwide.</p>
-      <p>Leveraging over four years of experience, CGDC utilizes data-driven solutions to identify business development opportunities, streamline sourcing strategies, and drive cost savings across the defense procurement lifecycle.</p>
-    </div>
-    <div id="contact">
-      <h2>Contact Us</h2>
-      <p>Want to reach us?<br />
-        <strong>Email:</strong> <a href="mailto:info@cgdefenseconsulting.com">info@cgdefenseconsulting.com</a><br />
-        <strong>Phone:</strong> +1 (646) 893-8705
-      </p>
-      <p style="margin-top:1.5rem; font-weight:600;">Schedule a Meeting</p>
-      <button style="background:var(--color-accent); color:var(--color-primary); padding:10px 20px; border:none; border-radius:4px; cursor:pointer;" onclick="window.location.href='/schedule.html'">Schedule</button>
+  <!-- INSIGHTS / CASE STUDIES -->
+  <section id="insights" class="section container">
+    <h2>Insights & Case Studies</h2>
+    <!-- placeholder for a carousel or cards -->
+    <div class="grid-auto">
+      <div class="card">
+        <img src="images/insight1.jpg" alt="Case Study 1" />
+        <h3>Case Study Title</h3>
+        <p>Short summary of success story.</p>
+      </div>
+      <div class="card">
+        <img src="images/insight2.jpg" alt="Insight 2" />
+        <h3>Insight Article</h3>
+        <p>Brief excerpt from a whitepaper or blog post.</p>
+      </div>
+      <div class="card">
+        <img src="images/insight3.jpg" alt="Case Study 3" />
+        <h3>Client Testimonial</h3>
+        <p>“Placeholder quote from a satisfied partner.”</p>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ABOUT -->
+  <section id="about" class="section container">
+    <h2>About CGDC</h2>
+    <div class="grid-2">
+      <div>
+        <p>We blend AI forecasting with end-to-end contracting support to act as your outsourced procurement arm.</p>
+        <p>Headquartered in NYC with a global presence.</p>
+      </div>
+      <div>
+        <!-- placeholder image -->
+        <img src="images/about-placeholder.jpg" alt="About CGDC" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section container">
+    <h2>Contact & Demo</h2>
+    <div class="grid-2">
+      <div>
+        <p><strong>Email:</strong> info@cgdefenseconsulting.com</p>
+        <p><strong>Phone:</strong> +1 (646) 893-8705</p>
+      </div>
+      <div>
+        <a class="btn-secondary" href="schedule.html">Schedule a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    &copy; 2025 CG Defense Consulting LLC. All Rights Reserved.
+    <div class="container">
+      <p>&copy; 2025 CG Defense Consulting LLC.</p>
+      <p><a href="#privacy">Privacy Policy</a> · <a href="#terms">Terms of Service</a></p>
+    </div>
   </footer>
 
-  <!-- Main JS -->
+  <!-- MAIN SCRIPT -->
   <script src="js/main.js" defer></script>
 </body>
 </html>
