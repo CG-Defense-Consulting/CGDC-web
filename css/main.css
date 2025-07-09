@@ -1,0 +1,15 @@
+/* css/main.css */
+
+/* 1. Simple reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Base font & background */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
