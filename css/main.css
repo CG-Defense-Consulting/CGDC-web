@@ -1,5 +1,14 @@
 /* css/main.css */
 
+/* CSS Variables */
+:root {
+  --color-primary: #182026;
+  --color-accent: #ffc107;
+  --bg-light: #f4f4f4;
+  --text-dark: #333;
+  --transition-fast: 0.2s ease-in-out;
+}
+
 /* 1. Simple reset */
 * {
   margin: 0;
