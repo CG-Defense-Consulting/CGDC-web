@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dots   = document.querySelectorAll('.focus-dot');
   const prev   = document.querySelector('.focus-prev');
   const next   = document.querySelector('.focus-next');
-  let current  = 0;
-  const max     = slides.length;
+  let current  = 0, max = slides.length;
 
   function showSlide(idx) {
     slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
@@ -48,6 +47,5 @@ document.addEventListener('DOMContentLoaded', () => {
     showSlide(parseInt(e.target.dataset.index));
   }));
 
-  // Auto-rotate every 8s
   setInterval(() => showSlide((current+1)%max), 8000);
 })();
