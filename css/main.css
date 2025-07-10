@@ -5,7 +5,7 @@
   --bg-primary: #1A1A1A;
   --bg-secondary: #282A36;
   --text-primary: #E0E0E0;       /* subtle off-white */
-  --accent-color: #00E5FF;       /* neon‐cyan accent */
+  --accent-color: #ECF8F6;       
   --font-sans: 'DM Sans', sans-serif;
   --transition-fast: 0.2s ease-in-out;
 }
@@ -29,7 +29,7 @@ a, .btn-primary {
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 a:hover, .btn-primary:hover {
-  background-color: #00c4cc;
+  background-color: #e0e0e0;
 }
 
 /* Full-Width Utility */
