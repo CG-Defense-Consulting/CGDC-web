@@ -1,11 +1,11 @@
 // js/main.js
 
-// 1. Sanity check
+// 1) Sanity check
 console.log('CGDC rebrand ready 🚀');
 
-// 2. Mobile menu toggle
+// 2) Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
-const menu = document.querySelector('.menu');
+const menu      = document.querySelector('.menu');
 
 hamburger.addEventListener('click', e => {
   e.stopPropagation();
@@ -19,17 +19,10 @@ document.addEventListener('click', () => {
   }
 });
 
-// 3. Fade in hero overlay on load
-window.addEventListener('load', () => {
+// 3) Fade-in hero overlay as soon as the DOM is parsed
+document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.querySelector('.hero-overlay');
   if (!overlay) return;
-
-  // Start hidden
-  overlay.style.opacity = '0';
-  overlay.style.transition = 'opacity 1s ease-in-out';
-
-  // Trigger the transition
-  requestAnimationFrame(() => {
-    overlay.style.opacity = '1';
-  });
+  // Trigger the CSS transition from opacity:0 → opacity:1
+  overlay.style.opacity = '1';
 });
