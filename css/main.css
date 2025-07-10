@@ -224,8 +224,70 @@ nav .menu {
   color: #444;
 }
 
-/* 7) Strategic Focus Areas Carousel */
-/* (if already added, this section can remain) */
+/* —— Strategic Focus Areas Carousel —— */
+.focus-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 0;
+}
+.focus-slide {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+.focus-slide.active {
+  display: block;
+}
+.focus-slide img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+.focus-slide h3 {
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+.focus-slide p {
+  color: #444;
+  line-height: 1.4;
+}
+
+/* Arrows */
+.focus-prev,
+.focus-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  padding: 0 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 10;
+}
+.focus-prev { left: 10px; }
+.focus-next { right: 10px; }
+
+/* Dots */
+.focus-dots {
+  text-align: center;
+  margin-top: 15px;
+}
+.focus-dot {
+  display: inline-block;
+  width: 12px; height: 12px;
+  margin: 0 6px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.focus-dot.active {
+  background: var(--color-accent);
+}
 
 /* 8) About & Contact */
 #about .grid-2 > div:first-child {
