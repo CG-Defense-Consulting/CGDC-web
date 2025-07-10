@@ -192,42 +192,33 @@ nav .menu {
   transition: transform var(--transition-fast);
   cursor: pointer;
 }
-
 .card:hover {
   transform: translateY(-4px);
 }
 
-/* SOLUTIONS card video/image container */
-#solutions .card-media {
-  position: relative;
-  width: 100%;
-  height: 120px;
-  overflow: hidden;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+/* 6.1) SOLUTIONS Section – video sizing */
+#solutions .solutions-grid {
+  gap: 20px;
 }
-
-#solutions .card-media img,
-#solutions .card-media .card-video {
-  position: absolute;
-  top: 0;
-  left: 0;
+#solutions .card {
+  border-radius: 8px;
+  overflow: hidden;
+}
+#solutions .solution-video {
   width: 100%;
-  height: 100%;
+  height: 160px;
   object-fit: cover;
   display: block;
 }
 
-/* Generic card-content */
+/* existing card-content styling */
 .card-content {
   padding: 15px;
 }
-
 .card-content h3 {
   margin-bottom: 8px;
   color: var(--color-primary);
 }
-
 .card-content p {
   font-size: 0.9rem;
   color: #444;
