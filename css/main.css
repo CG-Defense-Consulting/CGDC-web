@@ -115,7 +115,7 @@ nav .menu {
   .menu li {
     width: 100%;
   }
-  /* Always show dropdowns inside mobile menu */
+  /* Show dropdowns inline on mobile */
   .dropdown-menu {
     position: static !important;
     transform: none !important;
@@ -152,7 +152,7 @@ nav .menu {
   top: 50%;
   transform: translateY(-50%);
   padding: 0 20px;
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
@@ -180,77 +180,63 @@ nav .menu {
 }
 
 .btn-primary:hover {
-  background: #e6b800; /* slightly darker accent */
+  background: #e6b800;
 }
 
-/* 6) Strategic Focus Areas Carousel */
-.focus-carousel {
-  position: relative;
+/* 6) Cards (Solutions, Industries, Insights) */
+.card {
+  background: #fff;
+  border-radius: 8px;
   overflow: hidden;
-  padding: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
 }
-.focus-slide {
-  display: none;
-  text-align: center;
-  padding: 20px;
+
+.card:hover {
+  transform: translateY(-4px);
 }
-.focus-slide.active {
+
+/* SOLUTIONS card video/image container */
+#solutions .card-media {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#solutions .card-media img,
+#solutions .card-media .card-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
-/* Slide content */
-.focus-slide img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 15px;
+/* Generic card-content */
+.card-content {
+  padding: 15px;
 }
-.focus-slide h3 {
-  color: var(--color-primary);
+
+.card-content h3 {
   margin-bottom: 8px;
+  color: var(--color-primary);
 }
-.focus-slide p {
+
+.card-content p {
+  font-size: 0.9rem;
   color: #444;
-  line-height: 1.4;
 }
 
-/* Arrows */
-.focus-prev,
-.focus-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  font-size: 2rem;
-  padding: 0 12px;
-  cursor: pointer;
-  border-radius: 4px;
-  z-index: 10;
-}
-.focus-prev { left: 10px; }
-.focus-next { right: 10px; }
+/* 7) Strategic Focus Areas Carousel */
+/* (if already added, this section can remain) */
 
-/* Dots */
-.focus-dots {
-  text-align: center;
-  margin-top: 15px;
-}
-.focus-dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin: 0 6px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.focus-dot.active {
-  background: var(--color-accent);
-}
-
-/* 7) About & Contact */
+/* 8) About & Contact */
 #about .grid-2 > div:first-child {
   text-align: left;
 }
@@ -276,7 +262,7 @@ nav .menu {
   color: #fff;
 }
 
-/* 8) Footer */
+/* 9) Footer */
 footer {
   background: var(--color-primary);
   color: #fff;
