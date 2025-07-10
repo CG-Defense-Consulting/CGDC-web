@@ -42,3 +42,19 @@ window.addEventListener('load', () => {
 
   setInterval(() => showSlide((current+1)%max), 8000);
 })();
+
+// Force-play all videos once the page loads (catches any autoplay blocks)
+window.addEventListener('load', () => {
+  document.querySelectorAll('video').forEach(video => {
+    // ensure inline playback
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    // already muted, but re-assign to be safe
+    video.muted = true;
+    // attempt play
+    const p = video.play();
+    if (p && p.catch) p.catch(err => {
+      console.warn('Video autoplay prevented:', err);
+    });
+  });
+});
