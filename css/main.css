@@ -1,13 +1,15 @@
-/* css/main.css – Complete Dark Theme with Mobile Fixes, White Accents, and Modern UI */
+/* css/main.css
+   Light theme inspired by Palantir & Epirus
+*/
 
 /* 1) Variables & Base */
 :root {
-  --bg-primary: #1A1A1A;           /* Deep charcoal background */
-  --bg-secondary: #282A36;         /* Lighter panels and sections */
-  --text-primary: #E0E0E0;         /* Off-white text */
-  --accent-color: #FFFFFF;         /* Calm white accent */
-  --font-sans: 'DM Sans', sans-serif; /* Futuristic, legible font */
-  --transition-fast: 0.2s ease-in-out;
+  --bg-primary:    #ffffff;    /* pure white canvas */
+  --bg-secondary:  #f8f9fa;    /* very light gray sections */
+  --text-primary:  #1a1a1a;    /* dark charcoal text */
+  --accent-color:  #0062ff;    /* bright blue accent */
+  --font-sans:     'DM Sans', sans-serif;
+  --transition:    0.3s ease;
 }
 
 * {
@@ -17,245 +19,192 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-primary);
+  background: var(--bg-primary);
   color: var(--text-primary);
+  font-family: var(--font-sans);
   line-height: 1.6;
   letter-spacing: 0.5px;
 }
 
-/* Links & Buttons */
-a, .btn-primary {
-  color: var(--bg-primary);
-  background-color: var(--accent-color);
-  text-decoration: none;
-  transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-a:hover, .btn-primary:hover {
-  background-color: #E0E0E0; /* Subtle gray on hover */
-  color: var(--bg-primary);
-}
-
-/* 2) Full-Width Utility */
+/* 2) Utility Classes */
 .container {
   width: 100%;
-  max-width: none;
+  max-width: 1200px;
   padding: 0 20px;
   margin: 0 auto;
+}
+.grid-auto {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+}
+.grid-2 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width:768px) {
+  .grid-2 { grid-template-columns: 1fr; }
 }
 
 /* 3) Header & Navigation */
 header {
-  background: var(--bg-secondary);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  background: var(--bg-primary);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 .nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 30px 20px; /* Larger header for bigger logo */
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px;
 }
-
 .logo img {
-  height: 80px;
+  height: 60px;
 }
-
-/* Base menu (no display by default) */
 nav .menu {
-  gap: 20px;
   list-style: none;
+  gap: 24px;
+  display: flex;
 }
-
-/* Desktop: show flex */
-@media (min-width: 769px) {
-  nav .menu {
-    display: flex;
-  }
-}
-
 .menu li {
   position: relative;
 }
-
 .menu li > a {
   color: var(--text-primary);
-  background: transparent;
-  padding: 10px 8px;
-  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+  font-weight: 600;
+  padding: 8px 4px;
+  transition: color var(--transition);
 }
-
 .menu li > a:hover {
   color: var(--accent-color);
-  text-shadow: 0 0 5px var(--accent-color);
 }
 
-/* Mobile Hamburger */
+/* 4) Mobile Nav */
 .hamburger {
   display: none;
-  font-size: 2rem;
-  background: none;
-  border: none;
+  font-size: 1.8rem;
+  background: none; border: none;
   color: var(--text-primary);
   cursor: pointer;
 }
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
+@media (max-width:768px) {
+  .hamburger { display: block; }
   nav .menu {
     display: none;
     flex-direction: column;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    background: var(--bg-secondary);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+    position: absolute; top: 70px; left: 0;
+    width: 100%; background: var(--bg-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
-  nav .menu.open {
-    display: flex;
-  }
-  nav .menu li {
-    width: 100%;
-  }
+  nav .menu.open { display: flex; }
+  nav .menu li { width: 100%; }
   .dropdown-menu {
-    position: static !important;
-    transform: none !important;
-    box-shadow: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    position: static!important; transform:none!important;
+    box-shadow:none!important; opacity:1!important;
+    visibility:visible!important;
   }
 }
 
-/* 4) Hero Section */
+/* 5) Hero Section */
 #hero {
   position: relative;
   width: 100%;
-  height: 80vh;
-  max-height: 700px;
+  height: 80vh; max-height: 700px;
   overflow: hidden;
+  background: var(--bg-secondary);
 }
-
 .hero-video {
-  position: absolute;
-  top: 50%; left: 50%;
-  min-width: 100%; min-height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: 1;
+  position: absolute; top:50%; left:50%;
+  min-width:100%; min-height:100%;
+  transform:translate(-50%,-50%);
+  object-fit:cover; z-index:1;
 }
-
 .hero-overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
-  background: rgba(26,26,26,0.4);
-  color: var(--text-primary);
-  z-index: 2;
-
-  /* start invisible, then fade in */
-  opacity: 0;
-  animation: fadeInOverlay 1s ease-in-out 0.5s forwards;
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:0 20px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  z-index:2;
 }
-
-@keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 .hero-overlay h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
-
 .hero-overlay p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   text-shadow: 0 1px 4px rgba(0,0,0,0.7);
 }
-
 .btn-primary {
-  padding: 12px 24px;
-  border-radius: 6px;
+  background: var(--accent-color);
+  color: #fff;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 4px;
   font-weight: 600;
-  cursor: pointer;
+  transition: background var(--transition);
+}
+.btn-primary:hover {
+  background: #0051cc;
 }
 
-/* 5) Solutions Section */
+/* 6) Solutions Section */
 #solutions {
   background: var(--bg-secondary);
-  padding: 40px 20px;
+  padding: 60px 20px;
 }
-
 #solutions h2 {
   text-align: center;
-  color: var(--text-primary);
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 40px;
   letter-spacing: 1px;
 }
-
-#solutions .solutions-grid {
+.solutions-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
 }
-
-#solutions .card {
-  background: var(--bg-secondary);
-  border-radius: 12px;
+.solutions-grid .card {
+  background: var(--bg-primary);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
-  transition: transform var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform var(--transition);
   cursor: pointer;
 }
-
-#solutions .card:hover {
-  transform: translateY(-4px);
+.solutions-grid .card:hover {
+  transform: translateY(-6px);
 }
-
-#solutions .solution-video {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
+.solution-video {
+  width: 100%; height: 180px;
+  object-fit: cover; display: block;
 }
-
 .card-content {
-  padding: 15px;
+  padding: 16px;
 }
-
 .card-content h3 {
-  color: var(--accent-color);
   margin-bottom: 8px;
-  letter-spacing: 1px;
-}
-
-.card-content p {
   color: var(--text-primary);
+  font-size: 1.25rem;
+}
+.card-content p {
+  color: #555;
+  font-size: 0.95rem;
 }
 
-/* —— Strategic Focus Areas Carousel —— */
+/* 7) Strategic Focus Areas Carousel */
 #focus-areas {
   background: var(--bg-secondary);
-  padding: 40px 20px;
+  padding: 60px 20px;
 }
 #focus-areas h2 {
   text-align: center;
-  color: var(--text-primary);
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 40px;
   letter-spacing: 1px;
 }
 .focus-carousel {
@@ -263,44 +212,36 @@ nav .menu {
   overflow: hidden;
 }
 .focus-slide {
-  display: none;
-  text-align: center;
-  padding: 10px 0;
+  display: none; text-align: center; padding: 20px;
 }
 .focus-slide.active {
   display: block;
 }
 .focus-slide img {
-  width: 100%;
-  height: auto;
-  max-height: 200px;       /* adjust to taste */
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  width: 100%; max-height: 200px;
+  object-fit: cover; border-radius: 8px;
+  margin-bottom: 20px;
 }
 .focus-slide h3 {
-  color: var(--accent-color);
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 .focus-slide p {
-  color: var(--text-primary);
+  color: #555;
+  font-size: 1rem;
   line-height: 1.4;
 }
 
 /* Arrows */
 .focus-prev,
 .focus-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: absolute; top:50%;
+  transform:translateY(-50%);
   background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  font-size: 2rem;
-  padding: 0 12px;
-  cursor: pointer;
-  border-radius: 6px;
+  color: #fff; border: none;
+  font-size: 1.8rem; padding: 0 10px;
+  cursor: pointer; border-radius: 4px;
   z-index: 10;
 }
 .focus-prev { left: 10px; }
@@ -308,96 +249,52 @@ nav .menu {
 
 /* Dots */
 .focus-dots {
-  text-align: center;
-  margin-top: 15px;
+  text-align:center; margin-top:20px;
 }
 .focus-dot {
-  display: inline-block;
-  width: 12px; height: 12px;
-  margin: 0 6px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s;
+  display:inline-block;
+  width:12px; height:12px;
+  margin:0 6px;
+  background: rgba(0,0,0,0.2);
+  border-radius:50%;
+  cursor:pointer;
+  transition: background var(--transition);
 }
 .focus-dot.active {
   background: var(--accent-color);
 }
 
-/* 7) Our Services */
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.service-card {
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
-  transition: transform var(--transition-fast);
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-}
-
-.service-card img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 15px;
-}
-
-.service-card h3 {
-  color: var(--accent-color);
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.service-card p {
-  color: var(--text-primary);
-  line-height: 1.5;
-}
-
 /* 8) About & Contact */
 #about-contact {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 40px;
-  padding: 40px 20px;
+  background: var(--bg-primary);
+  padding: 60px 20px;
 }
-
 #about-contact h2 {
-  color: var(--accent-color);
-  margin-bottom: 15px;
   text-align: center;
-  letter-spacing: 1px;
+  color: var(--text-primary);
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
-
-#about,
-#contact {
+#about-contact .grid-2 > div {
   background: var(--bg-secondary);
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
+#about-contact p {
+  color: var(--text-primary);
+}
 #contact .btn-secondary {
   background: transparent;
   border: 2px solid var(--accent-color);
   color: var(--accent-color);
   padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  border-radius: 4px;
+  transition: background var(--transition), color var(--transition);
 }
-
 #contact .btn-secondary:hover {
   background: var(--accent-color);
-  color: var(--bg-primary);
+  color: #fff;
 }
 
 /* 9) Footer */
@@ -407,26 +304,19 @@ footer {
   text-align: center;
   padding: 20px 0;
 }
-
 footer a {
   color: var(--accent-color);
   text-decoration: underline;
 }
 
-/* 10) Form Elements */
-input,
-select,
-textarea,
-button {
+/* 10) Forms & Misc */
+input, select, textarea, button {
   font-family: var(--font-sans);
   color: var(--text-primary);
-  background-color: var(--bg-secondary);
-  border: 1px solid #444;
-  padding: 8px;
-  border-radius: 6px;
+  background: var(--bg-primary);
+  border: 1px solid #ddd;
+  padding: 8px; border-radius: 4px;
 }
-
-input:focus,
-textarea:focus {
+input:focus, textarea:focus {
   outline: 2px solid var(--accent-color);
 }
