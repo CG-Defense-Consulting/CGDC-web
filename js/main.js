@@ -17,3 +17,14 @@ document.addEventListener('click', () => {
     menu.classList.remove('open');
   }
 });
+
+// Fade in hero overlay on load
+window.addEventListener('load', () => {
+  const overlay = document.querySelector('.hero-overlay');
+  overlay.style.opacity = 0;
+  overlay.style.transition = 'opacity 1s ease-in-out';
+  // trigger reflow then fade in
+  requestAnimationFrame(() => {
+    overlay.style.opacity = 1;
+  });
+});
