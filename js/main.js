@@ -19,12 +19,12 @@ document.addEventListener('click', () => {
   }
 });
 
-// 3) Fade-in hero overlay as soon as the DOM is parsed
-document.addEventListener('DOMContentLoaded', () => {
+// Fade in hero overlay once all assets have loaded
+window.addEventListener('load', () => {
   const overlay = document.querySelector('.hero-overlay');
-  if (!overlay) return;
-  // Trigger the CSS transition from opacity:0 → opacity:1
-  overlay.style.opacity = '1';
+  if (overlay) {
+    overlay.classList.add('visible');
+  }
 });
 
 // Strategic Focus Areas Carousel
