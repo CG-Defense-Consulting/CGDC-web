@@ -192,7 +192,6 @@ nav .menu {
   transition: transform var(--transition-fast);
   cursor: pointer;
 }
-
 .card:hover {
   transform: translateY(-4px);
 }
@@ -201,6 +200,8 @@ nav .menu {
   width: 100%;
   height: 160px;
   overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .card-media video,
 .card-media img {
@@ -210,14 +211,15 @@ nav .menu {
   display: block;
 }
 
-
-.card h3 {
-  margin: 16px;
+.card-content {
+  padding: 15px;
+}
+.card-content h3 {
+  margin-bottom: 8px;
   color: var(--color-primary);
 }
-
-.card p {
-  margin: 0 16px 16px;
+.card-content p {
+  font-size: 0.9rem;
   color: #444;
 }
 
