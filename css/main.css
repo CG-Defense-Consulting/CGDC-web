@@ -196,21 +196,36 @@ nav .menu {
   transform: translateY(-4px);
 }
 
+/* NEW: video & image container for Solutions cards */
 .card-media {
+  position: relative;
   width: 100%;
   height: 160px;
   overflow: hidden;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
-.card-media video,
-.card-media img {
+.card-media img,
+.card-media .card-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
+/* hide video by default, fade it in on hover */
+.card-video {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.card:hover .card-video {
+  opacity: 1;
+}
+
+/* Card text/content */
 .card-content {
   padding: 15px;
 }
