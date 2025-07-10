@@ -247,52 +247,48 @@ nav .menu {
   color: var(--text-primary);
 }
 
-/* 6) Strategic Focus Areas Carousel */
+/* —— Strategic Focus Areas Carousel —— */
 #focus-areas {
   background: var(--bg-secondary);
   padding: 40px 20px;
 }
-
 #focus-areas h2 {
   text-align: center;
   color: var(--text-primary);
   margin-bottom: 30px;
   letter-spacing: 1px;
 }
-
 .focus-carousel {
   position: relative;
   overflow: hidden;
 }
-
 .focus-slide {
   display: none;
   text-align: center;
-  padding: 20px;
+  padding: 10px 0;
 }
-
 .focus-slide.active {
   display: block;
 }
-
 .focus-slide img {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: auto;
+  max-height: 200px;       /* adjust to taste */
+  object-fit: cover;
+  border-radius: 8px;
   margin-bottom: 15px;
-  object-fit: contain;
 }
-
 .focus-slide h3 {
   color: var(--accent-color);
   margin-bottom: 8px;
   letter-spacing: 1px;
 }
-
 .focus-slide p {
   color: var(--text-primary);
   line-height: 1.4;
 }
 
+/* Arrows */
 .focus-prev,
 .focus-next {
   position: absolute;
@@ -307,31 +303,23 @@ nav .menu {
   border-radius: 6px;
   z-index: 10;
 }
+.focus-prev { left: 10px; }
+.focus-next { right: 10px; }
 
-.focus-prev {
-  left: 10px;
-}
-
-.focus-next {
-  right: 10px;
-}
-
+/* Dots */
 .focus-dots {
   text-align: center;
   margin-top: 15px;
 }
-
 .focus-dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 12px; height: 12px;
   margin: 0 6px;
   background: rgba(255,255,255,0.3);
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
 }
-
 .focus-dot.active {
   background: var(--accent-color);
 }
