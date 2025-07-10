@@ -14,6 +14,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg-light);
@@ -27,18 +28,23 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .grid-auto {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
   gap: 20px;
 }
+
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+
 @media (max-width: 768px) {
-  .grid-2 { grid-template-columns: 1fr; }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 3) Header & Nav */
@@ -46,15 +52,40 @@ header {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .nav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
 }
+
 .logo img {
   height: 40px;
 }
+
+nav .menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu li > a {
+  color: var(--text-dark);
+  font-weight: 600;
+  padding: 8px;
+  transition: color var(--transition-fast);
+}
+
+.menu li > a:hover {
+  color: var(--color-accent);
+}
+
+/* 4) Mobile Navigation */
 .hamburger {
   display: none;
   font-size: 1.8rem;
@@ -62,25 +93,12 @@ header {
   border: none;
   cursor: pointer;
 }
-nav .menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-.menu li { position: relative; }
-.menu li a {
-  color: var(--text-dark);
-  font-weight: 600;
-  padding: 8px;
-  transition: color var(--transition-fast);
-}
-.menu li a:hover {
-  color: var(--color-accent);
-}
 
-/* 4) Mobile Nav */
 @media (max-width: 768px) {
-  .hamburger { display: block; }
+  .hamburger {
+    display: block;
+    color: var(--text-dark);
+  }
   .menu {
     display: none;
     flex-direction: column;
@@ -91,43 +109,63 @@ nav .menu {
     background: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
-  .menu.open { display: flex; }
+  .menu.open {
+    display: flex;
+  }
+  .menu li {
+    width: 100%;
+  }
+  /* Always show dropdowns inside mobile menu */
+  .dropdown-menu {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
 
-/* 5) Hero */
+/* 5) Hero Section */
 #hero {
   position: relative;
   height: 80vh;
-  max-height: 600px;
+  max-height: 700px;
   overflow: hidden;
 }
+
 .hero-video {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 100%; height: 100%;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
   transform: translate(-50%, -50%);
+  object-fit: cover;
   z-index: 1;
 }
+
 .hero-overlay {
   position: relative;
   z-index: 2;
   color: #fff;
   text-align: center;
-  padding: 0 20px;
   top: 50%;
   transform: translateY(-50%);
+  padding: 0 20px;
 }
+
 .hero-overlay h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
+
 .hero-overlay p {
+  font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  font-size: 1.1rem;
   text-shadow: 0 1px 4px rgba(0,0,0,0.7);
 }
+
 .btn-primary {
   background: var(--color-accent);
   color: var(--color-primary);
@@ -138,8 +176,9 @@ nav .menu {
   cursor: pointer;
   transition: background var(--transition-fast);
 }
+
 .btn-primary:hover {
-  background: darken(var(--color-accent), 10%);
+  background: #e6b800; /* slightly darker accent */
 }
 
 /* 6) Cards (Solutions, Industries, Insights) */
@@ -149,30 +188,40 @@ nav .menu {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   transition: transform var(--transition-fast);
+  cursor: pointer;
 }
+
 .card:hover {
   transform: translateY(-4px);
 }
+
 .card img,
 .card video {
   width: 100%;
   display: block;
   object-fit: cover;
 }
+
 .card h3 {
   margin: 16px;
   color: var(--color-primary);
 }
+
 .card p {
   margin: 0 16px 16px;
   color: #444;
 }
 
 /* 7) About & Contact */
-#about .grid-2 > div:first-child { text-align: left; }
-#about .grid-2 > div:last-child img {
-  width: 100%; border-radius: 8px;
+#about .grid-2 > div:first-child {
+  text-align: left;
 }
+
+#about .grid-2 > div:last-child img {
+  width: 100%;
+  border-radius: 8px;
+}
+
 #contact .btn-secondary {
   background: transparent;
   border: 2px solid var(--color-accent);
@@ -183,6 +232,7 @@ nav .menu {
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
 }
+
 #contact .btn-secondary:hover {
   background: var(--color-accent);
   color: #fff;
@@ -195,6 +245,7 @@ footer {
   text-align: center;
   padding: 20px 0;
 }
+
 footer a {
   color: #fff;
   text-decoration: underline;
