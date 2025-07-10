@@ -1,88 +1,94 @@
-/* css/main.css */
+/* css/main.css – Dark Theme Integrated with Existing Styles */
 
 /* 1) Variables & Base */
 :root {
-  --color-primary: #182026;
-  --color-accent: #ffc107;
-  --bg-light: #f4f4f4;
-  --text-dark: #333;
+  /* Dark mode palette */
+  --bg-primary: #1A1A1A;          /* Deep charcoal page background */
+  --bg-secondary: #282A36;        /* Lighter panels/sections */
+  --text-primary: #F0F0F0;        /* Off-white for text */
+  --accent-color: #6272A4;        /* Jewel-tone purple accent */
+  --font-sans: 'Inter', 'Source Sans Pro', sans-serif; /* Modern legible */
   --transition-fast: 0.2s ease-in-out;
 }
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg-light);
-  color: var(--text-dark);
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: #546192; /* slightly darker accent */
+}
+
+/* Section backgrounds */
+section, header, footer {
+  background-color: var(--bg-secondary);
 }
 
 /* 2) Utility Classes */
 .container {
-  width: 90%;
-  max-width: 1200px;
+  width: 90%; max-width: 1200px;
   margin: 0 auto;
 }
-
 .grid-auto {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
-
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
-
 @media (max-width: 768px) {
   .grid-2 {
     grid-template-columns: 1fr;
   }
 }
 
-/* 3) Header & Nav */
+/* 3) Header & Navigation */
 header {
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-
 .nav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
 }
-
 .logo img {
   height: 40px;
 }
-
 nav .menu {
   display: flex;
   gap: 20px;
   list-style: none;
 }
-
 .menu li {
   position: relative;
 }
-
 .menu li > a {
-  color: var(--text-dark);
+  color: var(--text-primary);
   font-weight: 600;
   padding: 8px;
   transition: color var(--transition-fast);
 }
-
 .menu li > a:hover {
-  color: var(--color-accent);
+  color: var(--accent-color);
 }
 
 /* 4) Mobile Navigation */
@@ -92,22 +98,19 @@ nav .menu {
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--text-primary);
 }
-
 @media (max-width: 768px) {
   .hamburger {
     display: block;
-    color: var(--text-dark);
   }
   .menu {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    top: 100%; left: 0; width: 100%;
+    background: var(--bg-secondary);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   }
   .menu.open {
     display: flex;
@@ -115,7 +118,6 @@ nav .menu {
   .menu li {
     width: 100%;
   }
-  /* Show dropdowns inline on mobile */
   .dropdown-menu {
     position: static !important;
     transform: none !important;
@@ -128,202 +130,159 @@ nav .menu {
 /* 5) Hero Section */
 #hero {
   position: relative;
-  height: 80vh;
-  max-height: 700px;
+  height: 80vh; max-height: 700px;
   overflow: hidden;
 }
-
 .hero-video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
+  top: 50%; left: 50%;
+  min-width: 100%; min-height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
   z-index: 1;
 }
-
 .hero-overlay {
   position: relative;
   z-index: 2;
-  color: #fff;
+  color: var(--text-primary);
   text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 50%; transform: translateY(-50%);
   padding: 0 20px;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  opacity: 0; transition: opacity 1s ease-in-out;
 }
-
-.hero-overlay h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+.hero-overlay h1,
+.hero-overlay h2,
+.hero-overlay h3 {
+  color: var(--text-primary);
 }
-
-.hero-overlay p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
-}
-
 .btn-primary {
-  background: var(--color-accent);
-  color: var(--color-primary);
+  background: var(--accent-color);
+  color: var(--bg-primary);
   padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
+  border: none; border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
   transition: background var(--transition-fast);
 }
-
 .btn-primary:hover {
-  background: #e6b800;
+  background: #546192;
 }
 
-/* 6) Cards (Solutions, Industries, Insights) */
-.card {
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform var(--transition-fast);
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-4px);
-}
-
-/* 6.1) SOLUTIONS Section – video sizing */
+/* 6) Solutions Section */
 #solutions .solutions-grid {
   gap: 20px;
 }
 #solutions .card {
+  background: var(--bg-secondary);
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+}
+#solutions .card:hover {
+  transform: translateY(-4px);
 }
 #solutions .solution-video {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
+  width: 100%; height: 160px;
+  object-fit: cover; display: block;
 }
-
-/* existing card-content styling */
 .card-content {
   padding: 15px;
 }
 .card-content h3 {
   margin-bottom: 8px;
-  color: var(--color-primary);
+  color: var(--accent-color);
 }
 .card-content p {
   font-size: 0.9rem;
-  color: #444;
+  color: var(--text-primary);
 }
 
-/* —— Strategic Focus Areas Carousel —— */
+/* 7) Strategic Focus Areas Carousel */
 .focus-carousel {
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
   padding: 20px 0;
 }
-.focus-slide {
-  display: none;
-  text-align: center;
-  padding: 20px;
-}
-.focus-slide.active {
-  display: block;
-}
-.focus-slide img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 15px;
-  object-fit: contain;
-}
-.focus-slide h3 {
-  color: var(--color-primary);
-  margin-bottom: 8px;
-}
-.focus-slide p {
-  color: #444;
-  line-height: 1.4;
-}
-
-/* Arrows */
-.focus-prev,
-.focus-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  font-size: 2rem;
-  padding: 0 12px;
-  cursor: pointer;
-  border-radius: 4px;
-  z-index: 10;
+.focus-slide { display: none; text-align: center; padding: 20px; }
+.focus-slide.active { display: block; }
+.focus-slide img { width: 80px; height: 80px; margin-bottom: 15px; object-fit: contain; }
+.focus-slide h3 { color: var(--accent-color); margin-bottom: 8px; }
+.focus-slide p { color: var(--text-primary); line-height: 1.4; }
+.focus-prev, .focus-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,0.5); color: #fff; border: none;
+  font-size: 2rem; padding: 0 12px; cursor: pointer; border-radius: 4px; z-index: 10;
 }
 .focus-prev { left: 10px; }
 .focus-next { right: 10px; }
-
-/* Dots */
-.focus-dots {
-  text-align: center;
-  margin-top: 15px;
-}
-.focus-dot {
-  display: inline-block;
-  width: 12px; height: 12px;
-  margin: 0 6px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
-  cursor: pointer;
+.focus-dots { text-align: center; margin-top: 15px; }
+.focus-dot { display: inline-block; width: 12px; height: 12px; margin: 0 6px;
+  background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer;
   transition: background 0.3s;
 }
-.focus-dot.active {
-  background: var(--color-accent);
-}
+.focus-dot.active { background: var(--accent-color); }
 
-/* 8) About & Contact */
-#about .grid-2 > div:first-child {
-  text-align: left;
+/* 8) Our Services */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
 }
-
-#about .grid-2 > div:last-child img {
-  width: 100%;
+.service-card {
+  background: var(--bg-secondary);
   border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
+.service-card img { width: 50px; height: 50px; margin-bottom: 15px; }
+.service-card h3 { color: var(--accent-color); margin-bottom: 10px; }
+.service-card p { color: var(--text-primary); line-height: 1.5; }
 
+/* 9) About & Contact */
+#about-contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 40px; max-width: 1200px; margin: 40px auto; padding-bottom: 60px;
+}
+#about { text-align: left; color: var(--text-primary); }
+#about-contact h2 { color: var(--accent-color); font-size: 1.75rem; margin-bottom: 15px; }
+#about-contact p { color: var(--text-primary); margin-bottom: 15px; }
+#contact { text-align: center; }
 #contact .btn-secondary {
   background: transparent;
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
   padding: 10px 20px;
   border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
 }
-
 #contact .btn-secondary:hover {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--accent-color);
+  color: var(--bg-primary);
 }
 
-/* 9) Footer */
+/* 10) Footer */
 footer {
-  background: var(--color-primary);
-  color: #fff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   text-align: center;
   padding: 20px 0;
 }
-
 footer a {
-  color: #fff;
+  color: var(--accent-color);
   text-decoration: underline;
+}
+
+/* 11) Form Elements */
+input, select, textarea, button {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border: 1px solid #444;
+  padding: 8px;
+}
+input:focus, textarea:focus {
+  outline: 2px solid var(--accent-color);
 }
