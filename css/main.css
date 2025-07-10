@@ -183,59 +183,71 @@ nav .menu {
   background: #e6b800; /* slightly darker accent */
 }
 
-/* 6) Cards (Solutions, Industries, Insights) */
-.card {
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform var(--transition-fast);
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-4px);
-}
-
-/* NEW: video & image container for Solutions cards */
-.card-media {
+/* 6) Strategic Focus Areas Carousel */
+.focus-carousel {
   position: relative;
-  width: 100%;
-  height: 160px;
   overflow: hidden;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  padding: 20px 0;
 }
-.card-media img,
-.card-media .card-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.focus-slide {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+.focus-slide.active {
   display: block;
 }
 
-/* hide video by default, fade it in on hover */
-.card-video {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+/* Slide content */
+.focus-slide img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
 }
-.card:hover .card-video {
-  opacity: 1;
+.focus-slide h3 {
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+.focus-slide p {
+  color: #444;
+  line-height: 1.4;
 }
 
-/* Card text/content */
-.card-content {
-  padding: 15px;
+/* Arrows */
+.focus-prev,
+.focus-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  padding: 0 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 10;
 }
-.card-content h3 {
-  margin-bottom: 8px;
-  color: var(--color-primary);
+.focus-prev { left: 10px; }
+.focus-next { right: 10px; }
+
+/* Dots */
+.focus-dots {
+  text-align: center;
+  margin-top: 15px;
 }
-.card-content p {
-  font-size: 0.9rem;
-  color: #444;
+.focus-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.focus-dot.active {
+  background: var(--color-accent);
 }
 
 /* 7) About & Contact */
