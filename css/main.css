@@ -47,7 +47,8 @@ a:hover, .btn-primary:hover {
 }
 @media (max-width:768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-/* 3) Header & Navigation – bigger, full-width */
+/* —————————————————————————————————————————————— */
+/* HEADER & NAV: Larger padding, transparent links */
 header {
   background: var(--bg-secondary);
   position: sticky; top: 0; z-index: 100;
@@ -55,20 +56,19 @@ header {
 }
 .nav-container {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px;   /* increased padding for larger logo */
+  padding: 30px 20px;    /* increased top/bottom padding */
 }
 .logo img {
-  height: 60px;    /* bigger logo */
+  height: 80px;          /* larger logo */
 }
 nav .menu {
   display: flex; gap: 20px; list-style: none;
 }
-.menu li { position: relative; }
 .menu li > a {
   color: var(--text-primary);
+  background: transparent;   /* no colored boxes */
   padding: 10px 8px;
   transition: color var(--transition-fast);
-  background: transparent;   /* no colored boxes */
 }
 .menu li > a:hover {
   color: var(--accent-color);
@@ -96,18 +96,20 @@ nav .menu {
   }
 }
 
-/* 5) Hero Section – CSS-only fade-in, no JS */
+/* —————————————————————————————————————————————— */
+/* HERO: full-screen, CSS‐only fade & z-index fix */
 #hero {
   position: relative; width: 100%;
-  height: 80vh; max-height: 700px;
-  overflow: hidden;
+  height: 80vh; max-height: 700px; overflow: hidden;
 }
 .hero-video {
   position: absolute; top: 50%; left: 50%;
-  min-width:100%; min-height:100%;
-  transform: translate(-50%,-50%);
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
   object-fit: cover; z-index: 1;
 }
+
+/* Overlay always on top, starts hidden */
 .hero-overlay {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%;
@@ -116,13 +118,18 @@ nav .menu {
   text-align: center;
   padding: 0 20px;
   color: var(--text-primary);
-  opacity: 0;
-  animation: fadeInOverlay 1s forwards;
+  opacity: 1;               /* shown by default */
+  z-index: 2;               /* above the video */
+  animation: fadeInOverlay 1s ease-in-out forwards;
   animation-delay: 0.5s;
+}
+.hero-overlay.hidden {
+  opacity: 0;               /* hidden until animates in */
 }
 @keyframes fadeInOverlay {
   from { opacity: 0; } to { opacity: 1; }
 }
+
 .hero-overlay h1 {
   font-size: 3rem; margin-bottom: 1rem;
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
