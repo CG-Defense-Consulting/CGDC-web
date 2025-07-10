@@ -26,3 +26,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Trigger the CSS transition from opacity:0 → opacity:1
   overlay.style.opacity = '1';
 });
+
+// Strategic Focus Areas Carousel
+(function() {
+  const slides = document.querySelectorAll('.focus-slide');
+  const dots   = document.querySelectorAll('.focus-dot');
+  const prev   = document.querySelector('.focus-prev');
+  const next   = document.querySelector('.focus-next');
+  let current  = 0;
+  const max     = slides.length;
+
+  function showSlide(idx) {
+    slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
+    dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+    current = idx;
+  }
+
+  prev.addEventListener('click', () => showSlide((current-1+max)%max));
+  next.addEventListener('click', () => showSlide((current+1)%max));
+  dots.forEach(dot => dot.addEventListener('click', e => {
+    showSlide(parseInt(e.target.dataset.index));
+  }));
+
+  // Auto-rotate every 8s
+  setInterval(() => showSlide((current+1)%max), 8000);
+})();
