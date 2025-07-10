@@ -12,13 +12,6 @@ hamburger.addEventListener('click', e => {
   menu.classList.toggle('open');
 });
 
-// Close menu when clicking outside
-document.addEventListener('click', () => {
-  if (menu.classList.contains('open')) {
-    menu.classList.remove('open');
-  }
-});
-
 // Fade in hero overlay once all assets have loaded
 window.addEventListener('load', () => {
   const overlay = document.querySelector('.hero-overlay');
