@@ -28,12 +28,12 @@ const focusTitle = document.getElementById('focus-title');
 const focusDesc = document.getElementById('focus-desc');
 
 const focusData = [
-  { img: 'images/focus1.jpg', title: 'Defense Manufacturing', desc: 'End-to-end support for defense contractors, from sourcing to assembly oversight.' },
-  { img: 'images/focus2.jpg', title: 'Supply Chain Optimization', desc: 'Streamline supplier networks with AI-driven insights.' },
-  { img: 'images/focus3.jpg', title: 'AI & Data Analytics', desc: 'Custom forecasting engines and real-time decision platforms.' },
-  { img: 'images/focus4.jpg', title: 'Contract Management', desc: 'Automated quotes and e-signature workflows for defense contracts.' },
-  { img: 'images/focus5.jpg', title: 'Logistics & Distribution', desc: 'Global shipping strategies, warehousing, and compliance support.' },
-  { img: 'images/focus6.jpg', title: 'Regulatory Compliance', desc: 'Ensure every procurement step meets defense and federal standards.' }
+  { img: 'images/icon-manufacturing.jpg', title: 'Defense Manufacturing', desc: 'End-to-end support for defense contractors, from sourcing to assembly oversight.' },
+  { img: 'images/icon-supply-chain.jpg', title: 'Supply Chain Optimization', desc: 'Streamline supplier networks with AI-driven insights.' },
+  { img: 'images/icon-ai-data.jpg', title: 'AI & Data Analytics', desc: 'Custom forecasting engines and real-time decision platforms.' },
+  { img: 'images/icon-contact.jpg', title: 'Contract Management', desc: 'Automated quotes and e-signature workflows for defense contracts.' },
+  { img: 'images/icon-logistics.jpg', title: 'Logistics & Distribution', desc: 'Global shipping strategies, warehousing, and compliance support.' },
+  { img: 'images/icon-compliance.jpg', title: 'Regulatory Compliance', desc: 'Ensure every procurement step meets defense and federal standards.' }
 ];
 
 let currentFocus = 0;
