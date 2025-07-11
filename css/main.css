@@ -242,3 +242,57 @@ h2, h3, p {
 }
 
 /* Additional sections can follow the same aesthetic */
+
+.focus-buttons button {
+  position: relative;
+  padding: 12px 18px;
+  border: none;
+  background: #e0e0e0;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 120px;
+  font-size: 0.95rem;
+}
+
+.focus-buttons button .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: #888;
+  width: 0%;
+  transition: width 0.2s linear;
+}
+
+.focus-buttons button.active {
+  background: #ccc;
+}
+
+.focus-display {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.focus-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.focus-overlay h3 {
+  margin: 0 0 5px;
+  font-size: 1.25rem;
+}
+
+.focus-overlay p {
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 300px;
+}
