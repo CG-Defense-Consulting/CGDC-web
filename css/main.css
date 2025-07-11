@@ -64,14 +64,14 @@ header {
 }
 
 .logo img {
-  height: 60px;
+  height: 90px; /* Increased logo size */
 }
 
 nav .menu {
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 60px;
+  top: 90px; /* Adjusted for larger logo */
   left: 0;
   width: 100%;
   background: var(--bg-secondary);
@@ -103,6 +103,7 @@ nav .menu li:last-child a {
   border: none;
   color: var(--text-primary);
   cursor: pointer;
+  margin-left: auto; /* Push hamburger all the way to the right */
 }
 
 #hero {
