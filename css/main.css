@@ -7,122 +7,59 @@
   --transition: 0.3s ease;
 }
 
+/* Global Reset and Full Width Control */
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font-sans);
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'DM Sans', sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
   line-height: 1.6;
-  letter-spacing: 0.5px;
 }
 
 .container {
   width: 100%;
   max-width: 1200px;
-  padding: 0 20px;
   margin: 0 auto;
-}
-
-.grid-auto {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-.grid-2 {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 768px) {
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: transparent;
-  box-shadow: none;
-  padding: 20px;
-  z-index: 10;
-}
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
-.logo img {
-  height: 90px; /* Increased logo size */
-}
-
-nav .menu {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 90px; /* Adjusted for larger logo */
-  left: 0;
+/* All sections force full width */
+section {
   width: 100%;
-  background: var(--bg-secondary);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  overflow-x: hidden;
 }
 
-nav .menu.open {
-  display: flex;
-}
-
-nav .menu li a {
+img, video {
+  max-width: 100%;
+  height: auto;
   display: block;
-  padding: 15px 20px;
-  color: var(--text-primary);
-  border-bottom: 1px solid #ddd;
 }
 
-nav .menu li:last-child a {
-  border-bottom: none;
+/* No forced min-width on elements */
+* {
+  box-sizing: border-box;
 }
 
-.hamburger {
-  display: block;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  margin-left: auto; /* Push hamburger all the way to the right */
-}
-
+/* Hero Section Adjustments */
 #hero {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: var(--bg-secondary);
 }
 
 .hero-video {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   min-width: 100%;
   min-height: 100%;
-  transform: translate(-50%, -50%);
   object-fit: cover;
-  z-index: 1;
 }
 
 .hero-overlay {
@@ -139,33 +76,60 @@ nav .menu li:last-child a {
   padding: 0 20px;
   background: rgba(0,0,0,0.4);
   color: #fff;
-  z-index: 2;
 }
 
 .hero-overlay h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
 
 .hero-overlay p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
 }
 
 .btn-primary {
-  background: var(--accent-color);
+  background: #0062ff;
   color: #fff;
   padding: 12px 28px;
   border: none;
   border-radius: 4px;
   font-weight: 600;
-  transition: background var(--transition);
+  cursor: pointer;
 }
 
 .btn-primary:hover {
   background: #0051cc;
+}
+
+/* Solutions & Focus Areas are full width and responsive */
+#solutions, #focus-areas {
+  width: 100%;
+  padding: 80px 0;
+  overflow-x: hidden;
+}
+
+.solution-block, .focus-carousel {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.focus-slide img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+h2, h3, p {
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
 }
 
 /* Additional sections can follow the same aesthetic */
