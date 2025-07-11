@@ -21,27 +21,59 @@ window.addEventListener('load', () => {
 });
 
 // Strategic Focus Areas Carousel
-(function() {
-  const slides = document.querySelectorAll('.focus-slide');
-  const dots   = document.querySelectorAll('.focus-dot');
-  const prev   = document.querySelector('.focus-prev');
-  const next   = document.querySelector('.focus-next');
-  let current  = 0, max = slides.length;
+const focusButtons = document.querySelectorAll('.focus-btn');
+const progressBars = document.querySelectorAll('.focus-btn .progress');
+const focusImage = document.getElementById('focus-image');
+const focusTitle = document.getElementById('focus-title');
+const focusDesc = document.getElementById('focus-desc');
 
-  function showSlide(idx) {
-    slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
-    dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
-    current = idx;
-  }
+const focusData = [
+  { img: 'images/focus1.jpg', title: 'Defense Manufacturing', desc: 'End-to-end support for defense contractors, from sourcing to assembly oversight.' },
+  { img: 'images/focus2.jpg', title: 'Supply Chain Optimization', desc: 'Streamline supplier networks with AI-driven insights.' },
+  { img: 'images/focus3.jpg', title: 'AI & Data Analytics', desc: 'Custom forecasting engines and real-time decision platforms.' },
+  { img: 'images/focus4.jpg', title: 'Contract Management', desc: 'Automated quotes and e-signature workflows for defense contracts.' },
+  { img: 'images/focus5.jpg', title: 'Logistics & Distribution', desc: 'Global shipping strategies, warehousing, and compliance support.' },
+  { img: 'images/focus6.jpg', title: 'Regulatory Compliance', desc: 'Ensure every procurement step meets defense and federal standards.' }
+];
 
-  prev.addEventListener('click', () => showSlide((current-1+max)%max));
-  next.addEventListener('click', () => showSlide((current+1)%max));
-  dots.forEach(dot => dot.addEventListener('click', e => {
-    showSlide(parseInt(e.target.dataset.index));
-  }));
+let currentFocus = 0;
+let interval;
+let progress = 0;
 
-  setInterval(() => showSlide((current+1)%max), 8000);
-})();
+function showFocus(index) {
+  focusButtons.forEach(btn => btn.classList.remove('active'));
+  focusButtons[index].classList.add('active');
+  focusImage.src = focusData[index].img;
+  focusTitle.textContent = focusData[index].title;
+  focusDesc.textContent = focusData[index].desc;
+  progressBars.forEach(p => p.style.width = '0%');
+  progress = 0;
+}
+
+function startFocusRotation() {
+  clearInterval(interval);
+  interval = setInterval(() => {
+    progress += 1;
+    if (progress > 100) {
+      currentFocus = (currentFocus + 1) % focusData.length;
+      showFocus(currentFocus);
+      progress = 0;
+    }
+    progressBars[currentFocus].style.width = progress + '%';
+  }, 100);
+}
+
+focusButtons.forEach((btn, idx) => {
+  btn.addEventListener('click', () => {
+    currentFocus = idx;
+    showFocus(currentFocus);
+    progress = 0;
+  });
+});
+
+showFocus(0);
+startFocusRotation();
+
 
 // Force-play all videos once the page loads (catches any autoplay blocks)
 window.addEventListener('load', () => {
