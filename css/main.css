@@ -151,6 +151,23 @@ nav .menu li:last-child a {
   margin-bottom: 1.5rem;
 }
 
+.hero-button {
+  text-decoration: none;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 4px;
+  display: inline-block;
+  transition: background 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+.hero-button:hover {
+  background-color: #f0f0f0;
+}
+
 .btn-primary {
   background: #0062ff;
   color: #fff;
