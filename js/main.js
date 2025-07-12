@@ -1,113 +1,97 @@
-// HAMBURGER MENU TOGGLE
-document.querySelector('.hamburger').addEventListener('click', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
   const menu = document.querySelector('.menu');
-  menu.classList.toggle('open');
+  hamburger.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+
+  // Smooth Scroll
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href'))?.scrollIntoView({
+        behavior: 'smooth'
+      });
+      menu.classList.remove('open');
+    });
+  });
+
+  // Strategic Focus Area
+  const focusImages = [
+    'images/icon-manufacturing.jpg',
+    'images/icon-supply-chain.jpg',
+    'images/icon-ai-data.jpg',
+    'images/icon-contact.jpg',
+    'images/icon-logistics.jpg',
+    'images/icon-compliance.jpg'
+  ];
+
+  const focusTitles = [
+    'Defense Manufacturing',
+    'Supply Chain',
+    'AI & Data',
+    'Contract Management',
+    'Logistics',
+    'Compliance'
+  ];
+
+  const focusDescriptions = [
+    'End-to-end support for defense contractors, from sourcing to assembly oversight.',
+    'Resilient logistics and material readiness across distributed networks.',
+    'Real-time data modeling and actionable insights for warfighter operations.',
+    'Streamlined quote-to-contract workflows with traceable compliance.',
+    'Optimized routing, asset tracking, and sustainment logistics.',
+    'Expertise in navigating DFARS, BAA, and ITAR with AI-enhanced auditing.'
+  ];
+
+  const buttons = document.querySelectorAll('.focus-btn');
+  const progressBars = document.querySelectorAll('.focus-btn .progress');
+  const imageEl = document.getElementById('focus-image');
+  const titleEl = document.getElementById('focus-title');
+  const descEl = document.getElementById('focus-desc');
+
+  let currentIndex = 0;
+  let intervalTime = 6000;
+  let progressInterval;
+
+  function updateFocus(index) {
+    buttons.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+      progressBars[i].style.width = i === index ? '0%' : '0%';
+    });
+
+    imageEl.src = focusImages[index];
+    titleEl.textContent = focusTitles[index];
+    descEl.textContent = focusDescriptions[index];
+
+    animateProgress(index);
+    currentIndex = index;
+  }
+
+  function animateProgress(index) {
+    let width = 0;
+    const interval = 100;
+    const step = (interval / intervalTime) * 100;
+
+    clearInterval(progressInterval);
+    progressInterval = setInterval(() => {
+      width += step;
+      if (width >= 100) {
+        width = 100;
+        clearInterval(progressInterval);
+        let nextIndex = (index + 1) % focusImages.length;
+        updateFocus(nextIndex);
+      }
+      progressBars[index].style.width = `${width}%`;
+    }, interval);
+  }
+
+  buttons.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      updateFocus(i);
+    });
+  });
+
+  updateFocus(0); // Initial
 });
-
-// SCROLL TO SECTION LINKS
-document.querySelectorAll('.menu a').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-
-    // Close mobile menu if open
-    document.querySelector('.menu').classList.remove('open');
-  });
-});
-
-// STRATEGIC FOCUS AREA ROTATION
-const focusImages = [
-  'images/focus1.jpg',
-  'images/focus2.jpg',
-  'images/focus3.jpg',
-  'images/focus4.jpg',
-  'images/focus5.jpg',
-  'images/focus6.jpg'
-];
-
-const focusTitles = [
-  'Defense Manufacturing',
-  'Supply Chain',
-  'AI & Data',
-  'Contract Management',
-  'Logistics',
-  'Compliance'
-];
-
-const focusDescriptions = [
-  'End-to-end support for defense contractors, from sourcing to assembly oversight.',
-  'Ensure continuity with deep-tier visibility, supplier validation, and risk mitigation.',
-  'AI-powered analytics for predictive insights and operational intelligence.',
-  'Automated document generation and lifecycle tracking for federal compliance.',
-  'Mission-focused mobility planning and readiness solutions.',
-  'Real-time tracking, regulatory alignment, and audit preparation.'
-];
-
-let currentIndex = 0;
-let timer;
-const interval = 7000; // milliseconds
-
-const imageEl = document.getElementById('focus-image');
-const titleEl = document.getElementById('focus-title');
-const descEl = document.getElementById('focus-desc');
-const btnEls = document.querySelectorAll('.focus-btn');
-
-// MANUAL BUTTON CLICK
-btnEls.forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-    setFocus(index);
-    resetTimer();
-  });
-});
-
-// SET FOCUS DISPLAY
-function setFocus(index) {
-  currentIndex = index;
-  imageEl.src = focusImages[index];
-  titleEl.textContent = focusTitles[index];
-  descEl.textContent = focusDescriptions[index];
-
-  btnEls.forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-    const progress = btn.querySelector('.progress');
-    progress.style.width = i === index ? '0%' : '0%';
-  });
-}
-
-// AUTO ROTATE FUNCTION
-function rotateFocus() {
-  currentIndex = (currentIndex + 1) % focusImages.length;
-  setFocus(currentIndex);
-}
-
-// PROGRESS BAR UPDATE
-function animateProgress() {
-  btnEls.forEach((btn, i) => {
-    const progress = btn.querySelector('.progress');
-    if (i === currentIndex) {
-      progress.style.transition = `width ${interval}ms linear`;
-      progress.style.width = '100%';
-    } else {
-      progress.style.transition = 'none';
-      progress.style.width = '0%';
-    }
-  });
-}
-
-// START AUTO ROTATION
-function startTimer() {
-  setFocus(currentIndex);
-  animateProgress();
-  timer = setInterval(() => {
-    rotateFocus();
-    animateProgress();
-  }, interval);
-}
-
-function resetTimer() {
-  clearInterval(timer);
-  startTimer();
-}
-
-// Start on load
-startTimer();
