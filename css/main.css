@@ -1,16 +1,14 @@
-/* css/main.css */
+/* main.css */
 
-/* ------------------ 1. Root Variables ------------------ */
 :root {
-  --bg-primary: #f9f9f9;
-  --bg-secondary: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
   --text-primary: #1a1a1a;
   --accent-color: #0062ff;
   --font-sans: 'DM Sans', sans-serif;
   --transition: 0.3s ease;
 }
 
-/* ------------------ 2. Reset & Base Layout ------------------ */
 html, body {
   margin: 0;
   padding: 0;
@@ -30,21 +28,41 @@ html, body {
   box-sizing: border-box;
 }
 
-/* ------------------ 3. Navigation ------------------ */
+.grid-auto {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.grid-2 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 header {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   background: transparent;
-  z-index: 10;
+  box-shadow: none;
   padding: 20px;
+  z-index: 10;
 }
 
 .nav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .logo img {
@@ -55,7 +73,7 @@ nav .menu {
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 100px;
+  top: 90px;
   left: 0;
   width: 100%;
   background: var(--bg-secondary);
@@ -73,8 +91,11 @@ nav .menu li a {
   display: block;
   padding: 15px 20px;
   color: var(--text-primary);
-  text-decoration: none;
   border-bottom: 1px solid #ddd;
+}
+
+nav .menu li:last-child a {
+  border-bottom: none;
 }
 
 .hamburger {
@@ -84,9 +105,10 @@ nav .menu li a {
   border: none;
   color: var(--text-primary);
   cursor: pointer;
+  margin-left: auto;
 }
 
-/* ------------------ 4. Hero Section ------------------ */
+/* Hero Section */
 #hero {
   position: relative;
   width: 100%;
@@ -116,8 +138,8 @@ nav .menu li a {
   justify-content: center;
   text-align: center;
   padding: 0 20px;
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
 }
 
 .hero-overlay h1 {
@@ -132,26 +154,40 @@ nav .menu li a {
 
 .hero-button {
   text-decoration: none;
-  background-color: white;
-  color: black;
+  background-color: #ffffff;
+  color: #000000;
   padding: 12px 28px;
   font-weight: 600;
   font-size: 1rem;
   border-radius: 4px;
   display: inline-block;
-  transition: background var(--transition);
+  transition: background 0.3s ease;
   border: none;
   cursor: pointer;
 }
-
 .hero-button:hover {
   background-color: #f0f0f0;
 }
 
-/* ------------------ 5. Solutions Section ------------------ */
+.btn-primary {
+  background: var(--accent-color);
+  color: #fff;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: #0051cc;
+}
+
+/* Solutions */
 #solutions {
-  background: white;
-  padding: 80px 20px;
+  width: 100%;
+  padding: 80px 0;
   overflow-x: hidden;
 }
 
@@ -176,36 +212,19 @@ nav .menu li a {
 .solution-block h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .solution-block p {
   font-size: 1rem;
   color: #444;
-  margin: 0;
 }
 
-.solution-block .btn-primary {
-  background: var(--accent-color);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: 600;
-  border: none;
-  text-decoration: none;
-  white-space: nowrap;
-  margin-left: auto;
-  display: inline-block;
-}
-
-.solution-block .btn-primary:hover {
-  background: #0051cc;
-}
-
-/* ------------------ 6. Strategic Focus Section ------------------ */
+/* Strategic Focus Area */
 #focus-areas {
-  background: white;
+  background: var(--bg-primary);
   padding: 80px 20px;
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -217,7 +236,7 @@ nav .menu li a {
   margin-bottom: 30px;
 }
 
-.focus-btn {
+.focus-buttons button {
   position: relative;
   padding: 12px 18px;
   border: none;
@@ -226,46 +245,56 @@ nav .menu li a {
   cursor: pointer;
   border-radius: 4px;
   overflow: hidden;
-  min-width: 140px;
+  min-width: 120px;
   font-size: 0.95rem;
-  transition: background 0.3s ease;
 }
 
-.focus-btn .progress {
+.focus-buttons button .progress {
   position: absolute;
   bottom: 0;
   left: 0;
   height: 4px;
   background: #888;
   width: 0%;
-  transition: width 5s linear;
+  transition: width 0.2s linear;
 }
 
-.focus-btn.active {
+.focus-buttons button.active {
   background: #ccc;
 }
 
-.focus-display {
-  position: relative;
+.focus-carousel {
+  width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  overflow: hidden;
+  position: relative;
 }
 
-#focus-image {
+.focus-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.focus-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.focus-slide img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 400px;
+  object-fit: cover;
   display: block;
-  border-radius: 8px;
-  transition: opacity 0.5s ease;
 }
 
 .focus-overlay {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -279,67 +308,4 @@ nav .menu li a {
   margin: 0;
   font-size: 0.95rem;
   max-width: 300px;
-}
-
-/* ------------------ 7. Insights Section ------------------ */
-.insights-section {
-  background: #111;
-  color: white;
-  padding: 80px 20px;
-  overflow-x: auto;
-}
-
-.insights-scroll {
-  display: flex;
-  gap: 20px;
-  overflow-x: scroll;
-  padding-bottom: 10px;
-}
-
-.insight-card {
-  background: white;
-  color: black;
-  padding: 20px;
-  min-width: 280px;
-  border-radius: 6px;
-  position: relative;
-}
-
-.insight-card small {
-  font-weight: 600;
-  font-size: 0.75rem;
-  color: #555;
-  text-transform: uppercase;
-}
-
-.insight-card h3 {
-  font-size: 1.1rem;
-  margin-top: 10px;
-}
-
-.insight-card .arrows {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.2rem;
-  color: #999;
-}
-
-/* ------------------ 8. Responsive Grid Fixes ------------------ */
-.grid-auto {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-.grid-2 {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 768px) {
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
 }
