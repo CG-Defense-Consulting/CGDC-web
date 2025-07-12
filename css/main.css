@@ -238,7 +238,7 @@ nav .menu li a {
   height: 4px;
   background: #888;
   width: 0%;
-  transition: width linear;
+  transition: width 5s linear;
 }
 
 .focus-btn.active {
