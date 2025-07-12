@@ -175,6 +175,9 @@ nav .menu li:last-child a {
   border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
+  .solution-link {
+  text-decoration: none !important;
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
