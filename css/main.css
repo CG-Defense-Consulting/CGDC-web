@@ -1,5 +1,5 @@
 :root {
-  --bg-primary: #ffffff;
+  --bg-primary: #f8f8f5;
   --bg-secondary: #f8f9fa;
   --text-primary: #1a1a1a;
   --accent-color: #0062ff;
@@ -7,15 +7,14 @@
   --transition: 0.3s ease;
 }
 
-/* Global Reset and Full Width Control */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-  font-family: 'DM Sans', sans-serif;
-  background: #ffffff;
-  color: #1a1a1a;
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
 }
 
@@ -65,7 +64,7 @@ header {
 }
 
 .logo img {
-  height: 90px; /* Adjust logo size as needed */
+  height: 90px;
 }
 
 nav .menu {
@@ -75,7 +74,7 @@ nav .menu {
   top: 90px;
   left: 0;
   width: 100%;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   list-style: none;
   margin: 0;
@@ -89,7 +88,7 @@ nav .menu.open {
 nav .menu li a {
   display: block;
   padding: 15px 20px;
-  color: #1a1a1a;
+  color: var(--text-primary);
   border-bottom: 1px solid #ddd;
 }
 
@@ -102,7 +101,7 @@ nav .menu li:last-child a {
   font-size: 2rem;
   background: none;
   border: none;
-  color: #1a1a1a;
+  color: var(--text-primary);
   cursor: pointer;
   margin-left: auto;
 }
@@ -160,7 +159,7 @@ nav .menu li:last-child a {
   font-size: 1rem;
   border-radius: 4px;
   display: inline-block;
-  transition: background 0.3s ease;
+  transition: background var(--transition);
   border: none;
   cursor: pointer;
 }
@@ -169,7 +168,7 @@ nav .menu li:last-child a {
 }
 
 .btn-primary {
-  background: #0062ff;
+  background: var(--accent-color);
   color: #fff;
   padding: 12px 28px;
   border: none;
@@ -187,6 +186,7 @@ nav .menu li:last-child a {
   width: 100%;
   padding: 80px 0;
   overflow-x: hidden;
+  background: var(--bg-primary);
 }
 
 .solution-block {
@@ -199,6 +199,7 @@ nav .menu li:last-child a {
 .solution-block video {
   width: 100%;
   display: block;
+  border-radius: 0;
 }
 
 .solution-block hr {
@@ -209,7 +210,7 @@ nav .menu li:last-child a {
 .solution-block h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .solution-block p {
@@ -224,73 +225,30 @@ nav .menu li:last-child a {
   overflow-x: hidden;
 }
 
-.focus-carousel {
-  max-width: 1100px;
+.focus-carousel-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+}
+
+.focus-slider {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  width: 100%;
+}
+
+.focus-slide {
+  min-width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .focus-slide img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 500px;
+  object-fit: cover;
   display: block;
-  border-radius: 8px;
-}
-
-.focus-slide h3 {
-  font-size: 1.5rem;
-  margin: 20px 0 10px;
-  color: #1a1a1a;
-}
-
-.focus-slide p {
-  font-size: 1rem;
-  color: #555;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-h2, h3, p {
-  margin: 0;
-  padding: 0;
-  word-wrap: break-word;
-}
-
-/* Additional sections can follow the same aesthetic */
-
-.focus-buttons button {
-  position: relative;
-  padding: 12px 18px;
-  border: none;
-  background: #e0e0e0;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-  min-width: 120px;
-  font-size: 0.95rem;
-}
-
-.focus-buttons button .progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  background: #888;
-  width: 0%;
-  transition: width 0.2s linear;
-}
-
-.focus-buttons button.active {
-  background: #ccc;
-}
-
-.focus-display {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
 }
 
 .focus-overlay {
@@ -312,4 +270,61 @@ h2, h3, p {
   margin: 0;
   font-size: 0.95rem;
   max-width: 300px;
+}
+
+/* Insights Section */
+.insights-section {
+  background: #111;
+  padding: 60px 20px;
+  color: #fff;
+}
+
+.insights-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.insights-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.insight-card {
+  flex: 0 0 300px;
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  scroll-snap-align: start;
+  min-height: 180px;
+}
+
+.insight-card small {
+  font-weight: 600;
+  color: #888;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.insight-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.insight-card .arrows {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.insight-card .arrows span {
+  margin-left: 5px;
+  cursor: pointer;
 }
