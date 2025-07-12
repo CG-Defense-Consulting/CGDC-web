@@ -218,37 +218,72 @@ nav .menu li:last-child a {
   color: #444;
 }
 
-/* Strategic Focus Section */
+/* Strategic Focus Fixes */
 #focus-areas {
-  width: 100%;
-  padding: 80px 0;
+  padding: 80px 20px;
+  background: #f9f9f9;
   overflow-x: hidden;
 }
 
-.focus-carousel-container {
-  overflow: hidden;
+.focus-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.focus-btn {
   position: relative;
-  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: #e0e0e0;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.focus-btn.active {
+  background: #ccc;
+}
+
+.focus-btn .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: #666;
+  width: 0%;
+  transition: width 0.2s linear;
+}
+
+.focus-display {
+  position: relative;
+  max-width: 1000px;
   margin: 0 auto;
+  overflow: hidden;
+  height: 600px; /* Consistent height */
 }
 
 .focus-slider {
   display: flex;
-  transition: transform 0.6s ease-in-out;
-  width: 100%;
+  transition: transform 1s ease-in-out;
+  width: 600%; /* 6 items */
 }
 
 .focus-slide {
   min-width: 100%;
-  box-sizing: border-box;
   position: relative;
 }
 
 .focus-slide img {
   width: 100%;
-  height: 500px;
+  height: 600px;
   object-fit: cover;
-  display: block;
+  border-radius: 8px;
 }
 
 .focus-overlay {
@@ -257,19 +292,9 @@ nav .menu li:last-child a {
   left: 20px;
   background: rgba(0,0,0,0.5);
   color: #fff;
-  padding: 10px 15px;
+  padding: 12px 16px;
   border-radius: 4px;
-}
-
-.focus-overlay h3 {
-  margin: 0 0 5px;
-  font-size: 1.25rem;
-}
-
-.focus-overlay p {
-  margin: 0;
-  font-size: 0.95rem;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 /* Insights Section */
