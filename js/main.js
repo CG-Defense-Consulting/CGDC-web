@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     buttons.forEach((btn, i) => {
       btn.classList.toggle('active', i === index);
-      progressBars[i].style.width = i === index ? '0%' : '0%';
+      progressBars[i].style.width = i === index ? '0%' 
     });
 
     animateProgress(index);
