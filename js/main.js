@@ -13,7 +13,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ========== STRATEGIC FOCUS AREA CAROUSEL ==========
-const focusData = [
+const focusItems = [
   {
     title: "Defense Manufacturing",
     desc: "End-to-end support for defense contractors, from sourcing to assembly oversight.",
@@ -21,7 +21,7 @@ const focusData = [
   },
   {
     title: "Supply Chain",
-    desc: "Real-time visibility and optimization across global defense logistics networks.",
+    desc: "Real-time visibility and AI-driven optimization across global defense logistics networks.",
     img: "images/icon-supply-chain.jpg"
   },
   {
@@ -31,65 +31,76 @@ const focusData = [
   },
   {
     title: "Contract Management",
-    desc: "Automated contract workflows and performance analytics for federal contracts.",
+    desc: "Automated workflows and performance analytics for federal contracts.",
     img: "images/icon-contact.jpg"
   },
   {
     title: "Logistics",
-    desc: "Streamlining inventory, transport, and fulfillment for defense systems.",
+    desc: "Streamlined inventory, transport, and fulfillment for defense systems.",
     img: "images/icon-logistics.jpg"
   },
   {
     title: "Compliance",
-    desc: "Ensure audit-ready compliance with NIST, DFARS, ITAR and cybersecurity mandates.",
+    desc: "Ensure audit-ready compliance with NIST, DFARS, ITAR & cybersecurity mandates.",
     img: "images/icon-compliance.jpg"
   }
 ];
 
-const buttons = document.querySelectorAll('.focus-btn');
-const img = document.getElementById('focus-image');
+const imageEl = document.getElementById('focus-image');
 const titleEl = document.getElementById('focus-title');
 const descEl = document.getElementById('focus-desc');
-let current = 0, timer;
+const buttons = document.querySelectorAll('.focus-btn');
+const progressBars = document.querySelectorAll('.focus-btn .progress');
+let currentIndex = 0, timer;
 
-function show(i) {
-  img.style.opacity = 0;
+// Function to update content
+function updateFocus(index) {
+  imageEl.style.opacity = 0;
   setTimeout(() => {
-    img.src = focusData[i].img;
-    titleEl.textContent = focusData[i].title;
-    descEl.textContent = focusData[i].desc;
-    img.style.opacity = 1;
+    const item = focusItems[index];
+    imageEl.src = item.img;
+    titleEl.textContent = item.title;
+    descEl.textContent = item.desc;
+    imageEl.style.opacity = 1;
   }, 500);
 
-  buttons.forEach((b, idx) => {
-    b.classList.toggle('active', idx === i);
-    b.querySelector('.progress').style.width = '0%';
+  buttons.forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
+    progressBars[i].style.width = '0%';
   });
 }
 
-function start() {
+// Start rotation
+function startRotation() {
   clearTimeout(timer);
-  buttons[current].querySelector('.progress').style.width = '0';
+  const bar = progressBars[currentIndex];
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
   setTimeout(() => {
-    buttons[current].querySelector('.progress').style.width = '100%';
+    bar.style.transition = 'width 5s linear';
+    bar.style.width = '100%';
   }, 50);
 
   timer = setTimeout(() => {
-    current = (current + 1) % focusData.length;
-    show(current);
-    start();
+    currentIndex = (currentIndex + 1) % focusItems.length;
+    updateFocus(currentIndex);
+    startRotation();
   }, 5000);
 }
 
+// Button clicks
 buttons.forEach((btn, i) => {
   btn.addEventListener('click', () => {
-    current = i;
-    show(i);
-    start();
+    clearTimeout(timer);
+    currentIndex = i;
+    updateFocus(i);
+    startRotation();
   });
 });
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  show(0);
-  start();
+  updateFocus(currentIndex);
+  startRotation();
 });
+
