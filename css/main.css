@@ -231,7 +231,7 @@ header {
   height: 4px;
   width: 0%;
   background: var(--accent-color);
-  transition: width linear;
+  transition: width 5s linear;
 }
 
 .focus-carousel {
@@ -241,19 +241,30 @@ header {
   overflow: hidden;
 }
 
-#focus-image {
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.focus-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.focus-slide img {
   width: 100%;
   height: 450px;
   object-fit: cover;
   display: block;
-  transition: opacity 0.5s ease-in-out;
+  border-radius: 8px;
 }
 
 .focus-overlay {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 10px 15px;
   border-radius: 4px;
