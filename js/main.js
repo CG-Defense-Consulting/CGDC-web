@@ -117,6 +117,24 @@ const headingObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.6 });
 
+// ===== HERO VIDEO ROTATION =====
+const heroVideos = [
+  'videos/hero1.mp4',
+  'videos/hero2.mp4',
+  'videos/hero3.mp4'
+];
+let heroIndex = 0;
+const heroVideoEl = document.getElementById('hero-video');
+const heroSourceEl = document.getElementById('hero-video-src');
+
+// On each video end, advance to the next clip
+heroVideoEl.addEventListener('ended', () => {
+  heroIndex = (heroIndex + 1) % heroVideos.length;
+  heroSourceEl.src = heroVideos[heroIndex];
+  heroVideoEl.load();    // reload with new source
+  heroVideoEl.play();    // autoplay next
+});
+
 // observe
 headings.forEach(h => headingObserver.observe(h));
 
