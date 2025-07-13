@@ -117,11 +117,14 @@ header {
 .hero-overlay h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
+  font-weight: 400;       /* lighter weight */
+  text-align: center;     /* center the heading */
 }
 
 .hero-overlay p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .hero-button {
