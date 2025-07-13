@@ -89,3 +89,30 @@ document.addEventListener('DOMContentLoaded', () => {
   rotateCarousel();
 });
 
+// ===== TYPEWRITER ON SCROLL FOR ALL H2 & H3 =====
+const headings = document.querySelectorAll('h2, h3');
+const typedHeadings = new Set();
+
+function typeWriter(el, text) {
+  el.textContent = '';
+  let idx = 0;
+  const interval = setInterval(() => {
+    el.textContent += text.charAt(idx);
+    idx++;
+    if (idx >= text.length) clearInterval(interval);
+  }, 40);
+}
+
+const headingObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !typedHeadings.has(entry.target)) {
+      const el = entry.target;
+      const txt = el.textContent.trim();
+      typeWriter(el, txt);
+      typedHeadings.add(el);
+    }
+  });
+}, { threshold: 0.6 });
+
+// Start observing all H2 and H3
+headings.forEach(h => headingObserver.observe(h));
