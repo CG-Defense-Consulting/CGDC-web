@@ -89,16 +89,19 @@ document.addEventListener('DOMContentLoaded', () => {
   rotateCarousel();
 });
 
-// ===== TYPEWRITER ON SCROLL FOR ALL H2 & H3 =====
-const headings = document.querySelectorAll('h2, h3');
+// ===== TYPEWRITER ON SCROLL (H1, H2, H3, HERO P) =====
+const headings = document.querySelectorAll(
+  '#hero .hero-overlay h1, ' +   // main hero title
+  '#hero .hero-overlay p, ' +    // hero subtext
+  'h2, h3'                        // all other section headings
+);
 const typedHeadings = new Set();
 
 function typeWriter(el, text) {
   el.textContent = '';
   let idx = 0;
   const interval = setInterval(() => {
-    el.textContent += text.charAt(idx);
-    idx++;
+    el.textContent += text.charAt(idx++);
     if (idx >= text.length) clearInterval(interval);
   }, 40);
 }
@@ -114,5 +117,6 @@ const headingObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.6 });
 
-// Start observing all H2 and H3
+// observe
 headings.forEach(h => headingObserver.observe(h));
+
