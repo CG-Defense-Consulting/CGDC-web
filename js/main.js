@@ -46,72 +46,50 @@ const focusData = [
   }
 ];
 
-const focusImage = document.getElementById('focus-image');
-const focusTitle = document.getElementById('focus-title');
-const focusDesc = document.getElementById('focus-desc');
 const buttons = document.querySelectorAll('.focus-btn');
-const progressBars = document.querySelectorAll('.focus-btn .progress');
+const img = document.getElementById('focus-image');
+const titleEl = document.getElementById('focus-title');
+const descEl = document.getElementById('focus-desc');
+let current = 0, timer;
 
-let currentFocus = 0;
-let interval;
-const intervalDuration = 5000;
+function show(i) {
+  img.style.opacity = 0;
+  setTimeout(() => {
+    img.src = focusData[i].img;
+    titleEl.textContent = focusData[i].title;
+    descEl.textContent = focusData[i].desc;
+    img.style.opacity = 1;
+  }, 500);
 
-function showFocus(index, direction = 'right') {
-  focusImage.classList.remove('slide-left', 'slide-right');
-
-  void focusImage.offsetWidth; // Force reflow
-
-  focusImage.classList.add(direction === 'left' ? 'slide-left' : 'slide-right');
-
-  const data = focusData[index];
-  focusImage.src = data.img;
-  focusTitle.textContent = data.title;
-  focusDesc.textContent = data.desc;
-
-  buttons.forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-    btn.querySelector('.progress').style.width = i === index ? '0%' : '0%';
+  buttons.forEach((b, idx) => {
+    b.classList.toggle('active', idx === i);
+    b.querySelector('.progress').style.width = '0%';
   });
 }
 
-function startCarousel() {
-  clearInterval(interval);
-  let start = Date.now();
-
-  interval = setInterval(() => {
-    const previous = currentFocus;
-    currentFocus = (currentFocus + 1) % focusData.length;
-    showFocus(currentFocus, 'right');
-    startProgressBar(currentFocus);
-  }, intervalDuration);
-
-  startProgressBar(currentFocus);
-}
-
-function startProgressBar(index) {
-  const progress = buttons[index].querySelector('.progress');
-  progress.style.transition = 'none';
-  progress.style.width = '0%';
-
+function start() {
+  clearTimeout(timer);
+  buttons[current].querySelector('.progress').style.width = '0';
   setTimeout(() => {
-    progress.style.transition = `width ${intervalDuration}ms linear`;
-    progress.style.width = '100%';
+    buttons[current].querySelector('.progress').style.width = '100%';
   }, 50);
+
+  timer = setTimeout(() => {
+    current = (current + 1) % focusData.length;
+    show(current);
+    start();
+  }, 5000);
 }
 
 buttons.forEach((btn, i) => {
   btn.addEventListener('click', () => {
-    clearInterval(interval);
-    const prevIndex = currentFocus;
-    const direction = i > prevIndex ? 'right' : 'left';
-    currentFocus = i;
-    showFocus(i, direction);
-    startCarousel();
+    current = i;
+    show(i);
+    start();
   });
 });
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  showFocus(currentFocus);
-  startCarousel();
+  show(0);
+  start();
 });
