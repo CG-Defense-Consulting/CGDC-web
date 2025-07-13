@@ -76,12 +76,16 @@ header {
 }
 
 .hamburger {
-  display: block;
+  position: absolute;  /* take it out of the flow */
+  top: 50%;            /* vertically center in the header */
+  right: 20px;         /* 20px from the right edge */
+  transform: translateY(-50%);
   font-size: 2rem;
   background: none;
   border: none;
   color: var(--text-primary);
   cursor: pointer;
+  z-index: 1001;       /* sit above video & logo */
 }
 
 /* HERO SECTION */
