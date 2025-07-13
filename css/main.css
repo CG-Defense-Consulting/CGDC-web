@@ -43,10 +43,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px;    /* add 20px padding on left & right */
 }
 
 .logo img {
-  height: 90px;
+ height: 110px;      /* bump up from 90px to 110px */
+  margin-left: 20px;  /* give it some breathing room from the left edge */
 }
 
 .menu {
