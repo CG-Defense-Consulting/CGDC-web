@@ -33,7 +33,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: transparent !important;
+  background: transparent 
   padding: 20px;
   z-index: 1000;
   transition: background 0.3s ease;
