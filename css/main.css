@@ -29,13 +29,14 @@ html, body {
 
 /* NAVIGATION */
 header {
-  position: absolute;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  background: transparent; !important;
+  background: transparent !important;
   padding: 20px;
   z-index: 1000;
+  transition: background 0.3s ease;
 }
 
 .nav-container {
