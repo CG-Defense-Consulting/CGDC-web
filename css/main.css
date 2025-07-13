@@ -34,7 +34,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: transparent;
+  background: transparent; !important;
   padding: 20px;
   z-index: 1000;
 }
@@ -99,8 +99,6 @@ header {
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
-
-  /* Allow pointer/touch events to go “through” the video */
   pointer-events: none;
 }
 
