@@ -115,6 +115,13 @@ header {
   justify-content: center;
   text-align: center;
   padding: 0 20px;
+  pointer-events: none;
+}
+
+  .hero-overlay h1,
+  .hero-overlay p,
+  .hero-overlay .hero-button {
+    pointer-events: auto;
 }
 
 .hero-overlay h1 {
