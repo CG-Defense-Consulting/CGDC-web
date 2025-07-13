@@ -138,3 +138,9 @@ heroVideoEl.addEventListener('ended', () => {
 // observe
 headings.forEach(h => headingObserver.observe(h));
 
+// — Toggle header background class on scroll —
+const headerEl = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 40) headerEl.classList.add('scrolled');
+  else headerEl.classList.remove('scrolled');
+});
