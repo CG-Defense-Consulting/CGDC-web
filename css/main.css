@@ -1,8 +1,6 @@
-/* main.css */
-
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
+  --bg-primary: #f9f9f9;
+  --bg-secondary: #eeeeee;
   --text-primary: #1a1a1a;
   --accent-color: #0062ff;
   --font-sans: 'DM Sans', sans-serif;
@@ -28,31 +26,13 @@ html, body {
   box-sizing: border-box;
 }
 
-.grid-auto {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-.grid-2 {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 768px) {
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* NAVIGATION */
 header {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   background: transparent;
-  box-shadow: none;
   padding: 20px;
   z-index: 10;
 }
@@ -61,15 +41,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 20px;
 }
 
 .logo img {
   height: 90px;
 }
 
-nav .menu {
+.menu {
   display: none;
   flex-direction: column;
   position: absolute;
@@ -79,23 +57,18 @@ nav .menu {
   background: var(--bg-secondary);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-nav .menu.open {
+.menu.open {
   display: flex;
 }
 
-nav .menu li a {
+.menu li a {
   display: block;
   padding: 15px 20px;
   color: var(--text-primary);
-  border-bottom: 1px solid #ddd;
-}
-
-nav .menu li:last-child a {
-  border-bottom: none;
+  text-decoration: none;
+  border-bottom: 1px solid #ccc;
 }
 
 .hamburger {
@@ -105,10 +78,9 @@ nav .menu li:last-child a {
   border: none;
   color: var(--text-primary);
   cursor: pointer;
-  margin-left: auto;
 }
 
-/* Hero Section */
+/* HERO SECTION */
 #hero {
   position: relative;
   width: 100%;
@@ -132,14 +104,14 @@ nav .menu li:last-child a {
   left: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0 20px;
-  background: rgba(0,0,0,0.4);
-  color: #fff;
 }
 
 .hero-overlay h1 {
@@ -154,41 +126,26 @@ nav .menu li:last-child a {
 
 .hero-button {
   text-decoration: none;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #fff;
+  color: #000;
   padding: 12px 28px;
   font-weight: 600;
   font-size: 1rem;
   border-radius: 4px;
-  display: inline-block;
   transition: background 0.3s ease;
   border: none;
   cursor: pointer;
 }
+
 .hero-button:hover {
   background-color: #f0f0f0;
 }
 
-.btn-primary {
-  background: var(--accent-color);
-  color: #fff;
-  padding: 12px 28px;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn-primary:hover {
-  background: #0051cc;
-}
-
-/* Solutions */
+/* SOLUTIONS */
 #solutions {
   width: 100%;
-  padding: 80px 0;
-  overflow-x: hidden;
+  padding: 80px 20px;
+  background: #ffffff;
 }
 
 .solution-block {
@@ -220,12 +177,29 @@ nav .menu li:last-child a {
   color: #444;
 }
 
-/* Strategic Focus Area */
+.solution-block .btn-primary {
+  margin-left: auto;
+  text-decoration: none;
+  background: var(--accent-color);
+  color: white;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: none;
+  transition: 0.3s;
+}
+
+.solution-block .btn-primary:hover {
+  background: #004dcc;
+}
+
+/* STRATEGIC FOCUS */
 #focus-areas {
-  background: var(--bg-primary);
   padding: 80px 20px;
+  background: #ffffff;
+  overflow: hidden;
   width: 100%;
-  overflow-x: hidden;
 }
 
 .focus-buttons {
@@ -245,8 +219,9 @@ nav .menu li:last-child a {
   cursor: pointer;
   border-radius: 4px;
   overflow: hidden;
-  min-width: 120px;
+  min-width: 140px;
   font-size: 0.95rem;
+  transition: background 0.3s;
 }
 
 .focus-buttons button .progress {
@@ -254,39 +229,38 @@ nav .menu li:last-child a {
   bottom: 0;
   left: 0;
   height: 4px;
-  background: #888;
+  background: #555;
   width: 0%;
-  transition: width 0.2s linear;
+  transition: width 0.3s linear;
 }
 
 .focus-buttons button.active {
   background: #ccc;
 }
 
-.focus-carousel {
-  width: 100%;
+.focus-display {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
   max-width: 1000px;
   margin: 0 auto;
-  overflow: hidden;
-  position: relative;
 }
 
-.focus-slider {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.focus-slide {
-  min-width: 100%;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.focus-slide img {
+.focus-display img {
   width: 100%;
-  height: 400px;
+  max-width: 100%;
+  height: 500px;
   object-fit: cover;
-  display: block;
+  border-radius: 8px;
+  transition: transform 0.6s ease;
+}
+
+.slide-left {
+  transform: translateX(-100%);
+}
+
+.slide-right {
+  transform: translateX(100%);
 }
 
 .focus-overlay {
@@ -297,6 +271,7 @@ nav .menu li:last-child a {
   color: #fff;
   padding: 10px 15px;
   border-radius: 4px;
+  max-width: 90%;
 }
 
 .focus-overlay h3 {
@@ -308,4 +283,76 @@ nav .menu li:last-child a {
   margin: 0;
   font-size: 0.95rem;
   max-width: 300px;
+}
+
+/* INSIGHTS */
+.insights-section {
+  background: #111;
+  color: #fff;
+  padding: 80px 20px;
+}
+
+.insights-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.insights-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+
+.insight-card {
+  flex: 0 0 300px;
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 8px;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.insight-card small {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.insight-card h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.insight-card .arrows {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.2rem;
+  color: #666;
+  display: flex;
+  gap: 8px;
+}
+
+/* FOOTER */
+footer {
+  background: #000;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #aaa;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
