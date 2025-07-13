@@ -12,7 +12,6 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
   touch-action: pan-y;
   font-family: var(--font-sans);
   background: var(--bg-primary);
