@@ -46,61 +46,46 @@ const focusItems = [
   }
 ];
 
-const imageEl = document.getElementById('focus-image');
-const titleEl = document.getElementById('focus-title');
-const descEl = document.getElementById('focus-desc');
 const buttons = document.querySelectorAll('.focus-btn');
 const progressBars = document.querySelectorAll('.focus-btn .progress');
+const track = document.querySelector('.carousel-track');
 let currentIndex = 0, timer;
 
-// Function to update content
-function updateFocus(index) {
-  imageEl.style.opacity = 0;
-  setTimeout(() => {
-    const item = focusItems[index];
-    imageEl.src = item.img;
-    titleEl.textContent = item.title;
-    descEl.textContent = item.desc;
-    imageEl.style.opacity = 1;
-  }, 500);
+function updateCarousel(index) {
+  track.style.transform = `translateX(-${index * 100}%)`;
 
   buttons.forEach((btn, i) => {
     btn.classList.toggle('active', i === index);
     progressBars[i].style.width = '0%';
+    progressBars[i].style.transition = 'none';
   });
+
+  setTimeout(() => {
+    progressBars[index].style.transition = 'width 5s linear';
+    progressBars[index].style.width = '100%';
+  }, 50);
 }
 
-// Start rotation
-function startRotation() {
+function rotateCarousel() {
   clearTimeout(timer);
-  const bar = progressBars[currentIndex];
-  bar.style.transition = 'none';
-  bar.style.width = '0%';
-  setTimeout(() => {
-    bar.style.transition = 'width 5s linear';
-    bar.style.width = '100%';
-  }, 50);
+  updateCarousel(currentIndex);
 
   timer = setTimeout(() => {
     currentIndex = (currentIndex + 1) % focusItems.length;
-    updateFocus(currentIndex);
-    startRotation();
+    rotateCarousel();
   }, 5000);
 }
 
-// Button clicks
 buttons.forEach((btn, i) => {
   btn.addEventListener('click', () => {
     clearTimeout(timer);
     currentIndex = i;
-    updateFocus(i);
-    startRotation();
+    rotateCarousel();
   });
 });
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  updateFocus(currentIndex);
-  startRotation();
+  updateCarousel(currentIndex);
+  rotateCarousel();
 });
 
