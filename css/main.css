@@ -12,9 +12,10 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;        /* ensure vertical scroll */
   touch-action: pan-y;
   font-family: var(--font-sans);
-  background: var(--bg-primary);
+  background: transparent;  /* ← allow the fixed video behind to show */
   color: var(--text-primary);
   line-height: 1.6;
 }
@@ -109,7 +110,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   object-fit: cover;
   pointer-events: none;
