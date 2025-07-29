@@ -128,9 +128,8 @@ const heroVideoEl = document.getElementById('hero-video');
 
 heroVideoEl.addEventListener('ended', () => {
   heroIndex = (heroIndex + 1) % heroVideos.length;
-  heroVideoEl.src = heroVideos[heroIndex];
-  heroVideoEl.load();    // reload with new source
-  heroVideoEl.play();    // autoplay next
+  heroVideoEl.setAttribute('src', heroVideos[heroIndex]);
+  // no need to call load/play — loop attribute will restart it
 });
 
 // observe
