@@ -141,3 +141,22 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 40) headerEl.classList.add('scrolled');
   else headerEl.classList.remove('scrolled');
 });
+
+// — Solutions Carousel Logic —
+;(function(){
+  const track = document.querySelector('.solutions-carousel .carousel-track');
+  const slides = Array.from(track.children);
+  const prevBtn = document.querySelector('.solutions-carousel .prev');
+  const nextBtn = document.querySelector('.solutions-carousel .next');
+  let idx = 0;
+
+  function moveTo(i) {
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+  }
+
+  prevBtn.addEventListener('click', () => moveTo(idx - 1));
+  nextBtn.addEventListener('click', () => moveTo(idx + 1));
+
+  setInterval(() => moveTo(idx + 1), 5000);
+})();
