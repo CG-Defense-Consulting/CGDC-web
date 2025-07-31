@@ -160,3 +160,15 @@ window.addEventListener('scroll', () => {
 
   setInterval(() => moveTo(idx + 1), 5000);
 })();
+
+// — Fade In Section on Scroll —
+;(function(){
+  const el = document.getElementById('platform-intro');
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      el.classList.add('visible');
+      obs.unobserve(el);
+    }
+  }, { threshold: 0.3 });
+  obs.observe(el);
+})();
