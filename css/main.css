@@ -224,6 +224,44 @@ header {
   background: #004dcc;
 }
 
+/* — Solutions Carousel — */
+.solutions-carousel .carousel-container {
+  position: relative;
+  overflow: hidden;
+  margin-top: 40px;
+}
+.solutions-carousel .carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+.solutions-carousel .carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+}
+.solutions-carousel .carousel-slide img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.8);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 2;
+}
+.carousel-nav.prev { left: 10px; }
+.carousel-nav.next { right: 10px; }
+
+
 /* STRATEGIC FOCUS */
 #focus-areas {
   padding: 80px 20px;
