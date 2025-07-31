@@ -410,3 +410,16 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+/* — Fade-In on Scroll — */
+.fade-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  padding: 80px 20px;
+  background: var(--bg-secondary);
+}
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
