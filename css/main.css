@@ -459,3 +459,103 @@ footer a:hover {
   color: #555;
   line-height: 1.5;
 }
+
+
+/* ───────────────────────────────────────────────────────────
+   1) Make each section fill the viewport and center its inner container
+─────────────────────────────────────────────────────────── */
+#hero,
+#solutions,
+#platform-intro,
+#focus-areas,
+#our-tools,
+#insights,
+#about,
+#contact {
+  min-height: 100vh;            /* full screen height */
+  display: flex;                /* flex to center */
+  align-items: center;          /* vertical center */
+  justify-content: center;      /* horizontal center */
+  padding: 0;                   /* override any extra padding */
+}
+
+/* Keep your existing container width/padding */
+#hero > .container,
+#solutions > .container,
+#platform-intro > .container,
+#focus-areas > .container,
+#our-tools > .container,
+#insights > .container,
+#about > .container,
+#contact > .container {
+  width: 90%;
+  max-width: 1200px;
+  padding: 40px 0;              /* you can adjust vertical padding if needed */
+  box-sizing: border-box;
+  text-align: center;           /* center text by default */
+}
+
+/* ───────────────────────────────────────────────────────────
+   2) Enlarge the “fade-in” text block to really fill the screen
+─────────────────────────────────────────────────────────── */
+#platform-intro {
+  background: var(--bg-secondary);
+}
+#platform-intro .intro-text {
+  font-size: 2rem;              /* bump from 1.5rem up to 2rem */
+  max-width: 800px;             /* cap the width so it wraps nicely */
+  margin: 0 auto;
+  opacity: 0;                   /* start hidden, JS will add .visible */
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+#platform-intro.visible .intro-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ───────────────────────────────────────────────────────────
+   3) Adjust “Our Solutions” carousel slide size to full screen
+─────────────────────────────────────────────────────────── */
+.solutions-carousel .carousel-container {
+  width: 100%;                  /* span full width */
+  height: 100%;                 /* fill full section */
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.solutions-carousel .carousel-track {
+  height: 100%;                 /* ensure the slides fill */
+}
+.solutions-carousel .carousel-slide {
+  /* slide content centered vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+.solutions-carousel .carousel-slide img {
+  max-height: 50vh;             /* cap at half viewport */
+  width: auto;
+  margin-bottom: 1.5rem;
+}
+.solutions-carousel .carousel-slide h3 {
+  margin-bottom: 0.5rem;
+}
+.solutions-carousel .carousel-slide p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ───────────────────────────────────────────────────────────
+   4) Make Tools & Insights text centered & spaced nicely
+─────────────────────────────────────────────────────────── */
+.tools-section .tools-grid,
+.insights-section .insights-scroll {
+  justify-content: center;      /* center cards horizontally */
+}
+.tool-card { text-align: left; } /* you can override if you want left-justified */
+
