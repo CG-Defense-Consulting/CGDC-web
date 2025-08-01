@@ -161,14 +161,18 @@ window.addEventListener('scroll', () => {
   setInterval(() => moveTo(idx + 1), 5000);
 })();
 
-// — Fade In Section on Scroll —
+// — Fade In “platform-intro” on scroll —
 ;(function(){
   const el = document.getElementById('platform-intro');
+  if (!el) return;
   const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      el.classList.add('visible');
-      obs.unobserve(el);
-    }
-  }, { threshold: 0.3 });
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
   obs.observe(el);
 })();
+
