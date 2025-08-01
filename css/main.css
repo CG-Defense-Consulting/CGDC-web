@@ -559,3 +559,48 @@ footer a:hover {
 }
 .tool-card { text-align: left; } /* you can override if you want left-justified */
 
+
+
+/* ───────────────────────────────────────────────────────────
+   SCALE-UP: Section Headings & Text
+─────────────────────────────────────────────────────────── */
+
+/* 1. Bigger section headers and paragraphs */
+section > .container h2 {
+  font-size: 3.5rem;          /* up from ~2.5rem */
+  margin-bottom: 1rem;        /* tighten space below */
+}
+section > .container p {
+  font-size: 1.25rem;         /* up from ~1rem */
+  max-width: 700px;           /* keep them from stretching too wide */
+  margin: 0 auto 2rem;        /* auto-center and add bottom gap */
+}
+
+/* 2. Fade-in intro text even larger */
+#platform-intro .intro-text {
+  font-size: 2.5rem !important;  /* up from 2rem */
+  line-height: 1.4;
+}
+
+/* 3. Solutions carousel slide typography */
+.solutions-carousel .carousel-slide h3 {
+  font-size: 2rem;            /* up from ~1.5rem */
+  margin-bottom: 0.75rem;
+}
+.solutions-carousel .carousel-slide p {
+  font-size: 1.125rem;        /* up from ~1rem */
+  max-width: 600px;
+}
+
+/* 4. Add extra vertical breathing room */
+#hero,
+#solutions,
+#platform-intro,
+#focus-areas,
+#our-tools,
+#insights,
+#about,
+#contact {
+  padding-top: 3rem;          /* add more top padding */
+  padding-bottom: 3rem;       /* add more bottom padding */
+}
