@@ -411,7 +411,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* — Fade-In on Scroll — */
+/* — Fade-In Text Section — */
 .fade-section {
   opacity: 0;
   transform: translateY(20px);
@@ -422,6 +422,15 @@ footer a:hover {
 .fade-section.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.intro-text {
+  font-size: 1.5rem;       /* larger text */
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-primary);
+  line-height: 1.6;
+  text-align: center;
 }
 
 /* — Our Tools Section — */
