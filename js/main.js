@@ -46,13 +46,13 @@ const focusItems = [
   }
 ];
 
-const buttons = document.querySelectorAll('.focus-btn');
-const progressBars = document.querySelectorAll('.focus-btn .progress');
-const track = document.querySelector('.carousel-track');
+const buttons     = document.querySelectorAll('#focus-areas .focus-btn');
+const progressBars = document.querySelectorAll('#focus-areas .focus-btn .progress');
+const focusTrack  = document.querySelector('#focus-areas .carousel-track');
 let currentIndex = 0, timer;
 
 function updateCarousel(index) {
-  track.style.transform = `translateX(-${index * 100}%)`;
+  focusTrack.style.transform = `translateX(-${index * 100}%)`;
 
   buttons.forEach((btn, i) => {
     btn.classList.toggle('active', i === index);
