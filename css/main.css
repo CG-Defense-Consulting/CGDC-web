@@ -498,20 +498,36 @@ footer a:hover {
 /* ───────────────────────────────────────────────────────────
    2) Enlarge the “fade-in” text block to really fill the screen
 ─────────────────────────────────────────────────────────── */
+/* — Fade-In Text Section — */
 #platform-intro {
+  min-height: 100vh;               /* fill the screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--bg-secondary);
+  overflow: hidden;
 }
+
 #platform-intro .intro-text {
-  font-size: 2rem;              /* bump from 1.5rem up to 2rem */
-  max-width: 800px;             /* cap the width so it wraps nicely */
-  margin: 0 auto;
-  opacity: 0;                   /* start hidden, JS will add .visible */
+  opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  font-size: 3rem;                 /* much larger text */
+  line-height: 1.2;
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-primary);
+  text-align: center;
 }
+
 #platform-intro.visible .intro-text {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Highlighted phrase in light blue */
+#platform-intro .highlight {
+  color: #0062ff;                  /* your accent blue */
 }
 
 /* ───────────────────────────────────────────────────────────
