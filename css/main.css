@@ -498,21 +498,22 @@ footer a:hover {
 /* ───────────────────────────────────────────────────────────
    2) Enlarge the “fade-in” text block to really fill the screen
 ─────────────────────────────────────────────────────────── */
-/* — Fade-In Text Section — */
+/* — Fade-In Text Section (adjusted) — */
 #platform-intro {
-  min-height: 100vh;               /* fill the screen */
+  min-height: 60vh;               /* was 100vh, now shorter */
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-secondary);
   overflow: hidden;
+  padding: 20px 0;                /* give just a little breathing room */
 }
 
 #platform-intro .intro-text {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  font-size: 3rem;                 /* much larger text */
+  font-size: 4rem;                /* bumped up from 3rem */
   line-height: 1.2;
   max-width: 800px;
   margin: 0 auto;
@@ -525,9 +526,8 @@ footer a:hover {
   transform: translateY(0);
 }
 
-/* Highlighted phrase in light blue */
 #platform-intro .highlight {
-  color: #0062ff;                  /* your accent blue */
+  color: #0062ff;
 }
 
 /* ───────────────────────────────────────────────────────────
