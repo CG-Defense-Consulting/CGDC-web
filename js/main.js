@@ -128,7 +128,7 @@ const heroVideoEl = document.getElementById('hero-video');
 
 heroVideoEl.addEventListener('ended', () => {
   heroIndex = (heroIndex + 1) % heroVideos.length;
-  heroVideoEl.setAttribute('src', heroVideos[heroIndex]);
+  heroVideoEl.src = heroVideos[heroIndex];
   // no need to call load/play — loop attribute will restart it
 });
 
