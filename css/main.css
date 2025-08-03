@@ -716,3 +716,22 @@ section > .container p {
 #contact {
   padding: 60px 20px;
 }
+
+/* 1) Keep Insights & Case Studies dark */
+#insights {
+  background: #111 !important;
+  color: #fff;
+}
+
+/* 2) Make sure the <h2> and text inside are white */
+#insights h2,
+#insights small,
+#insights .insight-card h3 {
+  color: #fff;
+}
+
+/* 3) Add horizontal padding so the first card is fully visible */
+.insights-scroll {
+  padding: 0 20px;    /* was only bottom-padding before */
+  margin-top: 40px;   /* keep your vertical spacing */
+}
