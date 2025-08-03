@@ -640,3 +640,79 @@ section > .container p {
   padding-top: 3rem;          /* add more top padding */
   padding-bottom: 3rem;       /* add more bottom padding */
 }
+
+/*additions*/
+
+/* ==========================================================================
+   1) Make Tools, Insights, About & Contact sit above the hero-video on white
+   ========================================================================== */
+#our-tools,
+#insights,
+#about,
+#contact {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+}
+
+/* ==========================================================================
+   2) Our Tools grid
+   ========================================================================== */
+.tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+.tool-card {
+  flex: 1 1 300px;
+  background: #f8f9fa;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+/* ==========================================================================
+   3) Insights carousel styling
+   ========================================================================== */
+.insights-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+  margin-top: 40px;
+}
+/* each card takes ~60% of viewport for a more “hero” look */
+.insight-card {
+  flex: 0 0 60%;
+  min-width: 280px;
+  scroll-snap-align: start;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+/* custom scroll bar */
+.insights-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.insights-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.insights-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   4) Tighten up About & Contact padding
+   ========================================================================== */
+#about,
+#contact {
+  padding: 60px 20px;
+}
