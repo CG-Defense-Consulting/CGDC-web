@@ -748,3 +748,60 @@ section > .container p {
 .insights-scroll {
   padding: 0 20px;
 }
+
+
+/* ───────────────────────────────────────────────────────────────
+   Insights: single‐card, smaller height
+─────────────────────────────────────────────────────────────── */
+#insights {
+  min-height: auto !important;
+  padding: 60px 20px;      /* shrink vertical size */
+  background: #111;         /* keep it black */
+}
+.insights-section h2 {
+  color: #fff;              /* ensure title is visible */
+  margin-bottom: 40px;
+}
+.insights-scroll {
+  overflow-x: auto;
+  padding: 0 20px;          /* no clipping on first/last card */
+}
+.insight-card {
+  flex: 0 0 auto;
+  width: 300px;             /* fixed width so single card centers nicely */
+  background: #fff;
+  color: var(--text-primary);
+}
+.insight-card small,
+.insight-card h3,
+.insight-card .arrows {
+  color: var(--text-primary);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   About + Contact combined, no video behind
+─────────────────────────────────────────────────────────────── */
+#about-contact {
+  min-height: auto !important;
+  padding: 60px 20px;
+  background: #fff;
+  color: var(--text-primary);
+}
+#about-contact h2 {
+  margin-bottom: 40px;
+}
+#about-contact .grid-2 {
+  gap: 40px;
+}
+#about-contact .btn-secondary {
+  margin-top: 20px;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Turn OFF the “every section is fullscreen” rule
+   (only for Insights, About, Contact)
+─────────────────────────────────────────────────────────────── */
+#insights,
+#about-contact {
+  display: block !important;
+}
