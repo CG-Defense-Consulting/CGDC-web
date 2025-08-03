@@ -723,15 +723,28 @@ section > .container p {
   color: #fff;
 }
 
-/* 2) Make sure the <h2> and text inside are white */
-#insights h2,
-#insights small,
-#insights .insight-card h3 {
-  color: #fff;
-}
-
 /* 3) Add horizontal padding so the first card is fully visible */
 .insights-scroll {
   padding: 0 20px;    /* was only bottom-padding before */
   margin-top: 40px;   /* keep your vertical spacing */
+}
+
+/* — INSIGHTS & CASE STUDIES FIX — */
+
+/* Only the section title should be white */
+#insights h2 {
+  color: #fff;
+}
+
+/* All card text (small, h3, paragraphs & arrows) should be dark */
+.insight-card small,
+.insight-card h3,
+.insight-card p,
+.insight-card .arrows {
+  color: var(--text-primary) !important;
+}
+
+/* Keep the cards from getting cut off on the edges */
+.insights-scroll {
+  padding: 0 20px;
 }
