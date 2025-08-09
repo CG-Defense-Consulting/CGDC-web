@@ -1,0 +1,116 @@
+:root {
+  --slide-ratio: 16/9;
+  --max-w: 900px;
+  --radius: 16px;
+  --shadow: 0 8px 24px rgba(0,0,0,.12);
+
+  --bg-track: #111;
+  --bg-slide: #000;
+  --text-on-media: #fff;
+  --caption-bg: rgba(0,0,0,.5);
+
+  --gap-sm: 12px;
+  --gap-md: 16px;
+
+  --h2-size: 1.5rem;
+  --p-size: 1rem;
+}
+
+.carousel {
+  max-width: var(--max-w);
+  margin: 32px auto;
+}
+
+.swiper {
+  width: 100%;
+  aspect-ratio: var(--slide-ratio);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--bg-track);
+}
+
+.swiper-slide {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: var(--bg-slide);
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Centered caption overlay */
+.slide-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90%, 720px);
+  max-width: 90%;
+  padding: var(--gap-sm) var(--gap-md);
+  color: var(--text-on-media);
+  background: var(--caption-bg);
+  border-radius: 8px;
+  line-height: 1.4;
+  text-align: center;
+  backdrop-filter: saturate(1.2) blur(2px); /* optional; ignored if unsupported */
+}
+
+.slide-caption h2 {
+  margin: 0 0 4px 0;
+  font-size: var(--h2-size);
+  line-height: 1.2;
+}
+
+.slide-caption p {
+  margin: 0;
+  font-size: var(--p-size);
+}
+
+/* Controls */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--text-on-media);
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+}
+
+.swiper-button-next:focus-visible,
+.swiper-button-prev:focus-visible,
+.swiper-pagination-bullet:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Pagination */
+.swiper-pagination-bullet {
+  background: #fff;
+  opacity: .6;
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .swiper, .swiper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Small-screen adjustments */
+@media (max-width: 640px) {
+  :root {
+    --h2-size: 1.125rem;
+    --p-size: .9375rem;
+  }
+  .slide-caption {
+    padding: var(--gap-sm);
+    width: 92%;
+    max-width: 92%;
+  }
+}

@@ -1,178 +1,216 @@
-// ========== MOBILE NAV ==========
-const hamburger = document.querySelector('.hamburger');
-const menu = document.querySelector('.menu');
+/* ---------- Typing Animation System (Hero Only) ---------- */
+(function(){
+  // Typing animation configuration
+  const typingConfig = {
+    speed: 40, // milliseconds per character
+    delay: 300, // delay before starting animation
+    cursor: '|', // cursor character
+    cursorBlinkSpeed: 500, // cursor blink speed
+    staggerDelay: 200 // delay between multiple elements in the same section
+  };
 
-hamburger.addEventListener('click', () => {
-  menu.classList.toggle('open');
-});
-
-document.addEventListener('click', (e) => {
-  if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
-    menu.classList.remove('open');
+  // Type writer effect
+  function typeWriter(element, text, speed = typingConfig.speed) {
+    return new Promise((resolve) => {
+      const cleanTextContent = text.replace(/\s+/g, ' ').trim();
+      element.textContent = '';
+      element.classList.add('typing-in-progress');
+      
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < cleanTextContent.length) {
+          element.textContent += cleanTextContent.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+          element.classList.remove('typing-in-progress');
+          element.classList.add('typing-completed');
+          resolve();
+        }
+      }, speed);
+    });
   }
-});
 
-// ========== STRATEGIC FOCUS AREA CAROUSEL ==========
-const focusItems = [
-  {
-    title: "Defense Manufacturing",
-    desc: "End-to-end support for defense contractors, from sourcing to assembly oversight.",
-    img: "images/icon-manufacturing.jpg"
-  },
-  {
-    title: "Supply Chain",
-    desc: "Real-time visibility and AI-driven optimization across global defense logistics networks.",
-    img: "images/icon-supply-chain.jpg"
-  },
-  {
-    title: "AI & Data",
-    desc: "Actionable insights with AI/ML to power mission readiness and operations.",
-    img: "images/icon-ai-data.jpg"
-  },
-  {
-    title: "Contract Management",
-    desc: "Automated workflows and performance analytics for federal contracts.",
-    img: "images/icon-contact.jpg"
-  },
-  {
-    title: "Logistics",
-    desc: "Streamlined inventory, transport, and fulfillment for defense systems.",
-    img: "images/icon-logistics.jpg"
-  },
-  {
-    title: "Compliance",
-    desc: "Ensure audit-ready compliance with NIST, DFARS, ITAR & cybersecurity mandates.",
-    img: "images/icon-compliance.jpg"
+  // Add cursor effect
+  function addCursor(element) {
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    cursor.textContent = typingConfig.cursor;
+    cursor.style.animation = `blink ${typingConfig.cursorBlinkSpeed}ms infinite`;
+    element.appendChild(cursor);
   }
-];
 
-const buttons     = document.querySelectorAll('#focus-areas .focus-btn');
-const progressBars = document.querySelectorAll('#focus-areas .focus-btn .progress');
-const focusTrack  = document.querySelector('#focus-areas .carousel-track');
-let currentIndex = 0, timer;
-
-function updateCarousel(index) {
-  focusTrack.style.transform = `translateX(-${index * 100}%)`;
-
-  buttons.forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-    progressBars[i].style.width = '0%';
-    progressBars[i].style.transition = 'none';
-  });
-
-  setTimeout(() => {
-    progressBars[index].style.transition = 'width 5s linear';
-    progressBars[index].style.width = '100%';
-  }, 50);
-}
-
-function rotateCarousel() {
-  clearTimeout(timer);
-  updateCarousel(currentIndex);
-
-  timer = setTimeout(() => {
-    currentIndex = (currentIndex + 1) % focusItems.length;
-    rotateCarousel();
-  }, 5000);
-}
-
-buttons.forEach((btn, i) => {
-  btn.addEventListener('click', () => {
-    clearTimeout(timer);
-    currentIndex = i;
-    rotateCarousel();
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateCarousel(currentIndex);
-  rotateCarousel();
-});
-
-// ===== TYPEWRITER ON SCROLL (H1, H2, H3, HERO P) =====
-const headings = document.querySelectorAll(
-  '#hero .hero-overlay h1, ' +   // main hero title
-  '#hero .hero-overlay p, ' +    // hero subtext
-  'h2, h3'                        // all other section headings
-);
-const typedHeadings = new Set();
-
-function typeWriter(el, text) {
-  el.textContent = '';
-  let idx = 0;
-  const interval = setInterval(() => {
-    el.textContent += text.charAt(idx++);
-    if (idx >= text.length) clearInterval(interval);
-  }, 40);
-}
-
-const headingObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !typedHeadings.has(entry.target)) {
-      const el = entry.target;
-      const txt = el.textContent.trim();
-      typeWriter(el, txt);
-      typedHeadings.add(el);
+  // Remove cursor effect
+  function removeCursor(element) {
+    const cursor = element.querySelector('.typing-cursor');
+    if (cursor) {
+      cursor.remove();
     }
+  }
+
+  // Animate a single element
+  async function animateElement(element) {
+    if (element.classList.contains('typing-animated')) return;
+    
+    const originalText = element.textContent.trim();
+    if (originalText.length === 0) return;
+
+    element.classList.add('typing-animated');
+    element.style.visibility = 'hidden'; // Hide until animation starts
+    
+    // Wait for element to be in view
+    await new Promise(resolve => setTimeout(resolve, typingConfig.delay));
+    
+    element.style.visibility = 'visible';
+    addCursor(element);
+    
+    await typeWriter(element, originalText);
+    removeCursor(element);
+  }
+
+  // Initialize typing animations for hero section only
+  function initHeroTypingAnimations() {
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      const heroOverlay = heroSection.querySelector('.hero-overlay');
+      if (heroOverlay) {
+        const heroTextElements = heroOverlay.querySelectorAll('h1, p, a');
+        heroTextElements.forEach((element, index) => {
+          if (!element.classList.contains('typing-animated')) {
+            setTimeout(() => {
+              animateElement(element);
+            }, index * 500); // Stagger hero animations
+          }
+        });
+      }
+    }
+  }
+
+  // Start animations when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroTypingAnimations);
+  } else {
+    initHeroTypingAnimations();
+  }
+
+  // Re-initialize for dynamically loaded content
+  window.addEventListener('load', () => {
+    setTimeout(initHeroTypingAnimations, 1000);
   });
-}, { threshold: 0.6 });
+})();
 
-// ===== HERO VIDEO ROTATION (fixed-element compatible) =====
-const heroVideos = [
-  'videos/hero1.mp4',
-  'videos/hero2.mp4',
-  'videos/hero3.mp4'
-];
-let heroIndex = 0;
-const heroVideoEl = document.getElementById('hero-video');
+/* ---------- Hero Video and Overlay ---------- */
+(function(){
+  const heroVideo = document.getElementById('hero-video');
+  const heroOverlay = document.querySelector('.hero-overlay');
+  
+  if (heroVideo && heroOverlay) {
+    // Ensure video loads and plays
+    heroVideo.addEventListener('loadeddata', function() {
+      console.log('Hero video loaded successfully');
+    });
+    
+    heroVideo.addEventListener('error', function() {
+      console.error('Error loading hero video');
+      // Add a fallback background if video fails to load
+      document.getElementById('hero').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    });
+    
+    // Ensure overlay is visible
+    heroOverlay.style.display = 'flex';
+  }
+})();
 
-heroVideoEl.addEventListener('ended', () => {
-  heroIndex = (heroIndex + 1) % heroVideos.length;
-  heroVideoEl.src = heroVideos[heroIndex];
-  // no need to call load/play — loop attribute will restart it
-});
-
-// observe
-headings.forEach(h => headingObserver.observe(h));
-
-// — Toggle header background class on scroll —
-const headerEl = document.querySelector('header');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 40) headerEl.classList.add('scrolled');
-  else headerEl.classList.remove('scrolled');
-});
-
-// — Solutions Carousel Logic —
-;(function(){
-  const track = document.querySelector('.solutions-carousel .carousel-track');
+/* ---------- Our Solutions: custom slider ---------- */
+(function(){
+  const track = document.getElementById('solutions-track');
   const slides = Array.from(track.children);
-  const prevBtn = document.querySelector('.solutions-carousel .prev');
-  const nextBtn = document.querySelector('.solutions-carousel .next');
-  let idx = 0;
+  const prev = document.getElementById('solutions-prev');
+  const next = document.getElementById('solutions-next');
+  let idx = 0, auto;
 
-  function moveTo(i) {
+  function go(i){
     idx = (i + slides.length) % slides.length;
     track.style.transform = `translateX(-${idx * 100}%)`;
   }
+  function start(){ stop(); auto = setInterval(()=>go(idx+1), 5000); }
+  function stop(){ if(auto) clearInterval(auto); }
 
-  prevBtn.addEventListener('click', () => moveTo(idx - 1));
-  nextBtn.addEventListener('click', () => moveTo(idx + 1));
+  prev.addEventListener('click', ()=>{ stop(); go(idx-1); start(); });
+  next.addEventListener('click', ()=>{ stop(); go(idx+1); start(); });
 
-  setInterval(() => moveTo(idx + 1), 5000);
+  // basic swipe
+  let startX=null;
+  track.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; stop(); }, {passive:true});
+  track.addEventListener('touchmove', e=>{
+    if(startX===null) return;
+    const dx = e.touches[0].clientX - startX;
+    if(Math.abs(dx) > 50){
+      go(idx + (dx<0 ? 1 : -1)); startX=null; start();
+    }
+  }, {passive:true});
+
+  start();
 })();
 
-// — Fade In “platform-intro” on scroll —
-;(function(){
-  const el = document.getElementById('platform-intro');
-  if (!el) return;
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        obs.unobserve(entry.target);
-      }
+/* ---------- Strategic Focus Areas: tabs + progress + slider ---------- */
+(function(){
+  const buttons = document.querySelectorAll('#focus-areas .focus-btn');
+  const bars = document.querySelectorAll('#focus-areas .progress');
+  const track = document.getElementById('focus-track');
+  const count = buttons.length;
+  let i = 0, timer;
+
+  function setActive(n){
+    // move track
+    track.style.transform = `translateX(-${n * 100}%)`;
+    // buttons state + progress reset
+    buttons.forEach((b, k)=>{
+      b.classList.toggle('active', k===n);
+      b.setAttribute('aria-selected', k===n ? 'true' : 'false');
+      bars[k].style.width = '0%';
+      bars[k].style.transition = 'none';
     });
-  }, { threshold: 0.1 });
-  obs.observe(el);
+    // kick progress animation for active
+    setTimeout(()=>{
+      bars[n].style.transition = 'width 5s linear';
+      bars[n].style.width = '100%';
+    }, 50);
+  }
+
+  function cycle(){
+    clearTimeout(timer);
+    setActive(i);
+    timer = setTimeout(()=>{
+      i = (i + 1) % count;
+      cycle();
+    }, 5000);
+  }
+
+  buttons.forEach((btn, idx)=>{
+    btn.addEventListener('click', ()=>{
+      clearTimeout(timer);
+      i = idx;
+      cycle();
+    });
+  });
+
+  // swipe support for focus carousel
+  let startX=null;
+  track.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; clearTimeout(timer); }, {passive:true});
+  track.addEventListener('touchmove', e=>{
+    if(startX===null) return;
+    const dx = e.touches[0].clientX - startX;
+    if(Math.abs(dx) > 50){
+      i = (i + (dx<0 ? 1 : -1) + count) % count;
+      setActive(i);
+      startX=null;
+      cycle();
+    }
+  }, {passive:true});
+
+  // init
+  setActive(i);
+  cycle();
 })();
 

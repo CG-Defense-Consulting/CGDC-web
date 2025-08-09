@@ -1,807 +1,252 @@
-:root {
-  --bg-primary: #f9f9f9;
-  --bg-secondary: #eeeeee;
-  --text-primary: #1a1a1a;
-  --accent-color: #0062ff;
-  --font-sans: 'DM Sans', sans-serif;
-  --transition: 0.3s ease;
+/* ============= Typing Animation Styles (Hero Only) ============= */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;        /* ensure vertical scroll */
-  touch-action: pan-y;
-  font-family: var(--font-sans);
-  background: transparent;  /* ← allow the fixed video behind to show */
-  color: var(--text-primary);
-  line-height: 1.6;
+.typing-cursor {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: bold;
+  animation: blink 500ms infinite;
+  margin-left: 2px;
 }
 
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-/* NAVIGATION */
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: transparent !important;
-  padding: 20px;
-  z-index: 1000;
-  transition: background 0.3s ease;
-}
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;    /* add 20px padding on left & right */
-}
-
-.logo img {
- height: 110px;      /* bump up from 90px to 110px */
-  margin-left: 20px;  /* give it some breathing room from the left edge */
-}
-
-.menu {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 90px;
-  left: 0;
-  width: 100%;
-  background: var(--bg-secondary);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  list-style: none;
-}
-
-.menu.open {
-  display: flex;
-}
-
-.menu li a {
-  display: block;
-  padding: 15px 20px;
-  color: var(--text-primary);
-  text-decoration: none;
-  border-bottom: 1px solid #ccc;
-}
-
-.hamburger {
-  position: absolute;  /* take it out of the flow */
-  /*top: 50%;*/            /* vertically center in the header */
-  right: 5%;         /poop code/
- /*transform: translateY(-50%);*/
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  z-index: 1001;       /* sit above video & logo */
-}
-
-/* HERO SECTION */
-#hero {
+.typing-in-progress {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
-#solutions,
-#focus-areas,
-#insights,
-#about,
-#contact {
-  position: relative;
-  z-index: 1;
+.typing-completed {
+  animation: none;
 }
 
-
-.hero-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  pointer-events: none;
-  z-index: -1; /* sit behind all page content */
+/* Hero overlay typing animation styles */
+.hero-overlay .typing-animated {
+  min-height: 1.2em;
+  display: inline-block;
+  white-space: pre-wrap;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-  .hero-overlay h1,
-  .hero-overlay p,
-  .hero-overlay .hero-button {
-    pointer-events: auto;
-}
-
-.hero-overlay h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 400;       /* lighter weight */
-  text-align: center;     /* center the heading */
-}
-
-.hero-overlay p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.hero-button {
-  text-decoration: none;
-  background-color: #fff;
-  color: #000;
-  padding: 12px 28px;
-  font-weight: 600;
-  font-size: 1rem;
-  border-radius: 4px;
-  transition: background 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.hero-button:hover {
-  background-color: #f0f0f0;
-}
-
-/* SOLUTIONS */
-#solutions {
-  width: 100%;
-  padding: 80px 20px;
-  background: #ffffff;
-}
-
-.solution-block {
-  max-width: 1100px;
-  margin: 0 auto 60px auto;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.solution-block video {
-  width: 100%;
-  display: block;
-  border-radius: 0;
-}
-
-.solution-block hr {
-  border-top: 1px dotted #bbb;
-  margin: 20px 0;
-}
-
-.solution-block h3 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-}
-
-.solution-block p {
-  font-size: 1rem;
-  color: #444;
-}
-
-.solution-block .btn-primary {
-  margin-left: auto;
-  text-decoration: none;
-  background: var(--accent-color);
-  color: white;
-  padding: 10px 20px;
-  font-weight: 600;
-  border-radius: 4px;
-  white-space: nowrap;
-  border: none;
-  transition: 0.3s;
-}
-
-.solution-block .btn-primary:hover {
-  background: #004dcc;
-}
-
-/* — Solutions Carousel — */
-.solutions-carousel .carousel-container {
-  position: relative;
-  overflow: hidden;
-  margin-top: 40px;
-}
-.solutions-carousel .carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-.solutions-carousel .carousel-slide {
-  min-width: 100%;
-  box-sizing: border-box;
-  padding: 20px;
-  text-align: center;
-}
-.solutions-carousel .carousel-slide img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  z-index: 2;
-}
-.carousel-nav.prev { left: 10px; }
-.carousel-nav.next { right: 10px; }
-
-
-/* STRATEGIC FOCUS */
-#focus-areas {
-  padding: 80px 20px;
-  background: white;
-  overflow: hidden;
-}
-
-.focus-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.focus-btn {
-  position: relative;
-  padding: 12px 18px;
-  background: #e0e0e0;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  min-width: 140px;
-}
-
-.focus-btn.active {
-  background: #ccc;
-}
-
-.focus-btn .progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  width: 0%;
-  background: var(--accent-color);
-  transition: width 5s linear;
-}
-
-.focus-carousel {
-  position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.focus-slide {
-  min-width: 100%;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.focus-slide img {
-  width: 100%;
-  height: 450px;
-  object-fit: cover;
-  display: block;
-  border-radius: 8px;
-}
-
-.focus-overlay {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 4px;
-  max-width: 80%;
-}
-
-/* INSIGHTS */
-.insights-section {
-  background: #111;
-  color: #fff;
-  padding: 80px 20px;
-}
-
-.insights-section h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-}
-
-.insights-scroll {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-}
-
-.insight-card {
-  flex: 0 0 300px;
-  background: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 8px;
-  scroll-snap-align: start;
-  position: relative;
-}
-
-.insight-card small {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  color: #666;
-}
-
-.insight-card h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-}
-
-.insight-card .arrows {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.2rem;
-  color: #666;
-  display: flex;
-  gap: 8px;
-}
-
-/* FOOTER */
-footer {
-  background: #000;
-  color: #fff;
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: #aaa;
-  text-decoration: none;
-  margin: 0 5px;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-/* — Fade-In Text Section — */
-.fade-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  padding: 80px 20px;
-  background: var(--bg-secondary);
-}
-.fade-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.intro-text {
-  font-size: 1.5rem;       /* larger text */
-  max-width: 800px;
-  margin: 0 auto;
-  color: var(--text-primary);
-  line-height: 1.6;
-  text-align: center;
-}
-
-/* —————————————————————
-   Our Tools (Style B)
-   ————————————————————— */
-.tools-section.style-b {
-  display: flex;
-  min-height: 60vh;
-  margin: 0;                /* reset any section padding */
-}
-.tools-section.style-b .tool-split {
-  flex: 1;
-  padding: 60px 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.tools-section.style-b .tool-split.guild {
-  background: #f8f9fa;
-  color: var(--text-primary);
-}
-.tools-section.style-b .tool-split.mentat {
-  background: #1a1a1a;
-  color: #fff;
-}
-.tools-section.style-b .divider {
-  width: 4px;
-  background: var(--accent-color);
-}
-.tools-section.style-b h3 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-.tools-section.style-b p {
-  font-size: 1.125rem;
-  line-height: 1.5;
-}
-
-/* Mobile stacking */
+/* Responsive adjustments for hero typing animation */
 @media (max-width: 768px) {
-  .tools-section.style-b {
-    flex-direction: column;
+  .typing-cursor {
+    margin-left: 1px;
   }
-  .tools-section.style-b .divider {
-    width: 100%;
-    height: 4px;
+  
+  .hero-overlay .typing-animated {
+    min-height: 1.1em;
   }
 }
 
-
-/* ───────────────────────────────────────────────────────────
-   1) Make each section fill the viewport and center its inner container
-─────────────────────────────────────────────────────────── */
-#hero,
-#solutions,
-#platform-intro,
-#focus-areas,
-#our-tools,
-#insights,
-#about,
-#contact {
-  min-height: 100vh;            /* full screen height */
-  display: flex;                /* flex to center */
-  align-items: center;          /* vertical center */
-  justify-content: center;      /* horizontal center */
-  padding: 0;                   /* override any extra padding */
+/* ============= Core Variables & Reset ============= */
+:root{
+  --bg-primary:#f9f9f9;
+  --bg-secondary:#eeeeee;
+  --text-primary:#1a1a1a;
+  --accent:#2563eb; /* blue for progress/accents */
+  --shadow:0 8px 24px rgba(0,0,0,.12);
+  --radius:12px;
 }
-
-/* Keep your existing container width/padding */
-#hero > .container,
-#solutions > .container,
-#platform-intro > .container,
-#focus-areas > .container,
-#our-tools > .container,
-#insights > .container,
-#about > .container,
-#contact > .container {
-  width: 90%;
-  max-width: 1200px;
-  padding: 40px 0;              /* you can adjust vertical padding if needed */
-  box-sizing: border-box;
-  text-align: center;           /* center text by default */
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  color:var(--text-primary);
+  line-height:1.6;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  background:#fff;
+  overflow-x:hidden;
 }
+img{display:block; max-width:100%; height:auto}
 
-/* ───────────────────────────────────────────────────────────
-   2) Enlarge the “fade-in” text block to really fill the screen
-─────────────────────────────────────────────────────────── */
-/* — Fade-In Text Section (adjusted) — */
-#platform-intro {
-  min-height: 60vh;               /* was 100vh, now shorter */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-secondary);
-  overflow: hidden;
-  padding: 20px 0;                /* give just a little breathing room */
+.container{width:100%; max-width:1200px; margin:0 auto; padding:0 20px}
+
+h1,h2,h3{margin:0 0 .5rem}
+h2{font-size:2.25rem}
+p{margin:0 0 1rem}
+
+/* ============= Header ============= */
+header{
+  position:absolute; inset:0 auto auto 0; width:100%;
+  padding:20px; z-index:1000; background:transparent;
 }
+.nav-container{display:flex; align-items:center; justify-content:space-between; padding:0 20px}
+.logo img{height:70px; margin-top:10px}
 
-#platform-intro .intro-text {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  font-size: 4rem;                /* bumped up from 3rem */
-  line-height: 1.2;
-  max-width: 800px;
-  margin: 0 auto;
+/* ============= Hero ============= */
+#hero{position:relative; width:100%; height:100vh; overflow:hidden}
+.hero-video{
+  position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; pointer-events:none;
+}
+.hero-overlay{
+  position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; color:#fff; background:linear-gradient(0deg, rgba(0,0,0,.45), rgba(0,0,0,.35));
+  padding:0 20px; z-index:2; pointer-events:auto; min-height:100vh;
+}
+.hero-overlay h1{font-size:3rem; font-weight:600; margin-bottom:1rem; text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+.hero-overlay p{font-size:1.125rem; margin-bottom:1.5rem; text-shadow:1px 1px 2px rgba(0,0,0,.5)}
+.hero-button{
+  appearance:none; border:0; border-radius:8px; padding:12px 24px; font-weight:700; cursor:pointer;
+  background:#fff; color:#000; transition:transform .15s ease, box-shadow .15s ease;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  text-decoration:none;
+}
+.hero-button:hover{transform:translateY(-1px); box-shadow:0 10px 24px rgba(0,0,0,.18)}
+
+/* ============= Section Spacing ============= */
+section{padding:72px 0}
+#solutions{background:#fff}
+#platform-intro{background:var(--bg-secondary)}
+#focus-areas{background:#fff}
+#our-tools{background:#fff}
+#insights{background:#111; color:#fff}
+#about-contact{background:#fff}
+
+/* ============= Shared Carousel Bits ============= */
+.carousel{
+  max-width:1100px; margin:24px auto 0; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); background:#111;
+}
+.carousel .slide{
+  position:relative; width:100%;
+}
+.slide img{
+  width:100%; aspect-ratio:16/9; object-fit:cover;
+}
+.slide-caption{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(92%, 760px);
+  background:rgba(0,0,0,.45);
+  color:#fff; padding:16px 20px; border-radius:10px; text-align:center; line-height:1.4;
+  backdrop-filter:saturate(1.2) blur(2px);
+}
+.slide-caption h3{font-size:1.5rem; margin:0 0 .25rem}
+.slide-caption p{margin:0; font-size:1rem}
+
+/* ============= Solutions Carousel (no external libs) ============= */
+.solutions-carousel .viewport{position:relative; overflow:hidden}
+.solutions-carousel .track{
+  display:flex; transition:transform .55s ease; will-change:transform;
+}
+.solutions-carousel .slide{flex:0 0 100%}
+.solutions-nav{
+  position:absolute; inset:0; pointer-events:none;
+}
+.solutions-nav button{
+  position:absolute; top:50%; transform:translateY(-50%);
+  pointer-events:auto; border:0; background:rgba(255,255,255,.75);
+  width:44px; height:44px; border-radius:999px; cursor:pointer; font-size:18px; font-weight:700;
+  display:grid; place-items:center;
+}
+.solutions-nav .prev{left:10px}
+.solutions-nav .next{right:10px}
+
+/* ============= Platform Intro ============= */
+#platform-intro .intro-text{
+  max-width:820px; margin:0 auto; font-size:1.4rem; text-align:center; color:var(--text-primary);
+}
+#platform-intro .highlight{
+  font-weight: 600;
   color: var(--text-primary);
-  text-align: center;
-}
-
-#platform-intro.visible .intro-text {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-#platform-intro .highlight {
-  color: #0062ff;
-}
-
-/* ───────────────────────────────────────────────────────────
-   3) Adjust “Our Solutions” carousel slide size to full screen
-─────────────────────────────────────────────────────────── */
-.solutions-carousel .carousel-container {
-  width: 100%;                  /* span full width */
-  height: 100%;                 /* fill full section */
-  display: flex;
-  align-items: center;
   position: relative;
-}
-.solutions-carousel .carousel-track {
-  height: 100%;                 /* ensure the slides fill */
-}
-.solutions-carousel .carousel-slide {
-  /* slide content centered vertically */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 100%;
-  box-sizing: border-box;
-  padding: 0 20px;
-}
-.solutions-carousel .carousel-slide img {
-  max-height: 50vh;             /* cap at half viewport */
-  width: auto;
-  margin-bottom: 1.5rem;
-}
-.solutions-carousel .carousel-slide h3 {
-  margin-bottom: 0.5rem;
-}
-.solutions-carousel .carousel-slide p {
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 0 2px;
 }
 
-/* ───────────────────────────────────────────────────────────
-   4) Make Tools & Insights text centered & spaced nicely
-─────────────────────────────────────────────────────────── */
-.tools-section .tools-grid,
-.insights-section .insights-scroll {
-  justify-content: center;      /* center cards horizontally */
-}
-.tool-card { text-align: left; } /* you can override if you want left-justified */
-
-
-
-/* ───────────────────────────────────────────────────────────
-   SCALE-UP: Section Headings & Text
-─────────────────────────────────────────────────────────── */
-
-/* 1. Bigger section headers and paragraphs */
-section > .container h2 {
-  font-size: 3.5rem;          /* up from ~2.5rem */
-  margin-bottom: 1rem;        /* tighten space below */
-}
-section > .container p {
-  font-size: 1.25rem;         /* up from ~1rem */
-  max-width: 700px;           /* keep them from stretching too wide */
-  margin: 0 auto 2rem;        /* auto-center and add bottom gap */
+#platform-intro .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(37, 99, 235, 0.3) 100%);
+  border-radius: 1px;
+  opacity: 0.7;
 }
 
-/* 2. Fade-in intro text even larger */
-#platform-intro .intro-text {
-  font-size: 2.5rem !important;  /* up from 2rem */
-  line-height: 1.4;
+/* ============= Strategic Focus Areas ============= */
+#focus-areas h2, #solutions h2, #our-tools h2, #insights h2, #about-contact h2{
+  text-align:center; margin-bottom:.5rem
+}
+#focus-areas p, #solutions p{max-width:800px; margin:0 auto 1rem; text-align:center}
+
+.focus-buttons{
+  display:flex; gap:8px; margin:12px auto; width:fit-content;
+}
+.focus-btn{
+  position:relative; flex:0 0 auto; border:0; border-radius:6px;
+  padding:10px 16px; font-weight:700; background:#e5e5e5; cursor:pointer; white-space:nowrap; overflow:hidden;
+}
+.focus-btn.active{background:#e5e5e5}
+.focus-btn .progress{
+  position:absolute; left:0; bottom:0; height:3px; width:0%; background:var(--accent); z-index:2;
 }
 
-/* 3. Solutions carousel slide typography */
-.solutions-carousel .carousel-slide h3 {
-  font-size: 2rem;            /* up from ~1.5rem */
-  margin-bottom: 0.75rem;
+/* Focus carousel (custom) */
+#focus-areas .carousel{background:#111}
+#focus-areas .carousel-track{display:flex; transition:transform .6s ease; will-change:transform}
+#focus-areas .focus-slide{flex:0 0 100%; position:relative}
+#focus-areas .focus-slide img{width:100%; aspect-ratio:16/9; object-fit:cover}
+#focus-areas{margin-bottom:40px} /* shrink gap to next section */
+
+/* ============= Our Tools ============= */
+.tools-grid{
+  display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:28px;
 }
-.solutions-carousel .carousel-slide p {
-  font-size: 1.125rem;        /* up from ~1rem */
-  max-width: 600px;
+.tool-card{
+  flex:1 1 320px; background:#f8f9fa; padding:32px; border-radius:10px; text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.06);
+}
+.tool-login-link{
+  display:inline-block; margin-top:16px; padding:8px 16px; background:var(--accent); color:#fff;
+  text-decoration:none; border-radius:6px; font-weight:600; font-size:0.9rem;
+  transition:background-color 0.3s ease, transform 0.2s ease;
+}
+.tool-login-link:hover{
+  background:#1d4ed8; transform:translateY(-1px);
 }
 
-/* 4. Add extra vertical breathing room */
-#hero,
-#solutions,
-#platform-intro,
-#focus-areas,
-#our-tools,
-#insights,
-#about,
-#contact {
-  padding-top: 3rem;          /* add more top padding */
-  padding-bottom: 3rem;       /* add more bottom padding */
+/* ============= Insights ============= */
+.insights-scroll{
+  display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding:0 20px; margin-top:28px;
+  justify-content:center; /* Center the cards */
+  max-width:1320px; margin-left:auto; margin-right:auto; /* Center the container for 4 cards */
+  /* Ensure proper centering even with scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
-
-/*additions*/
-
-/* ==========================================================================
-   1) Make Tools, Insights, About & Contact sit above the hero-video on white
-   ========================================================================== */
-#our-tools,
-#insights,
-#about,
-#contact {
-  position: relative;
-  z-index: 1;
-  background: #fff;
-}
-
-/* ==========================================================================
-   2) Our Tools grid
-   ========================================================================== */
-.tools-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 40px;
-}
-.tool-card {
-  flex: 1 1 300px;
-  background: #f8f9fa;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-/* ==========================================================================
-   3) Insights carousel styling
-   ========================================================================== */
-.insights-scroll {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  scroll-snap-type: x mandatory;
-  margin-top: 40px;
-}
-/* each card takes ~60% of viewport for a more “hero” look */
-.insight-card {
-  flex: 0 0 60%;
-  min-width: 280px;
-  scroll-snap-align: start;
-  background: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  position: relative;
-}
-/* custom scroll bar */
 .insights-scroll::-webkit-scrollbar {
-  height: 8px;
+  display: none; /* Chrome, Safari, Opera */
 }
-.insights-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+.insight-card{
+  flex:0 0 auto; width:300px; scroll-snap-align:center; background:#fff; color:var(--text-primary);
+  padding:24px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,.1); text-decoration:none;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
 }
-.insights-scroll::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
+.insight-card:hover{
+  transform:translateY(-4px); box-shadow:0 8px 25px rgba(0,0,0,.15);
 }
+.insight-card small{display:block; font-weight:700; text-transform:uppercase; color:#666}
+.insight-card h3{margin:12px 0 8px 0; font-size:1.1rem; line-height:1.3}
+.insight-card .arrows{opacity:0.6; transition:opacity 0.3s ease}
+.insight-card:hover .arrows{opacity:1}
 
-/* ==========================================================================
-   4) Tighten up About & Contact padding
-   ========================================================================== */
-#about,
-#contact {
-  padding: 60px 20px;
+/* ============= About & Footer ============= */
+#about-contact .grid-2{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:40px; align-items:start;
 }
+footer{
+  background:#000; color:#fff; text-align:center; padding:40px 20px; font-size:.95rem
+}
+footer a{color:#bbb; text-decoration:none}
+footer a:hover{text-decoration:underline}
 
-/* 1) Keep Insights & Case Studies dark */
-#insights {
-  background: #111 !important;
-  color: #fff;
-}
-
-/* 3) Add horizontal padding so the first card is fully visible */
-.insights-scroll {
-  padding: 0 20px;    /* was only bottom-padding before */
-  margin-top: 40px;   /* keep your vertical spacing */
-}
-
-/* — INSIGHTS & CASE STUDIES FIX — */
-
-/* Only the section title should be white */
-#insights h2 {
-  color: #fff;
-}
-
-/* All card text (small, h3, paragraphs & arrows) should be dark */
-.insight-card small,
-.insight-card h3,
-.insight-card p,
-.insight-card .arrows {
-  color: var(--text-primary) !important;
-}
-
-/* Keep the cards from getting cut off on the edges */
-.insights-scroll {
-  padding: 0 20px;
-}
-
-
-/* ───────────────────────────────────────────────────────────────
-   Insights: single‐card, smaller height
-─────────────────────────────────────────────────────────────── */
-#insights {
-  min-height: auto !important;
-  padding: 60px 20px;      /* shrink vertical size */
-  background: #111;         /* keep it black */
-}
-.insights-section h2 {
-  color: #fff;              /* ensure title is visible */
-  margin-bottom: 40px;
-}
-.insights-scroll {
-  overflow-x: auto;
-  padding: 0 20px;          /* no clipping on first/last card */
-}
-.insight-card {
-  flex: 0 0 auto;
-  width: 300px;             /* fixed width so single card centers nicely */
-  background: #fff;
-  color: var(--text-primary);
-}
-.insight-card small,
-.insight-card h3,
-.insight-card .arrows {
-  color: var(--text-primary);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   About + Contact combined, no video behind
-─────────────────────────────────────────────────────────────── */
-#about-contact {
-  min-height: auto !important;
-  padding: 60px 20px;
-  background: #fff;
-  color: var(--text-primary);
-}
-#about-contact h2 {
-  margin-bottom: 40px;
-}
-#about-contact .grid-2 {
-  gap: 40px;
-}
-#about-contact .btn-secondary {
-  margin-top: 20px;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   Turn OFF the “every section is fullscreen” rule
-   (only for Insights, About, Contact)
-─────────────────────────────────────────────────────────────── */
-#insights,
-#about-contact {
-  display: block !important;
+/* ============= Responsive tweaks ============= */
+@media (max-width:640px){
+  .hero-overlay h1{font-size:2.25rem}
+  .slide-caption{padding:12px 14px}
+  .slide-caption h3{font-size:1.25rem}
+  .slide-caption p{font-size:.95rem}
 }
