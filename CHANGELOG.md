@@ -149,8 +149,45 @@ index.html          # Refactored with improved semantics and accessibility
 - Add analytics and performance monitoring
 - Consider headless CMS integration for content management
 
+## Careers Section Addition
+
+### New Features
+- **Careers Landing Page** (`/careers/index.html`): Complete job board with filtering, search, and sorting
+- **Job Listings Data** (`/data/jobs.json`): Structured job data with 6 example positions across Operations, Tech, Sales, and Legal
+- **Individual Role Pages** (`/careers/roles/`): Dedicated pages for each job posting with detailed descriptions
+- **Job Template** (`/careers/job.template.html`): Copy-paste template for adding new positions
+- **Careers Styling** (`/css/careers.css`): Matching visual language with existing design system
+- **Interactive Functionality** (`/js/careers.js`): Client-side filtering, search, and URL state management
+
+### Job Categories
+- **Operations**: Supply chain coordination and procurement operations
+- **Tech**: Machine learning, frontend development, and AI engineering
+- **Sales**: Business development and partnership management
+- **Legal**: Compliance and regulatory expertise
+
+### Key Features
+- **Real-time Filtering**: Category buttons with instant results
+- **Search Functionality**: Debounced search across titles, summaries, and keywords
+- **Sorting Options**: Newest, A-Z, and Location-based sorting
+- **URL State Management**: Shareable filtered views via query parameters
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Responsive Design**: Mobile-first approach matching site standards
+- **SEO Optimization**: JSON-LD structured data and meta tags
+
+### Footer Updates
+- Added LinkedIn company page link
+- Added Careers section link
+- Maintained existing Privacy/Terms links
+
+### Technical Implementation
+- **Data Model**: Flat JSON array with comprehensive job metadata
+- **State Management**: URL parameter synchronization for shareable views
+- **Performance**: Debounced search and efficient DOM updates
+- **Error Handling**: Graceful fallbacks and user feedback
+- **Schema Markup**: JobPosting structured data for search engines
+
 ---
 
-**Version**: 2.0.0  
+**Version**: 2.1.0  
 **Date**: January 2025  
-**Status**: Complete redesign with modern design system
+**Status**: Complete redesign with modern design system + Careers section
