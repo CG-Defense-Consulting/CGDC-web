@@ -1,4 +1,34 @@
-/* ---------- Typing Animation System (Hero Only) ---------- */
+/* ============= Theme Toggle System ============= */
+(function() {
+  const themeToggle = document.querySelector('.theme-toggle');
+  const themeIcon = document.querySelector('.theme-icon');
+  const html = document.documentElement;
+  
+  // Get saved theme or default to dark
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+  
+  // Theme toggle functionality
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+  }
+  
+  function updateThemeIcon(theme) {
+    if (themeIcon) {
+      themeIcon.textContent = theme === 'dark' ? '☀' : '☾';
+    }
+  }
+})();
+
+/* ============= Typing Animation System (Hero Only) ============= */
 (function(){
   // Typing animation configuration
   const typingConfig = {
@@ -72,7 +102,7 @@
   function initHeroTypingAnimations() {
     const heroSection = document.getElementById('hero');
     if (heroSection) {
-      const heroOverlay = heroSection.querySelector('.hero-overlay');
+      const heroOverlay = heroSection.querySelector('.hero-content');
       if (heroOverlay) {
         const heroTextElements = heroOverlay.querySelectorAll('h1, p, a');
         heroTextElements.forEach((element, index) => {
@@ -99,10 +129,10 @@
   });
 })();
 
-/* ---------- Hero Video and Overlay ---------- */
+/* ============= Hero Video and Overlay ============= */
 (function(){
   const heroVideo = document.getElementById('hero-video');
-  const heroOverlay = document.querySelector('.hero-overlay');
+  const heroOverlay = document.querySelector('.hero-content');
   
   if (heroVideo && heroOverlay) {
     // Ensure video loads and plays
@@ -121,7 +151,7 @@
   }
 })();
 
-/* ---------- Our Solutions: custom slider ---------- */
+/* ============= Enhanced Solutions Carousel ============= */
 (function(){
   const track = document.getElementById('solutions-track');
   const slides = Array.from(track.children);
@@ -132,31 +162,68 @@
   function go(i){
     idx = (i + slides.length) % slides.length;
     track.style.transform = `translateX(-${idx * 100}%)`;
+    
+    // Update ARIA attributes
+    slides.forEach((slide, index) => {
+      slide.setAttribute('aria-label', `${index + 1} of ${slides.length}`);
+      slide.setAttribute('aria-hidden', index !== idx ? 'true' : 'false');
+    });
   }
-  function start(){ stop(); auto = setInterval(()=>go(idx+1), 5000); }
-  function stop(){ if(auto) clearInterval(auto); }
+  
+  function start(){ 
+    stop(); 
+    auto = setInterval(()=>go(idx+1), 5000); 
+  }
+  
+  function stop(){ 
+    if(auto) clearInterval(auto); 
+  }
 
-  prev.addEventListener('click', ()=>{ stop(); go(idx-1); start(); });
-  next.addEventListener('click', ()=>{ stop(); go(idx+1); start(); });
+  // Button controls
+  if (prev) prev.addEventListener('click', ()=>{ stop(); go(idx-1); start(); });
+  if (next) next.addEventListener('click', ()=>{ stop(); go(idx+1); start(); });
 
-  // basic swipe
-  let startX=null;
-  track.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; stop(); }, {passive:true});
-  track.addEventListener('touchmove', e=>{
-    if(startX===null) return;
+  // Keyboard controls
+  track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      stop();
+      go(idx-1);
+      start();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      stop();
+      go(idx+1);
+      start();
+    }
+  });
+
+  // Touch/swipe support
+  let startX = null;
+  track.addEventListener('touchstart', e => { 
+    startX = e.touches[0].clientX; 
+    stop(); 
+  }, {passive: true});
+  
+  track.addEventListener('touchmove', e => {
+    if(startX === null) return;
     const dx = e.touches[0].clientX - startX;
     if(Math.abs(dx) > 50){
-      go(idx + (dx<0 ? 1 : -1)); startX=null; start();
+      go(idx + (dx<0 ? 1 : -1)); 
+      startX = null; 
+      start();
     }
-  }, {passive:true});
+  }, {passive: true});
 
+  // Initialize
+  go(0);
   start();
 })();
 
-/* ---------- Strategic Focus Areas: tabs + progress + slider ---------- */
+/* ============= Enhanced Focus Areas Tabs ============= */
 (function(){
-  const buttons = document.querySelectorAll('#focus-areas .focus-btn');
-  const bars = document.querySelectorAll('#focus-areas .progress');
+  const buttons = document.querySelectorAll('#focus-areas .focus-tab');
+  const bars = document.querySelectorAll('#focus-areas .tab-progress');
   const track = document.getElementById('focus-track');
   const count = buttons.length;
   let i = 0, timer;
@@ -164,6 +231,7 @@
   function setActive(n){
     // move track
     track.style.transform = `translateX(-${n * 100}%)`;
+    
     // buttons state + progress reset
     buttons.forEach((b, k)=>{
       b.classList.toggle('active', k===n);
@@ -171,6 +239,7 @@
       bars[k].style.width = '0%';
       bars[k].style.transition = 'none';
     });
+    
     // kick progress animation for active
     setTimeout(()=>{
       bars[n].style.transition = 'width 5s linear';
@@ -193,24 +262,179 @@
       i = idx;
       cycle();
     });
+    
+    // Keyboard navigation
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        clearTimeout(timer);
+        i = idx;
+        cycle();
+      }
+    });
   });
 
-  // swipe support for focus carousel
-  let startX=null;
-  track.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; clearTimeout(timer); }, {passive:true});
-  track.addEventListener('touchmove', e=>{
-    if(startX===null) return;
+  // Arrow key navigation for tabs
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('#focus-areas .focus-tabs')) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        clearTimeout(timer);
+        i = (i - 1 + count) % count;
+        cycle();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        clearTimeout(timer);
+        i = (i + 1) % count;
+        cycle();
+      }
+    }
+  });
+
+  // Touch support for focus carousel
+  let startX = null;
+  track.addEventListener('touchstart', e => { 
+    startX = e.touches[0].clientX; 
+    clearTimeout(timer); 
+  }, {passive: true});
+  
+  track.addEventListener('touchmove', e => {
+    if(startX === null) return;
     const dx = e.touches[0].clientX - startX;
     if(Math.abs(dx) > 50){
       i = (i + (dx<0 ? 1 : -1) + count) % count;
       setActive(i);
-      startX=null;
+      startX = null;
       cycle();
     }
-  }, {passive:true});
+  }, {passive: true});
 
   // init
   setActive(i);
   cycle();
 })();
 
+/* ============= Scroll Indicator ============= */
+(function(){
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+      const solutionsSection = document.getElementById('solutions');
+      if (solutionsSection) {
+        solutionsSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  }
+})();
+
+/* ============= Header Scroll Effect ============= */
+(function(){
+  const header = document.querySelector('.site-header');
+  let lastScrollY = window.scrollY;
+  
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) {
+      header.style.background = 'rgba(11, 15, 20, 0.95)';
+      header.style.backdropFilter = 'blur(12px)';
+    } else {
+      header.style.background = 'rgba(11, 15, 20, 0.8)';
+      header.style.backdropFilter = 'blur(8px)';
+    }
+    
+    lastScrollY = currentScrollY;
+  }
+  
+  // Throttled scroll handler
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', onScroll);
+})();
+
+/* ============= Intersection Observer for Animations ============= */
+(function(){
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, observerOptions);
+  
+  // Observe sections for animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+})();
+
+/* ============= Footer Year Update ============= */
+(function(){
+  const currentYearElement = document.getElementById('current-year');
+  if (currentYearElement) {
+    currentYearElement.textContent = new Date().getFullYear();
+  }
+})();
+
+/* ============= Smooth Scrolling for Navigation ============= */
+(function(){
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        const headerHeight = document.querySelector('.site-header').offsetHeight;
+        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+})();
+
+/* ============= Reduced Motion Support ============= */
+(function(){
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  
+  function handleReducedMotion() {
+    if (prefersReducedMotion.matches) {
+      // Disable animations
+      document.documentElement.style.setProperty('--fast', '0ms');
+      document.documentElement.style.setProperty('--normal', '0ms');
+      document.documentElement.style.setProperty('--slow', '0ms');
+    } else {
+      // Restore animations
+      document.documentElement.style.setProperty('--fast', '140ms');
+      document.documentElement.style.setProperty('--normal', '220ms');
+      document.documentElement.style.setProperty('--slow', '400ms');
+    }
+  }
+  
+  handleReducedMotion();
+  prefersReducedMotion.addEventListener('change', handleReducedMotion);
+})();

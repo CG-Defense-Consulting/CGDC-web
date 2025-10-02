@@ -1,0 +1,85 @@
+/* ============= Background Patterns ============= */
+
+/* Subtle noise texture */
+.noise-pattern {
+  position: relative;
+}
+
+.noise-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+  background-size: 20px 20px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Diagonal line pattern */
+.diagonal-pattern {
+  position: relative;
+}
+
+.diagonal-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(45deg, transparent 48%, rgba(58,160,255,0.03) 49%, rgba(58,160,255,0.03) 51%, transparent 52%);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Grid pattern */
+.grid-pattern {
+  position: relative;
+}
+
+.grid-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(58,160,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58,160,255,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Apply patterns to specific sections */
+.platform-intro {
+  position: relative;
+}
+
+.platform-intro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(58,160,255,0.08) 1px, transparent 0);
+  background-size: 30px 30px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Utility classes for pattern application */
+.pattern-noise { composes: noise-pattern; }
+.pattern-diagonal { composes: diagonal-pattern; }
+.pattern-grid { composes: grid-pattern; }

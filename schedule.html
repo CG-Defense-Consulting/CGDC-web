@@ -2,13 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Schedule – CGDC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schedule a Demo - CGDC</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Schedule a personalized demo of CGDC's AI-powered defense procurement platform. See how we can streamline your procurement process.">
+  <meta name="keywords" content="defense procurement demo, AI platform demo, contract management demo">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0B0F14" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F7FAFD" media="(prefers-color-scheme: light)">
+
+  <!-- ICON -->
+  <link rel="icon" type="image/x-icon" href="images/CG-logo1.ico" />
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/patterns.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Schedule a Meeting</h1>
-  <!-- We’ll build this form later -->
-  <script src="js/main.js" defer></script>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/CG-logo1.png" alt="CGDC Logo" class="logo-img" />
+        </a>
+      </div>
+      
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="index.html#hero" class="nav-link">Home</a></li>
+          <li><a href="index.html#solutions" class="nav-link">Solutions</a></li>
+          <li><a href="index.html#platform-intro" class="nav-link">Platform</a></li>
+          <li><a href="index.html#insights" class="nav-link">Insights</a></li>
+          <li><a href="index.html#about-contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+          <span class="theme-icon" aria-hidden="true">☾</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main Content ===== -->
+  <main id="main-content" style="padding-top: 80px;">
+    
+    <!-- ===== Schedule Demo Section ===== -->
+    <section class="schedule-section" style="padding: var(--gap-5) 0; min-height: 80vh; display: flex; align-items: center;">
+      <div class="container">
+        <div class="schedule-content" style="max-width: 600px; margin: 0 auto; text-align: center;">
+          <h1>Schedule a Demo</h1>
+          <p style="font-size: var(--body-lg); margin-bottom: var(--gap-4); color: var(--muted);">
+            See how CGDC's AI-powered platform can transform your defense procurement process.
+          </p>
+          
+          <div class="demo-form" style="background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--gap-4); margin: var(--gap-4) 0;">
+            <h2 style="margin-bottom: var(--gap-3); font-size: var(--h3);">Get Started</h2>
+            <p style="margin-bottom: var(--gap-4); color: var(--muted);">
+              Fill out the form below and our team will contact you within 24 hours to schedule your personalized demo.
+            </p>
+            
+            <form action="mailto:info@cgdefenseconsulting.com" method="post" enctype="text/plain" style="display: flex; flex-direction: column; gap: var(--gap-3);">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-2);">
+                <input type="text" name="firstName" placeholder="First Name" required 
+                       style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);">
+                <input type="text" name="lastName" placeholder="Last Name" required 
+                       style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);">
+              </div>
+              
+              <input type="email" name="email" placeholder="Email Address" required 
+                     style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);">
+              
+              <input type="text" name="company" placeholder="Company Name" required 
+                     style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);">
+              
+              <select name="interest" 
+                      style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);">
+                <option value="">Select Area of Interest (Optional)</option>
+                <option value="platforms">Our Platforms (Guild, Mentat)</option>
+                <option value="defense-contracting">Defense Contracting</option>
+                <option value="manufacturing-partner">Becoming a Manufacturing / Supplier Partner</option>
+                <option value="investment-funding">Investment / Funding</option>
+              </select>
+              
+              <textarea name="message" placeholder="Tell us about your procurement challenges..." rows="4" 
+                        style="padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink); resize: vertical;"></textarea>
+              
+              <button type="submit" class="btn btn-primary" style="margin-top: var(--gap-2);">
+                Request Demo
+              </button>
+            </form>
+          </div>
+          
+          <div class="demo-info" style="margin-top: var(--gap-4);">
+            <h3 style="margin-bottom: var(--gap-2);">What to Expect</h3>
+            <ul style="text-align: left; max-width: 400px; margin: 0 auto; color: var(--muted);">
+              <li style="margin-bottom: var(--gap-1);">30-minute personalized demonstration</li>
+              <li style="margin-bottom: var(--gap-1);">Live walkthrough of our AI platform</li>
+              <li style="margin-bottom: var(--gap-1);">Q&A session with our experts</li>
+              <li style="margin-bottom: var(--gap-1);">Customized recommendations for your needs</li>
+            </ul>
+          </div>
+          
+          <div class="contact-alternative" style="margin-top: var(--gap-4); padding: var(--gap-3); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-md);">
+            <p style="margin: 0; color: var(--muted);">
+              Prefer to speak directly? Email us at 
+              <a href="mailto:info@cgdefenseconsulting.com" style="color: var(--accent-1); font-weight: 600;">info@cgdefenseconsulting.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; <span id="current-year">2025</span> CG Defense Consulting LLC.</p>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html#privacy">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="index.html#terms">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
 </body>
 </html>
