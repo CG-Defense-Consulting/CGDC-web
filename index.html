@@ -43,34 +43,14 @@
 </head>
 <body>
 
-  <!-- ===== Header ===== -->
-  <header class="site-header">
-    <div class="nav-container">
-      <div class="logo">
-        <img src="images/CG-logo1.png" alt="CGDC Logo" class="logo-img" />
-      </div>
-      
-      <nav class="main-nav" aria-label="Main navigation">
-        <ul class="nav-list">
-          <li><a href="#hero" class="nav-link">Home</a></li>
-          <li><a href="#solutions" class="nav-link">Solutions</a></li>
-          <li><a href="#platform-intro" class="nav-link">Platform</a></li>
-          <li><a href="#insights" class="nav-link">Insights</a></li>
-          <li><a href="#about-contact" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <button class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
-          <span class="theme-icon" aria-hidden="true">☾</span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <!-- ===== Logo Overlay ===== -->
+  <div class="logo-overlay">
+    <img src="images/CG-logo1.png" alt="CGDC Logo" class="logo-img" />
+  </div>
 
   <!-- ===== Hero ===== -->
   <section id="hero" class="hero-section">
-    <video id="hero-video" class="hero-video" playsinline autoplay muted preload="auto" loop aria-label="Background video showing defense technology">
+    <video id="hero-video" class="hero-video" playsinline autoplay muted preload="auto" aria-label="Background video showing defense technology">
       <source src="videos/hero1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -83,17 +63,17 @@
         <p class="hero-subtitle">Automate quotes, predict demand, and close deals faster.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#solutions">Explore Solutions</a>
-          <a class="btn btn-secondary" href="#about-contact">Schedule Demo</a>
+          <a class="btn btn-secondary" href="schedule.html">Schedule Demo</a>
         </div>
       </div>
-      
-      <div class="scroll-cue" aria-label="Scroll down to see more content">
-        <button class="scroll-indicator" aria-label="Scroll down">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 13l3 3 3-3M7 6l3 3 3-3"/>
-          </svg>
-        </button>
-      </div>
+    </div>
+    
+    <div class="scroll-cue" aria-label="Scroll down to see more content">
+      <button class="scroll-indicator" aria-label="Scroll down">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 13l3 3 3-3M7 6l3 3 3-3"/>
+        </svg>
+      </button>
     </div>
   </section>
 
@@ -117,10 +97,12 @@
                     <source src="videos/solutionglobe.mp4" type="video/mp4">
                     <img src="images/solutionglobe.jpg" alt="Global Procurement Bridge visualization" />
                   </video>
-                </div>
-                <div class="slide-content">
-                  <h3>Global Procurement Bridge</h3>
-                  <p>Connecting international and domestic manufacturers to U.S procurement systems with streamlined contract management, organization, and legal industry expertise.</p>
+                  <div class="slide-overlay">
+                    <div class="slide-content">
+                      <h3>Global Procurement Bridge</h3>
+                      <p>Connecting international and domestic manufacturers to U.S procurement systems with streamlined contract management, organization, and legal industry expertise.</p>
+                    </div>
+                  </div>
                 </div>
               </article>
               
@@ -130,10 +112,12 @@
                     <source src="videos/solutioncomputer.mp4" type="video/mp4">
                     <img src="images/solutioncomputer.jpg" alt="AI-Powered Time-to-Bid interface" />
                   </video>
-                </div>
-                <div class="slide-content">
-                  <h3>AI-Powered Time-to-Bid</h3>
-                  <p>Reducing time-to-bid from weeks to minutes with advanced pricing analysis, streamlined AI workflows, and automated contract parsing.</p>
+                  <div class="slide-overlay">
+                    <div class="slide-content">
+                      <h3>AI-Powered Time-to-Bid</h3>
+                      <p>Reducing time-to-bid from weeks to minutes with advanced pricing analysis, streamlined AI workflows, and automated contract parsing.</p>
+                    </div>
+                  </div>
                 </div>
               </article>
               
@@ -143,10 +127,12 @@
                     <source src="videos/solutionspace.mp4" type="video/mp4">
                     <img src="images/solutionspace.jpg" alt="Comprehensive Platform dashboard" />
                   </video>
-                </div>
-                <div class="slide-content">
-                  <h3>Comprehensive Platform</h3>
-                  <p>Delivering the end-to-end solution with everything needed to succeed in the U.S procurement market.</p>
+                  <div class="slide-overlay">
+                    <div class="slide-content">
+                      <h3>Comprehensive Platform</h3>
+                      <p>Delivering the end-to-end solution with everything needed to succeed in the U.S procurement market.</p>
+                    </div>
+                  </div>
                 </div>
               </article>
             </div>
@@ -296,7 +282,7 @@
             <div class="tool-content">
               <h3>Guild</h3>
               <p>Our flagship platform that sources, analyzes, and delivers contract opportunities directly to manufacturers in a single streamlined workflow.</p>
-              <a href="http://app.cgdefenseconsulting.com" class="tool-link" rel="noopener" target="_blank">
+              <a href="https://guild.cgdefenseconsulting.com" class="tool-link" rel="noopener" target="_blank">
                 Access Guild Platform
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="external-icon">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
@@ -312,7 +298,7 @@
             <div class="tool-content">
               <h3>Mentat</h3>
               <p>An end-to-end supply chain–to–door recommendation system with smart autopricing for maximum efficiency and transparency.</p>
-              <a href="http://app.cgdefenseconsulting.com" class="tool-link" rel="noopener" target="_blank">
+              <a href="https://mentat.cgdefenseconsulting.com" class="tool-link" rel="noopener" target="_blank">
                 Access Mentat Platform
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="external-icon">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>

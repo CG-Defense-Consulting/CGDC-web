@@ -1,31 +1,9 @@
-/* ============= Theme Toggle System ============= */
+/* ============= Theme System (Dark Mode Default) ============= */
 (function() {
-  const themeToggle = document.querySelector('.theme-toggle');
-  const themeIcon = document.querySelector('.theme-icon');
   const html = document.documentElement;
   
-  // Get saved theme or default to dark
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  html.setAttribute('data-theme', savedTheme);
-  updateThemeIcon(savedTheme);
-  
-  // Theme toggle functionality
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateThemeIcon(newTheme);
-    });
-  }
-  
-  function updateThemeIcon(theme) {
-    if (themeIcon) {
-      themeIcon.textContent = theme === 'dark' ? '☀' : '☾';
-    }
-  }
+  // Set dark theme as default
+  html.setAttribute('data-theme', 'dark');
 })();
 
 /* ============= Typing Animation System (Hero Only) ============= */
@@ -129,25 +107,54 @@
   });
 })();
 
-/* ============= Hero Video and Overlay ============= */
+/* ============= Hero Video Sequence ============= */
 (function(){
   const heroVideo = document.getElementById('hero-video');
   const heroOverlay = document.querySelector('.hero-content');
   
-  if (heroVideo && heroOverlay) {
+  // Video sequence array
+  const videoSequence = [
+    'videos/hero1.mp4',
+    'videos/hero2.mp4', 
+    'videos/hero3.mp4'
+  ];
+  
+  let currentVideoIndex = 0;
+  
+  if (heroVideo) {
+    // Function to load next video in sequence
+    function loadNextVideo() {
+      if (currentVideoIndex < videoSequence.length - 1) {
+        currentVideoIndex++;
+      } else {
+        currentVideoIndex = 0; // Loop back to first video
+      }
+      
+      heroVideo.src = videoSequence[currentVideoIndex];
+      heroVideo.load();
+    }
+    
+    // When video ends, load next video
+    heroVideo.addEventListener('ended', function() {
+      loadNextVideo();
+    });
+    
     // Ensure video loads and plays
     heroVideo.addEventListener('loadeddata', function() {
-      console.log('Hero video loaded successfully');
+      console.log(`Hero video ${currentVideoIndex + 1} loaded successfully`);
+      heroVideo.play();
     });
     
     heroVideo.addEventListener('error', function() {
-      console.error('Error loading hero video');
-      // Add a fallback background if video fails to load
-      document.getElementById('hero').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+      console.error(`Error loading hero video ${currentVideoIndex + 1}`);
+      // Try to load next video on error
+      loadNextVideo();
     });
     
     // Ensure overlay is visible
-    heroOverlay.style.display = 'flex';
+    if (heroOverlay) {
+      heroOverlay.style.display = 'flex';
+    }
   }
 })();
 
@@ -331,35 +338,23 @@
   }
 })();
 
-/* ============= Header Scroll Effect ============= */
+/* ============= Logo Overlay Effect ============= */
 (function(){
-  const header = document.querySelector('.site-header');
-  let lastScrollY = window.scrollY;
+  const logoOverlay = document.querySelector('.logo-overlay');
   
-  function updateHeader() {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > 100) {
-      header.style.background = 'rgba(11, 15, 20, 0.95)';
-      header.style.backdropFilter = 'blur(12px)';
-    } else {
-      header.style.background = 'rgba(11, 15, 20, 0.8)';
-      header.style.backdropFilter = 'blur(8px)';
-    }
-    
-    lastScrollY = currentScrollY;
+  if (logoOverlay) {
+    // Add subtle animation on scroll
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (scrolled > 50) {
+        logoOverlay.style.transform = 'scale(0.95)';
+        logoOverlay.style.opacity = '0.9';
+      } else {
+        logoOverlay.style.transform = 'scale(1)';
+        logoOverlay.style.opacity = '1';
+      }
+    });
   }
-  
-  // Throttled scroll handler
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  }
-  
-  window.addEventListener('scroll', onScroll);
 })();
 
 /* ============= Intersection Observer for Animations ============= */
@@ -394,19 +389,18 @@
   }
 })();
 
-/* ============= Smooth Scrolling for Navigation ============= */
+/* ============= Smooth Scrolling for Internal Links ============= */
 (function(){
-  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  const internalLinks = document.querySelectorAll('a[href^="#"]');
   
-  navLinks.forEach(link => {
+  internalLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = link.getAttribute('href');
       const targetElement = document.querySelector(targetId);
       
       if (targetElement) {
-        const headerHeight = document.querySelector('.site-header').offsetHeight;
-        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+        const targetPosition = targetElement.offsetTop - 20;
         
         window.scrollTo({
           top: targetPosition,

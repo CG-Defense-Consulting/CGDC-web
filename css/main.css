@@ -154,100 +154,19 @@ a:hover {
   font-size: var(--body-lg);
 }
 
-/* ============= Header ============= */
-.site-header {
+/* ============= Logo Overlay ============= */
+.logo-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: var(--gap-3);
+  left: var(--gap-3);
   z-index: 1000;
-  background: rgba(11, 15, 20, 0.8);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
   transition: all var(--normal) var(--easing);
 }
 
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--gap-2) var(--gap-3);
-  max-width: 1320px;
-  margin: 0 auto;
-}
-
-.logo img {
-  height: 50px;
+.logo-overlay img {
+  height: 60px;
   width: auto;
-}
-
-.main-nav {
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: var(--gap-4);
-}
-
-.nav-link {
-  color: var(--ink);
-  font-weight: 500;
-  padding: var(--gap-1) 0;
-  position: relative;
-  transition: color var(--fast) var(--easing);
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent-1);
-  transition: width var(--normal) var(--easing);
-}
-
-.nav-link:hover::after,
-.nav-link:focus-visible::after {
-  width: 100%;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--gap-2);
-}
-
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  padding: var(--gap-1);
-  color: var(--ink);
-  cursor: pointer;
-  transition: all var(--fast) var(--easing);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-elev);
-  border-color: var(--accent-1);
-  box-shadow: 0 0 0 1px var(--accent-1), 0 0 20px var(--glow);
-}
-
-.theme-icon {
-  font-size: 18px;
-  transition: transform var(--normal) var(--easing);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
 }
 
 /* ============= Hero Section ============= */
@@ -298,8 +217,8 @@ a:hover {
 .hero-subtitle {
   font-size: var(--body-lg);
   margin-bottom: var(--gap-4);
-  color: var(--muted);
-  text-shadow: 0 1px 2px rgba(0,0,0,.3);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,.6);
 }
 
 .hero-actions {
@@ -311,7 +230,7 @@ a:hover {
 
 .scroll-cue {
   position: absolute;
-  bottom: var(--gap-4);
+  bottom: var(--gap-2);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -419,8 +338,6 @@ a:hover {
 
 .carousel-slide {
   flex: 0 0 100%;
-  display: flex;
-  flex-direction: column;
   background: var(--bg);
   border-radius: var(--r-lg);
   overflow: hidden;
@@ -447,19 +364,37 @@ a:hover {
   transform: scale(1.03);
 }
 
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
 .slide-content {
-  padding: var(--gap-4);
   text-align: center;
+  color: white;
+  padding: var(--gap-4);
+  max-width: 90%;
 }
 
 .slide-content h3 {
   margin-bottom: var(--gap-2);
-  color: var(--ink);
+  color: white;
+  font-size: var(--h3);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .slide-content p {
-  color: var(--muted);
+  color: rgba(255,255,255,0.9);
   line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
 }
 
 .carousel-controls {
@@ -595,19 +530,16 @@ a:hover {
   flex: 0 0 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--gap-5);
-  padding: var(--gap-5);
+  gap: var(--gap-4);
+  padding: var(--gap-4);
   background: var(--bg);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-1);
-  min-height: 250px;
-  text-align: center;
+  min-height: 200px;
 }
 
 .slide-icon {
-  flex-shrink: 0;
-  width: 120px;
+  flex: 0 0 50%;
   height: 120px;
   border-radius: var(--r-md);
   overflow: hidden;
@@ -621,18 +553,23 @@ a:hover {
 }
 
 .slide-content {
-  flex: 1;
-  max-width: 500px;
+  flex: 0 0 50%;
+  padding: var(--gap-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .slide-content h3 {
-  margin-bottom: var(--gap-2);
+  margin-bottom: var(--gap-3);
   color: var(--ink);
+  font-size: var(--h3);
 }
 
 .slide-content p {
   color: var(--muted);
   line-height: 1.6;
+  font-size: var(--body);
 }
 
 /* ============= Tools Section ============= */
@@ -946,8 +883,13 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-  .nav-list {
-    display: none;
+  .logo-overlay {
+    top: var(--gap-2);
+    left: var(--gap-2);
+  }
+  
+  .logo-overlay img {
+    height: 50px;
   }
   
   .hero-content {
@@ -962,11 +904,18 @@ a:hover {
   .focus-slide {
     flex-direction: column;
     text-align: center;
+    min-height: 250px;
   }
   
   .slide-icon {
-    width: 60px;
-    height: 60px;
+    flex: 0 0 auto;
+    height: 100px;
+    width: 100%;
+  }
+  
+  .slide-content {
+    flex: 0 0 40%;
+    padding: var(--gap-2);
   }
   
   .footer-content {
