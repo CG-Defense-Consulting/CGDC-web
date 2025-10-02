@@ -462,3 +462,136 @@
     }
   }, 1000);
 })();
+
+// Login overlay dropdown (accessible, no libs)
+(function () {
+  const btn = document.querySelector('.login-trigger');
+  const menu = document.getElementById('login-menu');
+  const loginOverlay = document.querySelector('.login-overlay');
+  if (!btn || !menu || !loginOverlay) return;
+
+  const open  = () => { menu.dataset.open = "true";  btn.setAttribute('aria-expanded', 'true'); };
+  const close = () => { menu.dataset.open = "false"; btn.setAttribute('aria-expanded', 'false'); };
+
+  // Toggle on click
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    (menu.dataset.open === "true") ? close() : open();
+  });
+
+  // Close when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && e.target !== btn) close();
+  });
+
+  // Keyboard: Esc to close; ArrowDown focuses first item
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      open();
+      const first = menu.querySelector('a');
+      first && first.focus();
+    }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Basic focus trap inside menu
+  menu.addEventListener('keydown', (e) => {
+    const items = Array.from(menu.querySelectorAll('a'));
+    if (!items.length) return;
+    const idx = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); (items[idx + 1] || items[0]).focus(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); (items[idx - 1] || items.at(-1)).focus(); }
+    if (e.key === 'Tab') close();
+  });
+
+  // Hide login overlay when scrolling down
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) {
+      // Scrolled down - hide login overlay
+      loginOverlay.style.opacity = '0';
+      loginOverlay.style.transform = 'translateY(-20px)';
+      close(); // Close menu if open
+    } else {
+      // Scrolled up or at top - show login overlay
+      loginOverlay.style.opacity = '1';
+      loginOverlay.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollY = currentScrollY;
+  });
+})();
+
+// Accessible tabs with optional image swapping per group
+(function tabsController() {
+  function initTabs() {
+    const groups = document.querySelectorAll('.tabs');
+    if (!groups.length) return;
+
+  function swapImage(imgEl, src, alt) {
+    if (!imgEl || !src) return;
+    // Cheap crossfade, respects reduced motion automatically
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) imgEl.style.opacity = '0.001';
+    const done = () => {
+      if (!reduce) imgEl.style.opacity = '';
+      imgEl.removeEventListener('load', done);
+    };
+    imgEl.addEventListener('load', done);
+    imgEl.src = src;
+    if (alt) imgEl.alt = alt;
+  }
+
+  groups.forEach(group => {
+    const list = group.querySelector('.tablist');
+    const tabs = list ? Array.from(list.querySelectorAll('[role="tab"]')) : [];
+    const panels = Array.from(group.querySelectorAll('[role="tabpanel"]'));
+    if (!tabs.length || !panels.length) return;
+
+    const bandSection = group.closest('.band');
+    const bandImage = bandSection ? bandSection.querySelector('[data-tab-image]') : null;
+
+    function activate(tab) {
+      tabs.forEach(t => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+        const panel = group.querySelector('#' + t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !selected;
+      });
+
+      // Optional image swap (only if data present)
+      const src = tab.dataset.img;
+      const alt = tab.dataset.alt;
+      if (bandImage && src) swapImage(bandImage, src, alt || bandImage.alt);
+    }
+
+    // Init to the currently selected tab
+    const current = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    if (current) activate(current);
+
+    // Click
+    tabs.forEach(t => t.addEventListener('click', () => activate(t)));
+
+    // Keyboard
+    list.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i === -1) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); activate(tabs[(i+1)%tabs.length]); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); activate(tabs[(i-1+tabs.length)%tabs.length]); }
+      if (e.key === 'Home')       { e.preventDefault(); activate(tabs[0]); }
+      if (e.key === 'End')        { e.preventDefault(); activate(tabs.at(-1)); }
+    });
+  });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTabs);
+  } else {
+    initTabs();
+  }
+})();

@@ -48,6 +48,23 @@
     <img src="images/CG-logo1.png" alt="CGDC Logo" class="logo-img" />
   </div>
 
+  <!-- ===== Login Overlay ===== -->
+  <div class="login-overlay">
+    <nav class="util-nav">
+      <button class="login-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="login-menu">
+        Log in
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" focusable="false">
+          <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+
+      <ul id="login-menu" class="login-menu" role="menu">
+        <li role="none"><a role="menuitem" href="https://guild.cgdefenseconsulting.com" rel="noopener">Guild</a></li>
+        <li role="none"><a role="menuitem" href="https://mentat.cgdefenseconsulting.com" rel="noopener">Mentat</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <!-- ===== Hero ===== -->
   <section id="hero" class="hero-section">
     <video id="hero-video" class="hero-video" playsinline autoplay muted preload="auto" aria-label="Background video showing defense technology">
@@ -62,7 +79,7 @@
         <h1 class="rollup-h1">AI-powered OS for defense contracting</h1>
         <p class="subhead rollup-subhead">From opportunity to delivery, automation built on a shared industry model.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#contact">Request access</a>
+          <a class="btn btn-primary" href="/schedule.html">Schedule a Demo</a>
         </div>
       </div>
     </div>
@@ -95,91 +112,164 @@
           <p>Compliance, packaging, and documentation up front.</p>
         </div>
       </div>
+
+      <!-- Outcomes: placeholder stats (replace values later) -->
+      <div class="stats-row" aria-label="Outcome statistics">
+        <div class="stat">
+          <div class="stat-value" data-stat="ttb">XX%</div>
+          <div class="stat-label">Reduction in Time to Bid</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" data-stat="pricing-band">±X–Y%</div>
+          <div class="stat-label">Within historical award bands</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" data-stat="readiness">XX%</div>
+          <div class="stat-label">Pre-quote checklist completion</div>
+        </div>
+      </div>
     </section>
 
-    <!-- Guild (text left, image right) -->
-    <section class="section band">
+    <!-- ===== Guild (tabs; text left, image right) ===== -->
+    <section class="section band" id="guild">
       <div class="container-wide band-grid">
         <div class="band-copy">
           <h2>Guild — Opportunity & Execution</h2>
-          <ul class="bullets">
-            <li>Normalizes SAM.gov and DIBBS into a single, actionable queue.</li>
-            <li>Routes to partners, generates quote packets, and tracks through delivery & invoicing.</li>
-          </ul>
+
+          <div class="tabs" data-tabs="guild">
+            <div class="tablist" role="tablist" aria-label="Guild features">
+              <button role="tab" aria-selected="true" aria-controls="guild-panel-scout" id="guild-tab-scout">Scout</button>
+              <button role="tab" aria-selected="false" aria-controls="guild-panel-track" id="guild-tab-track" tabindex="-1">Track</button>
+              <button role="tab" aria-selected="false" aria-controls="guild-panel-document" id="guild-tab-document" tabindex="-1">Document</button>
+              <button role="tab" aria-selected="false" aria-controls="guild-panel-bid" id="guild-tab-bid" tabindex="-1">Bid</button>
+            </div>
+
+            <div class="tabpanels">
+              <div role="tabpanel" id="guild-panel-scout" aria-labelledby="guild-tab-scout">
+                <p>We continuously pull RFQs from SAM.gov and DIBBS into a single queue, de-duplicated and normalized so teams can move from discovery to action in minutes.</p>
+              </div>
+              <div role="tabpanel" id="guild-panel-track" aria-labelledby="guild-tab-track" hidden>
+                <p>Every opportunity flows through clear stages with partner confirmations, gating checks, and alerts—so status is obvious and Time to Bid stays short.</p>
+              </div>
+              <div role="tabpanel" id="guild-panel-document" aria-labelledby="guild-tab-document" hidden>
+                <p>Required files are generated and organized automatically—specs, packaging, labels, and forms—so the entire packet is ready before anyone asks.</p>
+              </div>
+              <div role="tabpanel" id="guild-panel-bid" aria-labelledby="guild-tab-bid" hidden>
+                <p>Submit clean, consistent quotes with the right attachments and price bands; handoffs are logged, and post-award tasks continue in the same timeline.</p>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="band-visual">
           <img src="images/guild-demo.png"
-               alt="Screenshot mock: Guild queue showing normalized RFQs from SAM.gov and DIBBS with statuses and partner routing." />
+               alt="Guild screen showing a unified RFQ queue, stage chips, and a timeline view with documents attached." />
         </div>
       </div>
     </section>
 
-    <!-- Mentat (image left, text right to alternate) -->
-    <section class="section band alt">
+    <!-- ===== Mentat (tabs; image left, text right) ===== -->
+    <section class="section band alt" id="mentat">
       <div class="container-wide band-grid">
         <div class="band-visual">
           <img src="images/mentat-pricing-placeholder.svg"
-               alt="Chart mock: Mentat price bands with confidence levels and historical award markers for a part number." />
+               alt="Mentat screen with price bands, confidence overlay, historical award markers, and scenario toggles." />
         </div>
+
         <div class="band-copy">
           <h2>Mentat — Pricing & Supply Chain Intelligence</h2>
-          <ul class="bullets">
-            <li>Learns from award history and competition to set target price bands.</li>
-            <li>Projects manufacturer, supplier, and logistics costs and margin under market conditions.</li>
-          </ul>
+
+          <div class="tabs" data-tabs="mentat">
+            <div class="tablist" role="tablist" aria-label="Mentat features">
+              <button role="tab" aria-selected="true" aria-controls="mentat-panel-parse" id="mentat-tab-parse">Parse</button>
+              <button role="tab" aria-selected="false" aria-controls="mentat-panel-analyze" id="mentat-tab-analyze" tabindex="-1">Analyze</button>
+              <button role="tab" aria-selected="false" aria-controls="mentat-panel-predict" id="mentat-tab-predict" tabindex="-1">Predict</button>
+              <button role="tab" aria-selected="false" aria-controls="mentat-panel-compete" id="mentat-tab-compete" tabindex="-1">Compete</button>
+            </div>
+
+            <div class="tabpanels">
+              <div role="tabpanel" id="mentat-panel-parse" aria-labelledby="mentat-tab-parse">
+                <p>Award history, RFQs, BOMs, and logistics data are ingested and mapped to a shared model, turning messy inputs into comparable signals.</p>
+              </div>
+              <div role="tabpanel" id="mentat-panel-analyze" aria-labelledby="mentat-tab-analyze" hidden>
+                <p>Mentat learns cost drivers and competitor patterns to surface what matters—relevance, eligibility, and risk—without manual spreadsheet work.</p>
+              </div>
+              <div role="tabpanel" id="mentat-panel-predict" aria-labelledby="mentat-tab-predict" hidden>
+                <p>We produce target price bands with confidence levels and expected lead times, factoring current market conditions and constraints.</p>
+              </div>
+              <div role="tabpanel" id="mentat-panel-compete" aria-labelledby="mentat-tab-compete" hidden>
+                <p>Price-to-win guidance and scenario testing help you set margins intelligently while protecting fulfillment and on-time delivery.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Why it clicks (ontology value) -->
-    <section class="section why">
-      <div class="container-narrow">
+    <!-- ===== Trust & Compliance (tabs; text left, image right) ===== -->
+    <section class="section band" id="trust">
+      <div class="container-wide band-grid">
+        <div class="band-copy">
+          <h2>Trust &amp; Compliance</h2>
+
+          <div class="tabs" data-tabs="trust">
+            <div class="tablist" role="tablist" aria-label="Trust & Compliance">
+              <button role="tab" aria-selected="true" aria-controls="trust-panel-secure" id="trust-tab-secure">Secure</button>
+              <button role="tab" aria-selected="false" aria-controls="trust-panel-comply" id="trust-tab-comply" tabindex="-1">Comply</button>
+              <button role="tab" aria-selected="false" aria-controls="trust-panel-register" id="trust-tab-register" tabindex="-1">Register</button>
+              <button role="tab" aria-selected="false" aria-controls="trust-panel-audit" id="trust-tab-audit" tabindex="-1">Audit</button>
+            </div>
+
+            <div class="tabpanels">
+              <div role="tabpanel" id="trust-panel-secure" aria-labelledby="trust-tab-secure">
+                <p>Role-based access, least-privilege defaults, and encrypted storage keep sensitive data controlled while teams collaborate.</p>
+              </div>
+              <div role="tabpanel" id="trust-panel-comply" aria-labelledby="trust-tab-comply" hidden>
+                <p>Built for NIST 800-171/DFARS workflows and ITAR-aware processes; controls and checklists live next to the work.</p>
+              </div>
+              <div role="tabpanel" id="trust-panel-register" aria-labelledby="trust-tab-register" hidden>
+                <p>Operate with the right rails—SAM.gov, PIEE/WAWF, JCP, CAGE—surfaced where they matter in the process.</p>
+              </div>
+              <div role="tabpanel" id="trust-panel-audit" aria-labelledby="trust-tab-audit" hidden>
+                <p>Every action, document, and decision is traceable; exports provide an end-to-end record from opportunity through invoicing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="band-visual">
+          <img src="images/trust-dashboard.png"
+               alt="Compliance dashboard showing access roles, control checks, and an exportable activity log." />
+        </div>
+      </div>
+    </section>
+
+    <!-- Why it clicks -->
+    <section class="section why" id="why">
+      <div class="container-wide">
         <h2>Why it clicks</h2>
-        <ul class="bullets">
-          <li><strong>One model of the work:</strong> parts, processes, and rules aligned by an ontology.</li>
-          <li><strong>Guided workflows:</strong> every step, doc, and handoff is sequenced—no guesswork.</li>
-          <li><strong>Shared context:</strong> manufacturers, suppliers, and logistics work in the same pane.</li>
-        </ul>
+
+        <!-- Three horizontal items -->
+        <div class="why-row">
+          <div class="why-item">
+            <h3>One model of the work</h3>
+            <p>Parts, processes, and rules aligned by an ontology.</p>
+          </div>
+          <div class="why-item">
+            <h3>Guided workflows</h3>
+            <p>Every step, document, and handoff is sequenced—no guesswork.</p>
+          </div>
+          <div class="why-item">
+            <h3>Shared context</h3>
+            <p>Manufacturers, suppliers, and logistics work in the same pane.</p>
+          </div>
+        </div>
+
+        <!-- Diagram below the row -->
         <figure class="why-visual">
           <img src="images/ontology-schematic.svg"
                alt="Simple schematic: nodes for parts, processes, and rules connected by an ontology; arrows show guided steps." />
         </figure>
-      </div>
-    </section>
-
-    <!-- Trust & compliance (lean) -->
-    <section class="section trust">
-      <div class="container-wide trust-grid">
-        <div class="trust-copy">
-          <h2>Trust & Compliance</h2>
-          <ul class="bullets">
-            <li>Built for NIST 800-171/DFARS workflows; ITAR-aware processes.</li>
-            <li>Role-based access, audit logs, least-privilege by default.</li>
-            <li>Active registrations we can name (e.g., SAM.gov, PIEE/WAWF, JCP, CAGE).</li>
-          </ul>
-        </div>
-        <div class="trust-badges">
-          <img src="images/badges-placeholder.svg"
-               alt="Badge strip placeholder for compliance and registration logos we are permitted to display." />
-        </div>
-      </div>
-    </section>
-
-    <!-- Signals (pick metrics or partner strip; keep minimal) -->
-    <section class="section signals">
-      <div class="container-wide metrics">
-        <div class="metric">
-          <h3>Quoting Cycle</h3>
-          <p>Designed to compress from days to hours.</p>
-        </div>
-        <div class="metric">
-          <h3>Price Targeting</h3>
-          <p>Aligned to historical award bands.</p>
-        </div>
-        <div class="metric">
-          <h3>Execution Confidence</h3>
-          <p>Compliance and packaging validated before you quote.</p>
-        </div>
       </div>
     </section>
 
@@ -189,8 +279,7 @@
         <p class="served">
           Built for <strong>Manufacturers</strong>, <strong>Suppliers/Distributors</strong>, and <strong>Logistics Partners</strong> — partner-integrated, not brokered.
         </p>
-        <a class="button primary" href="mailto:info@cgdefenseconsulting.com">Talk to procurement</a>
-        <p class="alt">Prefer a meeting? <a href="/schedule.html">Request a demo</a></p>
+        <a class="button primary" href="/schedule.html">Schedule a demo</a>
       </div>
     </section>
 
@@ -210,6 +299,10 @@
           <span aria-hidden="true">·</span>
           <a href="#terms">Terms of Service</a>
         </nav>
+        <p class="login-inline">Log in:
+          <a href="https://guild.cgdefenseconsulting.com" rel="noopener">Guild</a> ·
+          <a href="https://mentat.cgdefenseconsulting.com" rel="noopener">Mentat</a>
+        </p>
       </div>
     </div>
   </footer>
