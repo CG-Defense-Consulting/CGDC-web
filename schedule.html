@@ -24,41 +24,37 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/patterns.css" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom styles for schedule page -->
+  <style>
+    @media (max-width: 768px) {
+      .logo-header img {
+        height: 50px !important;
+      }
+      .logo-header {
+        top: var(--gap-2) !important;
+        left: var(--gap-2) !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ===== Header ===== -->
-  <header class="site-header">
-    <div class="nav-container">
-      <div class="logo">
-        <a href="index.html">
-          <img src="images/CG-logo1.png" alt="CGDC Logo" class="logo-img" />
-        </a>
-      </div>
-      
-      <nav class="main-nav" aria-label="Main navigation">
-        <ul class="nav-list">
-          <li><a href="index.html#hero" class="nav-link">Home</a></li>
-          <li><a href="index.html#solutions" class="nav-link">Solutions</a></li>
-          <li><a href="index.html#platform-intro" class="nav-link">Platform</a></li>
-          <li><a href="index.html#insights" class="nav-link">Insights</a></li>
-          <li><a href="index.html#about-contact" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <!-- Theme toggle removed - keeping dark mode default -->
-      </div>
-    </div>
-  </header>
-
   <!-- ===== Main Content ===== -->
-  <main id="main-content" style="padding-top: 80px;">
+  <main id="main-content">
     
+    <!-- ===== Logo Header ===== -->
+    <div class="logo-header" style="position: fixed; top: var(--gap-3); left: var(--gap-3); z-index: 1000;">
+      <a href="index.html" style="display: inline-block;">
+        <img src="images/CG-logo1.png" alt="CGDC Logo" style="height: 60px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));" />
+      </a>
+    </div>
+
     <!-- ===== Schedule Demo Section ===== -->
-    <section class="schedule-section" style="padding: var(--gap-5) 0; min-height: 80vh; display: flex; align-items: center;">
+    <section class="schedule-section" style="padding: var(--gap-5) 0; min-height: 100vh; display: flex; align-items: center;">
       <div class="container">
         <div class="schedule-content" style="max-width: 600px; margin: 0 auto; text-align: center;">
+          
           <h1>Schedule a Demo</h1>
           <p style="font-size: var(--body-lg); margin-bottom: var(--gap-4); color: var(--muted);">
             See how CGDC's AI-powered platform can transform your defense procurement process.
@@ -117,6 +113,12 @@
               Prefer to speak directly? Email us at 
               <a href="mailto:info@cgdefenseconsulting.com" style="color: var(--accent-1); font-weight: 600;">info@cgdefenseconsulting.com</a>
             </p>
+          </div>
+          
+          <div style="margin-top: var(--gap-4);">
+            <a href="index.html" style="color: var(--muted); text-decoration: none; font-size: var(--body-sm);">
+              ← Back to Home
+            </a>
           </div>
         </div>
       </div>
