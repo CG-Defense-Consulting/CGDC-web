@@ -61,6 +61,7 @@
       <ul id="login-menu" class="login-menu" role="menu">
         <li role="none"><a role="menuitem" href="https://guild.cgdefenseconsulting.com" rel="noopener">Guild</a></li>
         <li role="none"><a role="menuitem" href="https://mentat.cgdefenseconsulting.com" rel="noopener">Mentat</a></li>
+        <li role="none"><a role="menuitem" href="/capital/" class="nav-capital">Capital</a></li>
       </ul>
     </nav>
   </div>
@@ -98,34 +99,37 @@
 
     <!-- Outcomes band (three simple metrics) -->
     <section class="section outcomes">
-      <div class="container-wide metrics">
-        <div class="metric">
-          <h3>Time to Bid</h3>
-          <p>Minutes, not weeks.</p>
+      <div class="container-wide outcomes-grid">
+        <div class="outcome-column">
+          <div class="metric">
+            <h3>Time to Bid</h3>
+            <p>Minutes, not weeks.</p>
+          </div>
+          <div class="stat">
+            <div class="stat-value" data-stat="ttb">4.3 mins</div>
+            <div class="stat-label">Average time from contract scouted to bid submitted using Guild</div>
+          </div>
         </div>
-        <div class="metric">
-          <h3>Pricing Intelligence</h3>
-          <p>Data-backed target ranges and risk guards.</p>
+        <div class="outcome-column">
+          <div class="metric">
+            <h3>Pricing Intelligence</h3>
+            <p>Data-backed target ranges and risk guards.</p>
+          </div>
+          <div class="stat">
+            <div class="stat-value" data-stat="pricing-band">±0.8%</div>
+            <div class="stat-label">Average error in predicting optimal quote, bid-winning quote using Mentat</div>
+          </div>
         </div>
-        <div class="metric">
-          <h3>Fulfillment Readiness</h3>
-          <p>Compliance, packaging, and documentation up front.</p>
-        </div>
-      </div>
-
-      <!-- Outcomes: placeholder stats (replace values later) -->
-      <div class="stats-row" aria-label="Outcome statistics">
-        <div class="stat">
-          <div class="stat-value" data-stat="ttb">XX%</div>
-          <div class="stat-label">Reduction in Time to Bid</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" data-stat="pricing-band">±X–Y%</div>
-          <div class="stat-label">Within historical award bands</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" data-stat="readiness">XX%</div>
-          <div class="stat-label">Pre-quote checklist completion</div>
+        <div class="outcome-column">
+          <div class="metric">
+            <h3>Fulfillment Readiness</h3>
+            <p>Compliance, packaging, and documentation up front.</p>
+          </div>
+          <div class="stat">
+            <div class="stat-value" data-stat="readiness">100%</div>
+            <div class="stat-label">Pre-quote checklist completion using Guild</div>
+          </div>
+          
         </div>
       </div>
     </section>
@@ -297,6 +301,8 @@
           <a href="https://www.linkedin.com/company/cg-defense-consulting/" target="_blank" rel="noopener">LinkedIn</a>
           <!-- <span aria-hidden="true">·</span>
           <a href="/careers/">Careers</a> -->
+          <span aria-hidden="true">·</span>
+          <a href="/capital/">Capital Partnerships</a>
           <span aria-hidden="true">·</span>
           <a href="#privacy">Privacy Policy</a>
           <span aria-hidden="true">·</span>

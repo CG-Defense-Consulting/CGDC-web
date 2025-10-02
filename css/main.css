@@ -279,13 +279,7 @@ a:hover {
   .tablist [role="tab"] { transition: none; }
 }
 
-/* Outcomes: stats row */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: var(--gap-4);
-  margin-top: var(--gap-3);
-}
+/* Outcomes: individual stat styling */
 .stat {
   background: var(--bg-elev);
   border: 1px solid var(--line);
@@ -293,6 +287,11 @@ a:hover {
   padding: var(--gap-3);
   box-shadow: var(--shadow-1);
   text-align: center;
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .stat-value {
   font-size: clamp(28px, 5vw, 40px);
@@ -332,7 +331,7 @@ a:hover {
 
 /* Responsive */
 @media (max-width: 1024px){
-  .stats-row, .why-row { grid-template-columns: 1fr; }
+  .outcomes-grid, .why-row { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px){
@@ -1038,11 +1037,21 @@ a:hover {
   display: block; 
 }
 
-.metrics {
+.outcomes-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap-4);
+  padding: 0 var(--gap-3);
+  align-items: stretch;
+}
+
+.outcome-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  justify-content: space-between;
+  min-height: 200px;
 }
 
 .metric h3 {
@@ -1142,8 +1151,180 @@ a:hover {
     grid-template-columns: 1fr; 
   }
   
-  .metrics {
+  .outcomes-grid {
     grid-template-columns: 1fr;
     gap: var(--gap-3);
+  }
+}
+
+/* ============= Capital Page Styles ============= */
+
+/* Navigation Capital Link */
+.nav-capital {
+  color: var(--muted) !important;
+  font-weight: 400;
+  transition: color var(--fast) var(--easing);
+}
+
+.nav-capital:hover {
+  color: var(--accent-1) !important;
+}
+
+.nav-capital:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}
+
+/* Hero Capital Section */
+.hero-capital {
+  background: var(--bg);
+  text-align: center;
+  padding: var(--gap-5) 0;
+}
+
+.hero-capital h1 {
+  margin-bottom: var(--gap-3);
+  color: var(--ink);
+}
+
+.hero-capital p {
+  font-size: var(--body-lg);
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Safeguards & Risks Content */
+.safeguards-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-4);
+  margin-top: var(--gap-3);
+}
+
+.safeguards-section h3,
+.risks-section h3 {
+  margin-bottom: var(--gap-2);
+  color: var(--ink);
+  font-size: var(--h3);
+}
+
+.safeguards-section p,
+.risks-section p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Capital Form Styles */
+.capital-form {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: var(--gap-3);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--gap-1);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.required {
+  color: #e74c3c;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: var(--gap-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--bg-elev);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--body);
+  transition: border-color var(--fast) var(--easing), box-shadow var(--fast) var(--easing);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1);
+}
+
+.checkbox-group {
+  margin-bottom: var(--gap-3);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-2);
+  cursor: pointer;
+  font-size: var(--body);
+  line-height: 1.5;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent-1);
+}
+
+.checkbox .checkmark {
+  display: none; /* Using native checkbox styling */
+}
+
+.form-disclaimer {
+  margin-top: var(--gap-4);
+  padding: var(--gap-3);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-size: var(--body-sm);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.form-disclaimer p {
+  margin: 0;
+}
+
+/* Form Error States */
+.form-group.error input {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 1px #e74c3c;
+}
+
+.form-group.error .error-message {
+  color: #e74c3c;
+  font-size: var(--body-sm);
+  margin-top: var(--gap-1);
+  display: block;
+}
+
+/* Responsive Design for Capital Page */
+@media (max-width: 768px) {
+  .safeguards-content {
+    grid-template-columns: 1fr;
+    gap: var(--gap-3);
+  }
+  
+  .capital-form {
+    max-width: 100%;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="email"] {
+    padding: var(--gap-2);
   }
 }
