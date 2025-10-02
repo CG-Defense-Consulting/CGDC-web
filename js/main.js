@@ -39,6 +39,46 @@
     });
   }
 
+  // Roll up animation effect
+  function rollUpAnimation(element, text, speed = typingConfig.speed) {
+    return new Promise((resolve) => {
+      const cleanTextContent = text.replace(/\s+/g, ' ').trim();
+      element.textContent = '';
+      element.classList.add('roll-up-in-progress');
+      
+      // Create a container for the rolling effect
+      const container = document.createElement('div');
+      container.style.position = 'relative';
+      container.style.overflow = 'hidden';
+      container.style.height = '1.2em';
+      container.style.display = 'inline-block';
+      
+      // Create the text element that will roll up
+      const textElement = document.createElement('div');
+      textElement.textContent = cleanTextContent;
+      textElement.style.position = 'absolute';
+      textElement.style.top = '100%';
+      textElement.style.transition = `transform ${speed * cleanTextContent.length}ms cubic-bezier(0.22, 0.61, 0.36, 1)`;
+      textElement.style.transform = 'translateY(0)';
+      
+      container.appendChild(textElement);
+      element.appendChild(container);
+      
+      // Trigger the roll-up animation
+      setTimeout(() => {
+        textElement.style.transform = 'translateY(-100%)';
+      }, 50);
+      
+      // Complete the animation
+      setTimeout(() => {
+        element.textContent = cleanTextContent;
+        element.classList.remove('roll-up-in-progress');
+        element.classList.add('roll-up-completed');
+        resolve();
+      }, speed * cleanTextContent.length + 100);
+    });
+  }
+
   // Add cursor effect
   function addCursor(element) {
     const cursor = document.createElement('span');
@@ -58,38 +98,46 @@
 
   // Animate a single element
   async function animateElement(element) {
-    if (element.classList.contains('typing-animated')) return;
+    if (element.classList.contains('typing-animated') || element.classList.contains('roll-up-animated')) return;
     
     const originalText = element.textContent.trim();
     if (originalText.length === 0) return;
 
-    element.classList.add('typing-animated');
-    element.style.visibility = 'hidden'; // Hide until animation starts
-    
-    // Wait for element to be in view
-    await new Promise(resolve => setTimeout(resolve, typingConfig.delay));
-    
-    element.style.visibility = 'visible';
-    addCursor(element);
-    
-    await typeWriter(element, originalText);
-    removeCursor(element);
+    // Use roll-up animation for h1 elements, typing for others
+    if (element.tagName === 'H1') {
+      element.classList.add('roll-up-animated');
+      element.style.visibility = 'hidden'; // Hide until animation starts
+      
+      // Wait for element to be in view
+      await new Promise(resolve => setTimeout(resolve, typingConfig.delay));
+      
+      element.style.visibility = 'visible';
+      
+      await rollUpAnimation(element, originalText);
+    } else {
+      element.classList.add('typing-animated');
+      element.style.visibility = 'hidden'; // Hide until animation starts
+      
+      // Wait for element to be in view
+      await new Promise(resolve => setTimeout(resolve, typingConfig.delay));
+      
+      element.style.visibility = 'visible';
+      addCursor(element);
+      
+      await typeWriter(element, originalText);
+      removeCursor(element);
+    }
   }
 
-  // Initialize typing animations for hero section only
+  // Initialize typing animations for hero section only (excluding h1, subhead, and buttons which use roll-up or static display)
   function initHeroTypingAnimations() {
     const heroSection = document.getElementById('hero');
     if (heroSection) {
       const heroOverlay = heroSection.querySelector('.hero-content');
       if (heroOverlay) {
-        const heroTextElements = heroOverlay.querySelectorAll('h1, p, a');
-        heroTextElements.forEach((element, index) => {
-          if (!element.classList.contains('typing-animated')) {
-            setTimeout(() => {
-              animateElement(element);
-            }, index * 500); // Stagger hero animations
-          }
-        });
+        // No elements in hero section use typing animation anymore
+        // H1 and subhead use roll-up, buttons appear statically
+        console.log('Hero typing animations disabled - using roll-up and static display');
       }
     }
   }
@@ -158,168 +206,6 @@
   }
 })();
 
-/* ============= Enhanced Solutions Carousel ============= */
-(function(){
-  const track = document.getElementById('solutions-track');
-  const slides = Array.from(track.children);
-  const prev = document.getElementById('solutions-prev');
-  const next = document.getElementById('solutions-next');
-  let idx = 0, auto;
-
-  function go(i){
-    idx = (i + slides.length) % slides.length;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-    
-    // Update ARIA attributes
-    slides.forEach((slide, index) => {
-      slide.setAttribute('aria-label', `${index + 1} of ${slides.length}`);
-      slide.setAttribute('aria-hidden', index !== idx ? 'true' : 'false');
-    });
-  }
-  
-  function start(){ 
-    stop(); 
-    auto = setInterval(()=>go(idx+1), 5000); 
-  }
-  
-  function stop(){ 
-    if(auto) clearInterval(auto); 
-  }
-
-  // Button controls
-  if (prev) prev.addEventListener('click', ()=>{ stop(); go(idx-1); start(); });
-  if (next) next.addEventListener('click', ()=>{ stop(); go(idx+1); start(); });
-
-  // Keyboard controls
-  track.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      stop();
-      go(idx-1);
-      start();
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      stop();
-      go(idx+1);
-      start();
-    }
-  });
-
-  // Touch/swipe support
-  let startX = null;
-  track.addEventListener('touchstart', e => { 
-    startX = e.touches[0].clientX; 
-    stop(); 
-  }, {passive: true});
-  
-  track.addEventListener('touchmove', e => {
-    if(startX === null) return;
-    const dx = e.touches[0].clientX - startX;
-    if(Math.abs(dx) > 50){
-      go(idx + (dx<0 ? 1 : -1)); 
-      startX = null; 
-      start();
-    }
-  }, {passive: true});
-
-  // Initialize
-  go(0);
-  start();
-})();
-
-/* ============= Enhanced Focus Areas Tabs ============= */
-(function(){
-  const buttons = document.querySelectorAll('#focus-areas .focus-tab');
-  const bars = document.querySelectorAll('#focus-areas .tab-progress');
-  const track = document.getElementById('focus-track');
-  const count = buttons.length;
-  let i = 0, timer;
-
-  function setActive(n){
-    // move track
-    track.style.transform = `translateX(-${n * 100}%)`;
-    
-    // buttons state + progress reset
-    buttons.forEach((b, k)=>{
-      b.classList.toggle('active', k===n);
-      b.setAttribute('aria-selected', k===n ? 'true' : 'false');
-      bars[k].style.width = '0%';
-      bars[k].style.transition = 'none';
-    });
-    
-    // kick progress animation for active
-    setTimeout(()=>{
-      bars[n].style.transition = 'width 5s linear';
-      bars[n].style.width = '100%';
-    }, 50);
-  }
-
-  function cycle(){
-    clearTimeout(timer);
-    setActive(i);
-    timer = setTimeout(()=>{
-      i = (i + 1) % count;
-      cycle();
-    }, 5000);
-  }
-
-  buttons.forEach((btn, idx)=>{
-    btn.addEventListener('click', ()=>{
-      clearTimeout(timer);
-      i = idx;
-      cycle();
-    });
-    
-    // Keyboard navigation
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        clearTimeout(timer);
-        i = idx;
-        cycle();
-      }
-    });
-  });
-
-  // Arrow key navigation for tabs
-  document.addEventListener('keydown', (e) => {
-    if (e.target.closest('#focus-areas .focus-tabs')) {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        clearTimeout(timer);
-        i = (i - 1 + count) % count;
-        cycle();
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        clearTimeout(timer);
-        i = (i + 1) % count;
-        cycle();
-      }
-    }
-  });
-
-  // Touch support for focus carousel
-  let startX = null;
-  track.addEventListener('touchstart', e => { 
-    startX = e.touches[0].clientX; 
-    clearTimeout(timer); 
-  }, {passive: true});
-  
-  track.addEventListener('touchmove', e => {
-    if(startX === null) return;
-    const dx = e.touches[0].clientX - startX;
-    if(Math.abs(dx) > 50){
-      i = (i + (dx<0 ? 1 : -1) + count) % count;
-      setActive(i);
-      startX = null;
-      cycle();
-    }
-  }, {passive: true});
-
-  // init
-  setActive(i);
-  cycle();
-})();
 
 /* ============= Scroll Indicator ============= */
 (function(){
@@ -327,9 +213,9 @@
   
   if (scrollIndicator) {
     scrollIndicator.addEventListener('click', () => {
-      const solutionsSection = document.getElementById('solutions');
-      if (solutionsSection) {
-        solutionsSection.scrollIntoView({ 
+      const contentSection = document.getElementById('content');
+      if (contentSection) {
+        contentSection.scrollIntoView({ 
           behavior: 'smooth',
           block: 'start'
         });
@@ -431,4 +317,148 @@
   
   handleReducedMotion();
   prefersReducedMotion.addEventListener('change', handleReducedMotion);
+})();
+
+// Hero H1 roll-up animation (Palantir-style)
+(function rollupHero() {
+  const h1 = document.querySelector('.rollup-h1');
+  const subhead = document.querySelector('.rollup-subhead');
+  
+  if (!h1) {
+    console.log('Rollup: H1 not found');
+    return;
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Process H1
+  const originalH1 = h1.textContent.trim();
+  console.log('Rollup: Original H1 text:', originalH1);
+
+  // Split H1 into word wrappers: <span class="rollup-word"><span>Word</span></span>
+  const h1Words = originalH1.split(/\s+/).map((w) => {
+    const outer = document.createElement('span');
+    outer.className = 'rollup-word';
+    const inner = document.createElement('span');
+    inner.textContent = w;
+    outer.appendChild(inner);
+    return outer;
+  });
+
+  // Replace H1 content
+  h1.textContent = '';
+  h1Words.forEach((w, index) => {
+    h1.appendChild(w);
+    // Add space between words (except after the last word)
+    if (index < h1Words.length - 1) {
+      h1.appendChild(document.createTextNode(' '));
+    }
+  });
+  console.log('Rollup: H1 words created:', h1Words.length);
+
+  // Process subhead if it exists
+  let subheadWords = [];
+  if (subhead) {
+    const originalSubhead = subhead.textContent.trim();
+    console.log('Rollup: Original subhead text:', originalSubhead);
+
+    // Split subhead into word wrappers
+    subheadWords = originalSubhead.split(/\s+/).map((w) => {
+      const outer = document.createElement('span');
+      outer.className = 'rollup-word';
+      const inner = document.createElement('span');
+      inner.textContent = w;
+      outer.appendChild(inner);
+      return outer;
+    });
+
+    // Replace subhead content
+    subhead.textContent = '';
+    subheadWords.forEach((w, index) => {
+      subhead.appendChild(w);
+      // Add space between words (except after the last word)
+      if (index < subheadWords.length - 1) {
+        subhead.appendChild(document.createTextNode(' '));
+      }
+    });
+    console.log('Rollup: Subhead words created:', subheadWords.length);
+  }
+
+  // If reduced motion, activate immediately
+  if (reduceMotion) {
+    console.log('Rollup: Reduced motion detected, activating immediately');
+    document.querySelector('.hero-section')?.classList.add('rollup-active');
+    return;
+  }
+
+  // One-time IntersectionObserver to trigger when hero enters viewport
+  const heroSection = document.querySelector('.hero-section');
+  if (!heroSection) {
+    console.log('Rollup: Hero section not found');
+    return;
+  }
+
+  console.log('Rollup: Setting up intersection observer');
+
+  const io = new IntersectionObserver((entries) => {
+    const e = entries[0];
+    console.log('Rollup: Intersection event:', e.isIntersecting);
+    if (!e?.isIntersecting) return;
+
+    console.log('Rollup: Activating animation');
+
+    // Stagger: 60ms per word feels right; cap total to avoid long tails
+    const base = 60; // ms
+    const maxDelay = 900; // ms cap
+    
+    // Animate H1 words
+    h1Words.forEach((w, i) => {
+      const inner = w.firstElementChild;
+      const delay = Math.min(i * base, maxDelay);
+      inner.style.transitionDelay = `${delay}ms`;
+    });
+
+    // Animate subhead words with a slight delay after H1
+    if (subheadWords.length > 0) {
+      const subheadDelay = Math.min(h1Words.length * base, maxDelay) + 200; // Start after H1 + 200ms
+      subheadWords.forEach((w, i) => {
+        const inner = w.firstElementChild;
+        const delay = Math.min(subheadDelay + (i * base), maxDelay + subheadDelay);
+        inner.style.transitionDelay = `${delay}ms`;
+      });
+    }
+
+    heroSection.classList.add('rollup-active');
+    io.disconnect(); // run once
+  }, { rootMargin: '-10% 0px -10% 0px', threshold: 0.2 });
+
+  io.observe(heroSection);
+
+  // Fallback: activate after 1 second if intersection observer doesn't trigger
+  setTimeout(() => {
+    if (!heroSection.classList.contains('rollup-active')) {
+      console.log('Rollup: Fallback activation');
+      const base = 60;
+      const maxDelay = 900;
+      
+      // Animate H1 words
+      h1Words.forEach((w, i) => {
+        const inner = w.firstElementChild;
+        const delay = Math.min(i * base, maxDelay);
+        inner.style.transitionDelay = `${delay}ms`;
+      });
+
+      // Animate subhead words with a slight delay after H1
+      if (subheadWords.length > 0) {
+        const subheadDelay = Math.min(h1Words.length * base, maxDelay) + 200;
+        subheadWords.forEach((w, i) => {
+          const inner = w.firstElementChild;
+          const delay = Math.min(subheadDelay + (i * base), maxDelay + subheadDelay);
+          inner.style.transitionDelay = `${delay}ms`;
+        });
+      }
+      
+      heroSection.classList.add('rollup-active');
+    }
+  }, 1000);
 })();

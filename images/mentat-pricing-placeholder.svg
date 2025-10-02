@@ -1,0 +1,73 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B0F14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#121820;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="priceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3AA0FF;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#6BA07A;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Chart Title -->
+  <text x="300" y="30" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="16" font-weight="600">Mentat Price Intelligence - Part #ABC-123</text>
+  
+  <!-- Y-axis -->
+  <line x1="60" y1="60" x2="60" y2="320" stroke="#1D2630" stroke-width="2"/>
+  <text x="50" y="70" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$1000</text>
+  <text x="50" y="120" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$800</text>
+  <text x="50" y="170" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$600</text>
+  <text x="50" y="220" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$400</text>
+  <text x="50" y="270" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$200</text>
+  <text x="50" y="320" text-anchor="end" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">$0</text>
+  
+  <!-- X-axis -->
+  <line x1="60" y1="320" x2="540" y2="320" stroke="#1D2630" stroke-width="2"/>
+  <text x="120" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q1 2023</text>
+  <text x="200" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q2 2023</text>
+  <text x="280" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q3 2023</text>
+  <text x="360" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q4 2023</text>
+  <text x="440" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q1 2024</text>
+  <text x="520" y="340" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Q2 2024</text>
+  
+  <!-- Price Bands -->
+  <!-- High Confidence Band -->
+  <rect x="80" y="180" width="400" height="60" fill="#3AA0FF" opacity="0.1" stroke="#3AA0FF" stroke-width="1"/>
+  <text x="90" y="175" fill="#3AA0FF" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10" font-weight="500">High Confidence Range</text>
+  
+  <!-- Medium Confidence Band -->
+  <rect x="80" y="160" width="400" height="100" fill="#6BA07A" opacity="0.1" stroke="#6BA07A" stroke-width="1"/>
+  <text x="90" y="155" fill="#6BA07A" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10" font-weight="500">Target Range</text>
+  
+  <!-- Historical Award Points -->
+  <circle cx="120" cy="200" r="4" fill="#3AA0FF"/>
+  <circle cx="200" cy="190" r="4" fill="#3AA0FF"/>
+  <circle cx="280" cy="210" r="4" fill="#3AA0FF"/>
+  <circle cx="360" cy="195" r="4" fill="#3AA0FF"/>
+  <circle cx="440" cy="185" r="4" fill="#3AA0FF"/>
+  <circle cx="520" cy="200" r="4" fill="#3AA0FF"/>
+  
+  <!-- Trend Line -->
+  <path d="M120,200 L200,190 L280,210 L360,195 L440,185 L520,200" stroke="#3AA0FF" stroke-width="2" fill="none"/>
+  
+  <!-- Current Price Prediction -->
+  <line x1="520" y1="180" x2="520" y2="220" stroke="#6BA07A" stroke-width="3"/>
+  <text x="530" y="200" fill="#6BA07A" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10" font-weight="600">Current Target</text>
+  
+  <!-- Confidence Indicators -->
+  <rect x="80" y="350" width="120" height="30" rx="4" fill="#121820" stroke="#1D2630" stroke-width="1"/>
+  <rect x="90" y="360" width="8" height="8" rx="4" fill="#3AA0FF"/>
+  <text x="105" y="368" fill="#E6EEF7" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">High Confidence</text>
+  
+  <rect x="220" y="350" width="120" height="30" rx="4" fill="#121820" stroke="#1D2630" stroke-width="1"/>
+  <rect x="230" y="360" width="8" height="8" rx="4" fill="#6BA07A"/>
+  <text x="245" y="368" fill="#E6EEF7" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Target Range</text>
+  
+  <rect x="360" y="350" width="120" height="30" rx="4" fill="#121820" stroke="#1D2630" stroke-width="1"/>
+  <rect x="370" y="360" width="8" height="8" rx="4" fill="#9AA7B2"/>
+  <text x="385" y="368" fill="#E6EEF7" font-family="IBM Plex Sans, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans" font-size="10">Historical Data</text>
+</svg>

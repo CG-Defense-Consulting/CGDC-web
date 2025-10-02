@@ -1,0 +1,44 @@
+<svg width="800" height="120" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B0F14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#121820;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="120" fill="url(#bgGradient)"/>
+  
+  <!-- Badge 1: NIST -->
+  <rect x="50" y="30" width="100" height="60" rx="8" fill="none" stroke="#3AA0FF" stroke-width="2"/>
+  <text x="100" y="50" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="12" font-weight="600">NIST</text>
+  <text x="100" y="65" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">800-171</text>
+  <text x="100" y="80" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Compliant</text>
+  
+  <!-- Badge 2: DFARS -->
+  <rect x="180" y="30" width="100" height="60" rx="8" fill="none" stroke="#6BA07A" stroke-width="2"/>
+  <text x="230" y="50" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="12" font-weight="600">DFARS</text>
+  <text x="230" y="65" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">252.204-7012</text>
+  <text x="230" y="80" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Ready</text>
+  
+  <!-- Badge 3: SAM.gov -->
+  <rect x="310" y="30" width="100" height="60" rx="8" fill="none" stroke="#3AA0FF" stroke-width="2"/>
+  <text x="360" y="50" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="12" font-weight="600">SAM.gov</text>
+  <text x="360" y="65" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Registered</text>
+  <text x="360" y="80" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Active</text>
+  
+  <!-- Badge 4: ITAR -->
+  <rect x="440" y="30" width="100" height="60" rx="8" fill="none" stroke="#6BA07A" stroke-width="2"/>
+  <text x="490" y="50" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="12" font-weight="600">ITAR</text>
+  <text x="490" y="65" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Aware</text>
+  <text x="490" y="80" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Processes</text>
+  
+  <!-- Badge 5: CAGE -->
+  <rect x="570" y="30" width="100" height="60" rx="8" fill="none" stroke="#3AA0FF" stroke-width="2"/>
+  <text x="620" y="50" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="12" font-weight="600">CAGE</text>
+  <text x="620" y="65" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Code</text>
+  <text x="620" y="80" text-anchor="middle" fill="#9AA7B2" font-family="IBM Plex Sans" font-size="9">Assigned</text>
+  
+  <!-- Title -->
+  <text x="400" y="20" text-anchor="middle" fill="#E6EEF7" font-family="IBM Plex Sans" font-size="14" font-weight="600">Compliance & Registration Status</text>
+</svg>
