@@ -166,8 +166,8 @@
         </div>
 
         <div class="band-visual">
-          <img src="images/guild-demo.png"
-               alt="Guild screen showing a unified RFQ queue, stage chips, and a timeline view with documents attached." />
+          <img src="images/tracker-demo.png"
+               alt="Guild screen showing current feature" />
         </div>
       </div>
     </section>
@@ -176,7 +176,7 @@
     <section class="section band alt" id="mentat">
       <div class="container-wide band-grid">
         <div class="band-visual">
-          <img src="images/mentat-pricing-placeholder.svg"
+          <img src="images/price-demo.png"
                alt="Mentat screen with price bands, confidence overlay, historical award markers, and scenario toggles." />
         </div>
 
@@ -210,7 +210,7 @@
       </div>
     </section>
 
-    <!-- ===== Trust & Compliance (tabs; text left, image right) ===== -->
+    <!-- ===== Trust & Compliance (tabs left, content right) ===== -->
     <section class="section band" id="trust">
       <div class="container-wide band-grid">
         <div class="band-copy">
@@ -223,27 +223,24 @@
               <button role="tab" aria-selected="false" aria-controls="trust-panel-register" id="trust-tab-register" tabindex="-1">Register</button>
               <button role="tab" aria-selected="false" aria-controls="trust-panel-audit" id="trust-tab-audit" tabindex="-1">Audit</button>
             </div>
-
-            <div class="tabpanels">
-              <div role="tabpanel" id="trust-panel-secure" aria-labelledby="trust-tab-secure">
-                <p>Role-based access, least-privilege defaults, and encrypted storage keep sensitive data controlled while teams collaborate.</p>
-              </div>
-              <div role="tabpanel" id="trust-panel-comply" aria-labelledby="trust-tab-comply" hidden>
-                <p>Built for NIST 800-171/DFARS workflows and ITAR-aware processes; controls and checklists live next to the work.</p>
-              </div>
-              <div role="tabpanel" id="trust-panel-register" aria-labelledby="trust-tab-register" hidden>
-                <p>Operate with the right rails—SAM.gov, PIEE/WAWF, JCP, CAGE—surfaced where they matter in the process.</p>
-              </div>
-              <div role="tabpanel" id="trust-panel-audit" aria-labelledby="trust-tab-audit" hidden>
-                <p>Every action, document, and decision is traceable; exports provide an end-to-end record from opportunity through invoicing.</p>
-              </div>
-            </div>
           </div>
         </div>
 
         <div class="band-visual">
-          <img src="images/trust-dashboard.png"
-               alt="Compliance dashboard showing access roles, control checks, and an exportable activity log." />
+          <div class="tabpanels">
+            <div role="tabpanel" id="trust-panel-secure" aria-labelledby="trust-tab-secure">
+              <p>Role-based access, least-privilege defaults, and encrypted storage keep sensitive data controlled while teams collaborate.</p>
+            </div>
+            <div role="tabpanel" id="trust-panel-comply" aria-labelledby="trust-tab-comply" hidden>
+              <p>Built for NIST 800-171/DFARS workflows and ITAR-aware processes; controls and checklists live next to the work.</p>
+            </div>
+            <div role="tabpanel" id="trust-panel-register" aria-labelledby="trust-tab-register" hidden>
+              <p>Operate with the right rails—SAM.gov, PIEE/WAWF, JCP, CAGE—surfaced where they matter in the process.</p>
+            </div>
+            <div role="tabpanel" id="trust-panel-audit" aria-labelledby="trust-tab-audit" hidden>
+              <p>Every action, document, and decision is traceable; exports provide an end-to-end record from opportunity through invoicing.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -270,22 +267,18 @@
         </div>
 
         <!-- Diagram below the row -->
-        <figure class="why-visual">
+        <!--<figure class="why-visual">
           <img src="images/ontology-schematic.svg"
                alt="Simple schematic: nodes for parts, processes, and rules connected by an ontology; arrows show guided steps." />
-        </figure>
+        </figure>-->
       </div>
     </section>
 
     <!-- Partners & Contact -->
     <section class="section contact" id="contact">
       <div class="container-narrow">
-        <p class="served" style="margin-bottom: 0;">
-          Built for <strong>Manufacturers</strong>, <strong>Suppliers/Distributors</strong>, and <strong>Logistics Partners</strong>
-        </p>
-        <p class="served-sub" style="margin-top: 0; margin-bottom: var(--gap-3); font-size: var(--body); color: var(--muted);">
-          Partner-integrated, not brokered
-        </p>
+        <h2 class="partners-title">Built for <strong>Manufacturers</strong>, <strong>Suppliers</strong>, and <strong>Logistics Partners</strong></h2>
+        <p class="partners-subtitle">Partner-integrated, not brokered</p>
         <a class="button primary" href="/schedule.html">Schedule a demo</a>
       </div>
     </section>

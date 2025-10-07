@@ -548,22 +548,45 @@
   groups.forEach(group => {
     const list = group.querySelector('.tablist');
     const tabs = list ? Array.from(list.querySelectorAll('[role="tab"]')) : [];
-    const panels = Array.from(group.querySelectorAll('[role="tabpanel"]'));
+    
+    // For Trust section, look for panels in the band-visual container
+    let panels;
+    if (group.dataset.tabs === 'trust') {
+      const bandSection = group.closest('.band');
+      const bandVisual = bandSection ? bandSection.querySelector('.band-visual') : null;
+      panels = bandVisual ? Array.from(bandVisual.querySelectorAll('[role="tabpanel"]')) : [];
+    } else {
+      panels = Array.from(group.querySelectorAll('[role="tabpanel"]'));
+    }
+    
     if (!tabs.length || !panels.length) return;
 
     const bandSection = group.closest('.band');
     const bandImage = bandSection ? bandSection.querySelector('[data-tab-image]') : null;
+    
 
     function activate(tab) {
       tabs.forEach(t => {
         const selected = t === tab;
         t.setAttribute('aria-selected', selected ? 'true' : 'false');
         t.tabIndex = selected ? 0 : -1;
-        const panel = group.querySelector('#' + t.getAttribute('aria-controls'));
+        
+        // For Trust section, look for panel in band-visual container
+        let panel;
+        if (group.dataset.tabs === 'trust') {
+          const bandSection = group.closest('.band');
+          const bandVisual = bandSection ? bandSection.querySelector('.band-visual') : null;
+          panel = bandVisual ? bandVisual.querySelector('#' + t.getAttribute('aria-controls')) : null;
+        } else {
+          panel = group.querySelector('#' + t.getAttribute('aria-controls'));
+        }
+        
         if (panel) panel.hidden = !selected;
       });
 
-      // Optional image swap (only if data present)
+      // Guild section image is static - no dynamic switching
+
+      // Optional image swap (only if data present) - for other sections
       const src = tab.dataset.img;
       const alt = tab.dataset.alt;
       if (bandImage && src) swapImage(bandImage, src, alt || bandImage.alt);

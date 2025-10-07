@@ -267,10 +267,32 @@ a:hover {
 .tabpanels { margin-top: var(--gap-3); }
 .tabpanels p { margin: 0; color: var(--muted); font-size: var(--body-lg); line-height: 1.65; }
 
+/* Guild tab visuals */
+#guild .tab-visual {
+  width: 100%;
+  height: auto;
+}
+
 /* Band grids already exist; ensure images look crisp */
 .band-visual img {
   width: 100%; height: auto; display: block;
   border-radius: var(--r-lg); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+  transition: opacity var(--normal) var(--easing);
+}
+
+/* Tab visual containers */
+.tab-visual {
+  width: 100%;
+  height: auto;
+}
+
+.tab-visual img {
+  width: 100%; 
+  height: auto; 
+  display: block;
+  border-radius: var(--r-lg); 
+  border: 1px solid var(--line); 
+  box-shadow: var(--shadow-1);
   transition: opacity var(--normal) var(--easing);
 }
 
@@ -1011,6 +1033,26 @@ a:hover {
   text-align: center;
 }
 
+.partners-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 var(--gap-2);
+  line-height: 1.2;
+}
+
+.partners-title strong {
+  color: var(--accent-1);
+  font-weight: 700;
+}
+
+.partners-subtitle {
+  font-size: var(--body-lg);
+  color: var(--muted);
+  margin: 0 0 var(--gap-4);
+  font-weight: 500;
+}
+
 .band-grid, .trust-grid {
   display: grid; 
   align-items: center; 
@@ -1021,6 +1063,25 @@ a:hover {
 .band.alt .band-grid { 
   grid-template-columns: 1fr 1.2fr; /* image left variant */
 }
+
+/* Trust section tab content styling */
+#trust .band-visual {
+  display: flex;
+  align-items: flex-start;
+  padding-top: calc(var(--h2) + var(--gap-2) + var(--gap-3)); /* Align with tabs */
+}
+
+#trust .band-visual .tabpanels {
+  margin-top: 0;
+}
+
+#trust .band-visual .tabpanels p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--body-lg);
+  line-height: 1.65;
+}
+
 
 .hero-visual img, .band-visual img, .why-visual img { 
   width: 100%; 
@@ -1154,6 +1215,12 @@ a:hover {
   .outcomes-grid {
     grid-template-columns: 1fr;
     gap: var(--gap-3);
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-title {
+    font-size: clamp(24px, 6vw, 36px);
   }
 }
 
