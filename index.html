@@ -29,6 +29,22 @@
   <meta name="theme-color" content="#0B0F14" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#F7FAFD" media="(prefers-color-scheme: light)">
 
+  <meta name="description" content = "CGDC connects manufacturers and suppliers with U.S. and international defense procurement with AI and Ontology systems. Experts in pricing, compliance, and strategy.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CG Defense Consulting LLC",
+    "url": "https://cgdefenseconsulting.com",
+    "logo": "https://cgdefenseconsulting.com/images/CG-logo1.ico",
+    "sameAs": [
+      "https://www.linkedin.com/company/cg-defense-consulting"
+    ]
+  }
+  </script>
+
+
   <!-- ICON -->
   <link rel="icon" type="image/x-icon" href="images/CG-logo1.ico" />
 
@@ -94,72 +110,48 @@
     </div>
   </section>
 
-  <!-- ===== Main Content ===== -->
-  <main id="content">
+  <!-- ===== Our Solutions (Custom Carousel, no external CSS/JS) ===== -->
+  <section id="solutions" class="solutions-carousel">
+    <div class="container">
+      <h2>Our Solutions</h2>
+      <p>Innovative systems to streamline your procurement, forecasting, and operational readiness.</p>
 
-    <!-- Outcomes band (three simple metrics) -->
-    <section class="section outcomes">
-      <div class="container-wide outcomes-grid">
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Time to Bid</h3>
-            <p>Minutes, not weeks.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="ttb">4.3 mins</div>
-            <div class="stat-label">Average time from contract scouted to bid submitted using Guild</div>
-          </div>
-        </div>
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Pricing Intelligence</h3>
-            <p>Data-backed target ranges and risk guards.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="pricing-band">±0.8%</div>
-            <div class="stat-label">Average error in predicting optimal quote, bid-winning quote using Mentat</div>
-          </div>
-        </div>
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Fulfillment Readiness</h3>
-            <p>Compliance, packaging, and documentation up front.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="readiness">100%</div>
-            <div class="stat-label">Pre-quote checklist completion using Guild</div>
-          </div>
-          
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Guild (tabs; text left, image right) ===== -->
-    <section class="section band" id="guild">
-      <div class="container-wide band-grid">
-        <div class="band-copy">
-          <h2>Guild — Opportunity & Execution</h2>
-
-          <div class="tabs" data-tabs="guild">
-            <div class="tablist" role="tablist" aria-label="Guild features">
-              <button role="tab" aria-selected="true" aria-controls="guild-panel-scout" id="guild-tab-scout">Scout</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-track" id="guild-tab-track" tabindex="-1">Track</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-document" id="guild-tab-document" tabindex="-1">Document</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-bid" id="guild-tab-bid" tabindex="-1">Bid</button>
-            </div>
-
-            <div class="tabpanels">
-              <div role="tabpanel" id="guild-panel-scout" aria-labelledby="guild-tab-scout">
-                <p>We continuously pull RFQs from SAM.gov and DIBBS into a single queue, de-duplicated and normalized so teams can move from discovery to action in minutes.</p>
+      <main class="carousel">
+        <div class="viewport">
+          <div class="track" id="solutions-track">
+            <article class="slide">
+              <!--<img src="images/solutionglobe.jpg" alt="AI Forecast Engine" />-->
+              <!--<img src="images/solutions_veo_global.gif" alt="" />-->
+              <video playsinline autoplay muted preload="auto" loop>
+              <source src="videos/solutions_veo_global.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video>
+              <div class="slide-caption">
+                <h3>Global Procurement Bridge</h3>
+                <p>Connecting international and domestic manufacturers to U.S procurement systems with streamlined contract management, organiation, and legal industry expertise.</p>
               </div>
-              <div role="tabpanel" id="guild-panel-track" aria-labelledby="guild-tab-track" hidden>
-                <p>Every opportunity flows through clear stages with partner confirmations, gating checks, and alerts—so status is obvious and Time to Bid stays short.</p>
+            </article>
+            <article class="slide">
+              <!--<img src="images/solutioncomputer.jpg" alt="Contract Automation" />-->
+              <!--<img src="images/solutions_veo_ai.gif" alt="Contract Automation" />-->
+              <video playsinline autoplay muted preload="auto" loop>
+              <source src="videos/solutions_veo_ai.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video>
+              <div class="slide-caption">
+                <h3>AI-Powered Time-to-Bid</h3>
+                <p>Reducing time-to-bid from weeks to minutes with advanced pricing analysis, streamlined AI workflows, and automated contract parsing.</p>
               </div>
-              <div role="tabpanel" id="guild-panel-document" aria-labelledby="guild-tab-document" hidden>
-                <p>Required files are generated and organized automatically—specs, packaging, labels, and forms—so the entire packet is ready before anyone asks.</p>
-              </div>
-              <div role="tabpanel" id="guild-panel-bid" aria-labelledby="guild-tab-bid" hidden>
-                <p>Submit clean, consistent quotes with the right attachments and price bands; handoffs are logged, and post-award tasks continue in the same timeline.</p>
+            </article>
+            <article class="slide">
+              <!--<img src="images/solutionspace.jpg" alt="Live Data Portal" />-->
+              <video playsinline autoplay muted preload="auto" loop>
+              <source src="videos/solutions_veo_platform.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video>
+              <div class="slide-caption">
+                <h3>Comprehensive Platform</h3>
+                <p>Delivering the end-to-end solution with everything needed to succeed in the U.S procurement market.</p>
               </div>
             </div>
           </div>
@@ -240,7 +232,26 @@
             <div role="tabpanel" id="trust-panel-audit" aria-labelledby="trust-tab-audit" hidden>
               <p>Every action, document, and decision is traceable; exports provide an end-to-end record from opportunity through invoicing.</p>
             </div>
-          </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ===== Our Tools ===== -->
+  <section id="our-tools">
+    <div class="container">
+      <h2>Our Tools</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h3>Guild</h3>
+          <p>Our flagship platform that sources, analyzes, and delivers contract opportunities directly to manufacturers in a single streamlined workflow.</p>
+          <a href="http://guild.cgdefenseconsulting.com" class="tool-login-link">Access Guild Platform</a>
+        </div>
+        <div class="tool-card">
+          <h3>Mentat</h3>
+          <p>An end-to-end supply chain–to–door recommendation system with smart autopricing for maximum efficiency and transparency.</p>
+          <a href="http://app.cgdefenseconsulting.com" class="tool-login-link">Access Mentat Platform</a>
         </div>
       </div>
     </section>
