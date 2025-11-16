@@ -40,7 +40,8 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/patterns.css" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Inter font (matching imprint.co aesthetic) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -61,8 +62,7 @@
 
       <ul id="login-menu" class="login-menu" role="menu">
         <li role="none"><a role="menuitem" href="https://guild.cgdefenseconsulting.com" rel="noopener">Guild</a></li>
-        <li role="none"><a role="menuitem" href="https://mentat.cgdefenseconsulting.com" rel="noopener">Mentat</a></li>
-        <li role="none"><a role="menuitem" href="/capital/" class="nav-capital">Capital</a></li>
+        <li role="none"><a role="menuitem" href="https://mentat.cgdefenseconsulting.com" rel="noopener" id="mentat-link" class="mentat-link">Mentat</a></li>
       </ul>
     </nav>
   </div>
@@ -78,10 +78,14 @@
     
     <div class="hero-content">
       <div class="hero-text">
-        <h1 class="rollup-h1">AI-powered OS for defense contracting</h1>
-        <p class="subhead rollup-subhead">From opportunity to delivery, automation built on a shared industry model.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/schedule.html">Schedule a Demo</a>
+        <h1 class="rollup-h1">Defense Technology for Procurement Readiness</h1>
+        <div class="hero-card">
+          <p class="hero-card-text"><strong>Coordinating large-scale</strong> manufacturing through<br>AI-powered systems</p>
+          <div class="hero-card-buttons">
+            <a href="#technology" class="hero-card-btn">Technology</a>
+            <a href="#global-strategy" class="hero-card-btn">Our Process</a>
+            <a href="/investors.html" class="hero-card-btn">Investors</a>
+          </div>
         </div>
       </div>
     </div>
@@ -95,161 +99,83 @@
     </div>
   </section>
 
+  <!-- ===== Main Navigation Bar ===== -->
+  <nav class="main-nav" id="main-nav">
+    <div class="main-nav-container">
+      <a href="#technology" class="nav-btn">Technology</a>
+      <a href="#global-strategy" class="nav-btn">Our Process</a>
+      <a href="/news-research.html" class="nav-btn">News & Research</a>
+      <a href="/investors.html" class="nav-btn">Investors</a>
+      <a href="https://guild.cgdefenseconsulting.com" class="nav-btn nav-btn-guild" target="_blank" rel="noopener">Guild Login</a>
+    </div>
+  </nav>
+
   <!-- ===== Main Content ===== -->
   <main id="content">
 
-    <!-- Outcomes band (three simple metrics) -->
-    <section class="section outcomes">
-      <div class="container-wide outcomes-grid">
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Time to Bid</h3>
-            <p>Minutes, not weeks.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="ttb">4.3 mins</div>
-            <div class="stat-label">Average time from contract scouted to bid submitted using Guild</div>
-          </div>
-        </div>
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Pricing Intelligence</h3>
-            <p>Data-backed target ranges and risk guards.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="pricing-band">±0.8%</div>
-            <div class="stat-label">Average error in predicting optimal quote, bid-winning quote using Mentat</div>
-          </div>
-        </div>
-        <div class="outcome-column">
-          <div class="metric">
-            <h3>Fulfillment Readiness</h3>
-            <p>Compliance, packaging, and documentation up front.</p>
-          </div>
-          <div class="stat">
-            <div class="stat-value" data-stat="readiness">100%</div>
-            <div class="stat-label">Pre-quote checklist completion using Guild</div>
-          </div>
-          
+    <!-- Company Description Section -->
+    <section class="section company-intro" id="company-intro">
+      <div class="company-intro-content">
+        <h2 class="company-intro-heading">Manufacturing coordination at&nbsp;scale.<br>Supporting defense readiness.</h2>
+        <p class="company-intro-text">We're your strategic execution partner, that takes point on the contract. Our technology leads the contract end to end by sourcing, analyzing, and coordinating every operation, aligning requirements with production, securing compliance and packaging, orchestrating logistics, and tracking milestones so manufacturers can focus on building and you move forward with confidence.</p>
+      </div>
+      <div class="company-intro-3d-container" id="company-intro-3d"></div>
+    </section>
+
+    <!-- ===== Our Technology ===== -->
+    <section id="technology">
+      <video id="technology-video" class="technology-video-bg" playsinline autoplay muted loop preload="auto" aria-label="Background video showing Guild platform">
+        <source src="videos/313116.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      
+      <div class="technology-scrim"></div>
+      
+      <div class="container-wide technology-layout">
+        <div class="technology-content">
+          <h2 class="technology-heading">
+            <span class="gradient-text">Guild</span> empowers for more
+          </h2>
+          <p class="technology-text">We've built an end-to-end procurement orchestration platform. Guild ingests defense data, uses AI-driven analysis to align supply chains, all while designed to fully support workflows that require government standards.</p>
         </div>
       </div>
     </section>
 
-    <!-- ===== Guild (tabs; text left, image right) ===== -->
-    <section class="section band" id="guild">
-      <div class="container-wide band-grid">
-        <div class="band-copy">
-          <h2>Guild — Opportunity & Execution</h2>
-
-          <div class="tabs" data-tabs="guild">
-            <div class="tablist" role="tablist" aria-label="Guild features">
-              <button role="tab" aria-selected="true" aria-controls="guild-panel-scout" id="guild-tab-scout">Scout</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-track" id="guild-tab-track" tabindex="-1">Track</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-document" id="guild-tab-document" tabindex="-1">Document</button>
-              <button role="tab" aria-selected="false" aria-controls="guild-panel-bid" id="guild-tab-bid" tabindex="-1">Bid</button>
+    <!-- ===== Global Strategy ===== -->
+    <section id="global-strategy" class="section global-strategy">
+      <div class="container-wide">
+        <h2 class="global-strategy-heading">Global Strategy</h2>
+      </div>
+      <div class="global-strategy-layout">
+        <div class="global-strategy-content">
+          <div class="globe-legend" role="list" aria-label="Global strategy phases">
+            <div class="legend-item" data-phase="source" role="listitem" tabindex="0">
+              <div class="legend-dot active" aria-hidden="true"></div>
+              <span>Source</span>
             </div>
-
-            <div class="tabpanels">
-              <div role="tabpanel" id="guild-panel-scout" aria-labelledby="guild-tab-scout">
-                <p>We continuously pull RFQs from SAM.gov and DIBBS into a single queue, de-duplicated and normalized so teams can move from discovery to action in minutes.</p>
-              </div>
-              <div role="tabpanel" id="guild-panel-track" aria-labelledby="guild-tab-track" hidden>
-                <p>Every opportunity flows through clear stages with partner confirmations, gating checks, and alerts—so status is obvious and Time to Bid stays short.</p>
-              </div>
-              <div role="tabpanel" id="guild-panel-document" aria-labelledby="guild-tab-document" hidden>
-                <p>Required files are generated and organized automatically—specs, packaging, labels, and forms—so the entire packet is ready before anyone asks.</p>
-              </div>
-              <div role="tabpanel" id="guild-panel-bid" aria-labelledby="guild-tab-bid" hidden>
-                <p>Submit clean, consistent quotes with the right attachments and price bands; handoffs are logged, and post-award tasks continue in the same timeline.</p>
-              </div>
+            <div class="legend-item" data-phase="coordinate" role="listitem" tabindex="0">
+              <div class="legend-dot" aria-hidden="true"></div>
+              <span>Coordinate</span>
+            </div>
+            <div class="legend-item" data-phase="deliver" role="listitem" tabindex="0">
+              <div class="legend-dot" aria-hidden="true"></div>
+              <span>Deliver</span>
             </div>
           </div>
+          <div class="globe-info-cards-container" id="globe-info-cards-container">
+            <!-- Info cards will be inserted here by JavaScript -->
+          </div>
         </div>
-
-        <div class="band-visual">
-          <img src="images/tracker-demo.png"
-               alt="Guild screen showing current feature" />
+        <div class="globe-container">
+          <div id="globe-container" class="globe-canvas-wrapper"></div>
         </div>
       </div>
     </section>
 
-    <!-- ===== Mentat (tabs; image left, text right) ===== -->
-    <section class="section band alt" id="mentat">
-      <div class="container-wide band-grid">
-        <div class="band-visual">
-          <img src="images/price-demo.png"
-               alt="Mentat screen with price bands, confidence overlay, historical award markers, and scenario toggles." />
-        </div>
-
-        <div class="band-copy">
-          <h2>Mentat — Pricing & Supply Chain Intelligence</h2>
-
-          <div class="tabs" data-tabs="mentat">
-            <div class="tablist" role="tablist" aria-label="Mentat features">
-              <button role="tab" aria-selected="true" aria-controls="mentat-panel-parse" id="mentat-tab-parse">Parse</button>
-              <button role="tab" aria-selected="false" aria-controls="mentat-panel-analyze" id="mentat-tab-analyze" tabindex="-1">Analyze</button>
-              <button role="tab" aria-selected="false" aria-controls="mentat-panel-predict" id="mentat-tab-predict" tabindex="-1">Predict</button>
-              <button role="tab" aria-selected="false" aria-controls="mentat-panel-compete" id="mentat-tab-compete" tabindex="-1">Compete</button>
-            </div>
-
-            <div class="tabpanels">
-              <div role="tabpanel" id="mentat-panel-parse" aria-labelledby="mentat-tab-parse">
-                <p>Award history, RFQs, BOMs, and logistics data are ingested and mapped to a shared model, turning messy inputs into comparable signals.</p>
-              </div>
-              <div role="tabpanel" id="mentat-panel-analyze" aria-labelledby="mentat-tab-analyze" hidden>
-                <p>Mentat learns cost drivers and competitor patterns to surface what matters—relevance, eligibility, and risk—without manual spreadsheet work.</p>
-              </div>
-              <div role="tabpanel" id="mentat-panel-predict" aria-labelledby="mentat-tab-predict" hidden>
-                <p>We produce target price bands with confidence levels and expected lead times, factoring current market conditions and constraints.</p>
-              </div>
-              <div role="tabpanel" id="mentat-panel-compete" aria-labelledby="mentat-tab-compete" hidden>
-                <p>Price-to-win guidance and scenario testing help you set margins intelligently while protecting fulfillment and on-time delivery.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Trust & Compliance (tabs left, content right) ===== -->
-    <section class="section band" id="trust">
-      <div class="container-wide band-grid">
-        <div class="band-copy">
-          <h2>Trust &amp; Compliance</h2>
-
-          <div class="tabs" data-tabs="trust">
-            <div class="tablist" role="tablist" aria-label="Trust & Compliance">
-              <button role="tab" aria-selected="true" aria-controls="trust-panel-secure" id="trust-tab-secure">Secure</button>
-              <button role="tab" aria-selected="false" aria-controls="trust-panel-comply" id="trust-tab-comply" tabindex="-1">Comply</button>
-              <button role="tab" aria-selected="false" aria-controls="trust-panel-register" id="trust-tab-register" tabindex="-1">Register</button>
-              <button role="tab" aria-selected="false" aria-controls="trust-panel-audit" id="trust-tab-audit" tabindex="-1">Audit</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="band-visual">
-          <div class="tabpanels">
-            <div role="tabpanel" id="trust-panel-secure" aria-labelledby="trust-tab-secure">
-              <p>Role-based access, least-privilege defaults, and encrypted storage keep sensitive data controlled while teams collaborate.</p>
-            </div>
-            <div role="tabpanel" id="trust-panel-comply" aria-labelledby="trust-tab-comply" hidden>
-              <p>Built for NIST 800-171/DFARS workflows and ITAR-aware processes; controls and checklists live next to the work.</p>
-            </div>
-            <div role="tabpanel" id="trust-panel-register" aria-labelledby="trust-tab-register" hidden>
-              <p>Operate with the right rails—SAM.gov, PIEE/WAWF, JCP, CAGE—surfaced where they matter in the process.</p>
-            </div>
-            <div role="tabpanel" id="trust-panel-audit" aria-labelledby="trust-tab-audit" hidden>
-              <p>Every action, document, and decision is traceable; exports provide an end-to-end record from opportunity through invoicing.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why it clicks -->
+    <!-- Why it Works -->
     <section class="section why" id="why">
       <div class="container-wide">
-        <h2>Why it clicks</h2>
+        <h2>Why it Works</h2>
 
         <!-- Three horizontal items -->
         <div class="why-row">
@@ -280,7 +206,7 @@
       <div class="container-narrow">
         <h2 class="partners-title">Built for <strong>Manufacturers</strong>, <strong>Suppliers</strong>, and <strong>Logistics Partners</strong></h2>
         <p class="partners-subtitle">Partner-integrated, not brokered</p>
-        <a class="button primary" href="/schedule.html">Schedule a demo</a>
+        <a class="button primary" href="#" onclick="return false;">Schedule a demo</a>
       </div>
     </section>
 
@@ -290,27 +216,77 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
-        <p>&copy; <span id="current-year">2025</span> CG Defense Consulting LLC.</p>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="https://www.linkedin.com/company/cg-defense-consulting/" target="_blank" rel="noopener">LinkedIn</a>
-          <!-- <span aria-hidden="true">·</span>
-          <a href="/careers/">Careers</a> -->
-          <span aria-hidden="true">·</span>
-          <a href="/capital/">Capital Partnerships</a>
-          <span aria-hidden="true">·</span>
-          <a href="#privacy">Privacy Policy</a>
-          <span aria-hidden="true">·</span>
-          <a href="#terms">Terms of Service</a>
-        </nav>
-        <p class="login-inline">Log in:
-          <a href="https://guild.cgdefenseconsulting.com" rel="noopener">Guild</a> ·
-          <a href="https://mentat.cgdefenseconsulting.com" rel="noopener">Mentat</a>
-        </p>
+        <div class="footer-columns">
+          <!-- Company Column -->
+          <div class="footer-column">
+            <h3 class="footer-column-title">Company</h3>
+            <ul class="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="#technology">Technology</a></li>
+              <li><a href="#global-strategy">Our Process</a></li>
+              <li><a href="/investors.html">Investors</a></li>
+              <li><a href="/news-research.html">News & Research</a></li>
+              <li><a href="https://www.linkedin.com/company/cg-defense-consulting/" target="_blank" rel="noopener">LinkedIn</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Resources Column -->
+          <div class="footer-column">
+            <h3 class="footer-column-title">Resources</h3>
+            <ul class="footer-links">
+              <li><a href="https://guild.cgdefenseconsulting.com" target="_blank" rel="noopener">Guild Login</a></li>
+              <li><a href="https://guild.cgdefenseconsulting.com" target="_blank" rel="noopener">Guild Support</a></li>
+              <li><a href="#technology">Platform Overview</a></li>
+              <li><a href="/news-research.html">Documentation</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal Column -->
+          <div class="footer-column footer-legal">
+            <h3 class="footer-column-title">Legal</h3>
+            <div class="footer-legal-text">
+              <p>This website and its content are provided for informational purposes only. Product visual representations, features, and capabilities may vary from current or future product experience.</p>
+              <p>CG Defense Consulting LLC ("CGDC") is a defense technology company providing large-scale manufacturing coordination and procurement readiness services. All services are subject to applicable laws, regulations, and contractual agreements.</p>
+              <p>Investment opportunities described on this website are informational only and do not constitute an offer to sell, or a solicitation of an offer to buy, any securities. All investments are subject to applicable securities laws and regulations. Past performance does not guarantee future results.</p>
+              <p>If an applicant accepts an offer or applies for services, we may conduct credit or background checks which may impact the applicant's credit score or standing.</p>
+              <p>All trademarks, service marks, and trade names referenced on this site are the property of their respective owners. CGDC and Guild are trademarks of CG Defense Consulting LLC.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <p>&copy; <span id="current-year">2025</span> CG Defense Consulting LLC. All rights reserved.</p>
+          <nav class="footer-bottom-nav" aria-label="Footer bottom navigation">
+            <a href="#privacy">Privacy Policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="#terms">Terms of Service</a>
+            <span aria-hidden="true">·</span>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
       </div>
     </div>
   </footer>
 
+  <!-- ===== Coming Soon Overlay ===== -->
+  <div id="coming-soon-overlay" class="coming-soon-overlay" hidden>
+    <div class="coming-soon-content">
+      <h1 class="coming-soon-title">Coming Soon</h1>
+      <p class="coming-soon-text">This site is currently under construction. We're working hard to bring you something amazing.</p>
+      <button class="btn btn-primary coming-soon-return-btn" id="return-to-main-btn">Return to Main Page</button>
+    </div>
+  </div>
+
   <!-- JavaScript -->
+  <!-- Three.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <!-- Globe.gl Library -->
+  <script src="https://unpkg.com/globe.gl@2.29.0/dist/globe.gl.min.js"></script>
+  <!-- Spinning Hardware 3D Component -->
+  <script src="js/components/SpinningHardware3D.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/globe.js"></script>
 </body>
 </html>

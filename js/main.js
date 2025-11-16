@@ -224,22 +224,75 @@
   }
 })();
 
-/* ============= Logo Overlay Effect ============= */
+/* ============= Logo Overlay Effect & Navigation Bar ============= */
 (function(){
   const logoOverlay = document.querySelector('.logo-overlay');
+  const heroSection = document.getElementById('hero');
+  const investorsHero = document.getElementById('investors-hero');
+  const mainNav = document.getElementById('main-nav');
+  const isInvestorsPage = document.body.classList.contains('investors-page');
   
-  if (logoOverlay) {
-    // Add subtle animation on scroll
-    window.addEventListener('scroll', () => {
+  // Only apply logo fade on homepage, not investors page
+  if (heroSection && !isInvestorsPage) {
+    let ticking = false;
+    
+    function updateScrollEffects() {
       const scrolled = window.scrollY;
-      if (scrolled > 50) {
-        logoOverlay.style.transform = 'scale(0.95)';
-        logoOverlay.style.opacity = '0.9';
-      } else {
-        logoOverlay.style.transform = 'scale(1)';
-        logoOverlay.style.opacity = '1';
+      const heroHeight = heroSection.offsetHeight;
+      
+      // Logo fade-out (only on homepage)
+      if (logoOverlay) {
+        const fadeProgress = Math.min(scrolled / heroHeight, 1);
+        const opacity = 1 - fadeProgress;
+        logoOverlay.style.opacity = Math.max(0, opacity);
+      }
+      
+      // Navigation bar fade-in
+      if (mainNav && !isInvestorsPage) {
+        // Start appearing when scrolled 30% through hero, fully visible when past hero
+        const navStartProgress = 0.3;
+        const navProgress = Math.max(0, (scrolled / heroHeight - navStartProgress) / (1 - navStartProgress));
+        const navOpacity = Math.min(1, navProgress);
+        
+        // Get the Guild Login button
+        const guildLoginBtn = mainNav.querySelector('.nav-btn-guild');
+        
+        if (navOpacity > 0) {
+          mainNav.style.opacity = navOpacity;
+          mainNav.style.transform = `translateY(${-20 * (1 - navOpacity)}px)`;
+          mainNav.style.pointerEvents = navOpacity > 0.5 ? 'auto' : 'none';
+          
+          // Change "Guild Login" to "Login" when menu appears
+          if (guildLoginBtn && navOpacity > 0.5) {
+            guildLoginBtn.textContent = 'Login';
+          }
+        } else {
+          mainNav.style.opacity = '0';
+          mainNav.style.transform = 'translateY(-20px)';
+          mainNav.style.pointerEvents = 'none';
+          
+          // Change back to "Guild Login" when menu is hidden
+          if (guildLoginBtn) {
+            guildLoginBtn.textContent = 'Guild Login';
+          }
+        }
+      }
+      
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollEffects);
+        ticking = true;
       }
     });
+    
+    // Initial call
+    updateScrollEffects();
+  } else if (isInvestorsPage && logoOverlay) {
+    // On investors page, keep logo always visible
+    logoOverlay.style.opacity = '1';
   }
 })();
 
@@ -264,6 +317,12 @@
     sections.forEach(section => {
       observer.observe(section);
     });
+    
+    // Observe company intro content specifically for fade-in from above
+    const companyIntroContent = document.querySelector('.company-intro-content');
+    if (companyIntroContent) {
+      observer.observe(companyIntroContent);
+    }
   });
 })();
 
@@ -272,6 +331,54 @@
   const currentYearElement = document.getElementById('current-year');
   if (currentYearElement) {
     currentYearElement.textContent = new Date().getFullYear();
+  }
+})();
+
+/* ============= Spinning Hardware 3D Component ============= */
+(function() {
+  'use strict';
+  
+  // Initialize 3D hardware component in company overview section
+  function initHardware3D() {
+    const container = document.getElementById('company-intro-3d');
+    if (!container || typeof window.SpinningHardware3D === 'undefined') {
+      return;
+    }
+    
+    // Create and initialize the component
+    const hardware3D = new window.SpinningHardware3D({
+      variant: 'screw',
+      size: 300,
+      color: '#666666',
+      speed: 0.015,
+      container: container
+    });
+    
+    // Store reference for cleanup if needed
+    window.companyIntroHardware3D = hardware3D;
+  }
+  
+  // Wait for DOM and Three.js to be ready
+  function waitForThreeJS(callback, maxAttempts = 50) {
+    let attempts = 0;
+    const checkInterval = setInterval(() => {
+      attempts++;
+      if (typeof window.THREE !== 'undefined' && typeof window.SpinningHardware3D !== 'undefined') {
+        clearInterval(checkInterval);
+        callback();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(checkInterval);
+        console.warn('SpinningHardware3D: Three.js or component not loaded after timeout');
+      }
+    }, 50);
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      waitForThreeJS(initHardware3D);
+    });
+  } else {
+    waitForThreeJS(initHardware3D);
   }
 })();
 
@@ -525,6 +632,36 @@
   });
 })();
 
+// Coming Soon overlay for Mentat
+(function () {
+  const mentatLink = document.getElementById('mentat-link');
+  const comingSoonOverlay = document.getElementById('coming-soon-overlay');
+  const returnBtn = document.getElementById('return-to-main-btn');
+  
+  if (!mentatLink || !comingSoonOverlay || !returnBtn) return;
+
+  // Show coming soon overlay when Mentat link is clicked
+  mentatLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    comingSoonOverlay.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  });
+
+  // Return to main page
+  returnBtn.addEventListener('click', () => {
+    comingSoonOverlay.setAttribute('hidden', '');
+    document.body.style.overflow = ''; // Restore scrolling
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !comingSoonOverlay.hasAttribute('hidden')) {
+      comingSoonOverlay.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+
 // Accessible tabs with optional image swapping per group
 (function tabsController() {
   function initTabs() {
@@ -616,5 +753,290 @@
     document.addEventListener('DOMContentLoaded', initTabs);
   } else {
     initTabs();
+  }
+})();
+
+/* ============= Company Intro Scroll-Based Animation ============= */
+(function() {
+  const companyIntroSection = document.getElementById('company-intro');
+  if (!companyIntroSection) return;
+  
+  const statBoxes = companyIntroSection.querySelectorAll('.company-stat-box');
+  if (statBoxes.length === 0) return;
+  
+  let allBoxesVisible = false;
+  const scrollDistancePerBox = 200; // pixels of scroll per box
+  let animationStartScroll = null; // Scroll position when animation starts
+  const totalScrollNeeded = statBoxes.length * scrollDistancePerBox; // Total scroll needed for all boxes
+  
+  // Update box opacity based on scroll position
+  function updateBoxAnimations() {
+    const rect = companyIntroSection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const sectionTop = rect.top;
+    const sectionBottom = rect.bottom;
+    const currentScroll = window.scrollY || window.pageYOffset || 
+                          document.documentElement.scrollTop || 
+                          document.body.scrollTop || 0;
+    
+    // Calculate scroll progress
+    let scrollProgress = 0;
+    
+    // Check if section is in viewport
+    if (sectionTop <= viewportHeight && sectionBottom > 0) {
+      // Initialize animation start position when section first enters viewport
+      if (animationStartScroll === null) {
+        animationStartScroll = currentScroll;
+      }
+      
+      // Calculate how much has scrolled since animation started
+      scrollProgress = Math.max(0, currentScroll - animationStartScroll);
+    } else if (sectionBottom <= 0 && animationStartScroll !== null) {
+      // Section is fully scrolled past - all boxes should be visible
+      scrollProgress = totalScrollNeeded;
+      allBoxesVisible = true;
+    } else if (sectionTop > viewportHeight) {
+      // Section not yet in viewport - reset
+      animationStartScroll = null;
+      scrollProgress = 0;
+      allBoxesVisible = false;
+    }
+    
+    let allVisible = true;
+    
+    statBoxes.forEach((box, index) => {
+      const boxStart = index * scrollDistancePerBox;
+      const boxEnd = (index + 1) * scrollDistancePerBox;
+      
+      let opacity = 0;
+      
+      if (scrollProgress >= boxEnd) {
+        // Box fully visible
+        opacity = 1;
+        box.classList.add('visible');
+      } else if (scrollProgress >= boxStart) {
+        // Box fading in
+        const localProgress = (scrollProgress - boxStart) / scrollDistancePerBox;
+        opacity = Math.max(0, Math.min(1, localProgress));
+        box.classList.add('visible');
+        allVisible = false;
+      } else {
+        // Box not visible yet
+        opacity = 0;
+        box.classList.remove('visible');
+        allVisible = false;
+      }
+      
+      box.style.opacity = opacity.toString();
+    });
+    
+    // Update all boxes visible state
+    allBoxesVisible = allVisible && scrollProgress >= totalScrollNeeded;
+    
+    return allBoxesVisible;
+  }
+  
+  // Handle scroll events
+  let ticking = false;
+  
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateBoxAnimations();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Prevent wheel events from scrolling past until all boxes visible
+  window.addEventListener('wheel', (e) => {
+    if (allBoxesVisible) return; // Allow scrolling once all boxes are visible
+    
+    const rect = companyIntroSection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const currentScroll = window.scrollY || window.pageYOffset || 
+                          document.documentElement.scrollTop || 
+                          document.body.scrollTop || 0;
+    
+    // Only prevent if section is in viewport and scrolling down
+    if (rect.bottom > 0 && rect.top < viewportHeight && e.deltaY > 0 && animationStartScroll !== null) {
+      // Calculate the scroll position we need to reach to show all boxes
+      const requiredScroll = animationStartScroll + totalScrollNeeded;
+      
+      // Only prevent if we haven't scrolled enough to show all boxes yet
+      if (currentScroll < requiredScroll - 10) {
+        // Check if this scroll would take us past the required point
+        const nextScroll = currentScroll + e.deltaY;
+        if (nextScroll > requiredScroll) {
+          // Allow scrolling but cap it at the required point
+          e.preventDefault();
+          window.scrollTo({
+            top: requiredScroll,
+            behavior: 'auto'
+          });
+          return false;
+        }
+      }
+    }
+  }, { passive: false });
+  
+  // Initial update
+  updateBoxAnimations();
+  
+  // Also listen for resize
+  window.addEventListener('resize', () => {
+    animationStartScroll = null; // Reset on resize
+    updateBoxAnimations();
+  }, { passive: true });
+})();
+
+/* ============= Process Section Fade-in Animation ============= */
+(function() {
+  // Process steps removed - section deleted
+  return;
+  
+  const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Stop observing once visible
+      }
+    });
+  }, observerOptions);
+  
+  // Process steps removed - section deleted
+  // Observe each process step
+  [].forEach((step, index) => {
+    // Add slight delay for staggered effect
+    setTimeout(() => {
+      // observer.observe(step);
+    }, index * 100);
+  });
+})();
+
+/* ============= Technology Section Scroll Animation ============= */
+(function() {
+  'use strict';
+  
+  // Ensure video loops continuously
+  function setupVideoLoop() {
+    const techVideo = document.getElementById('technology-video');
+    if (techVideo) {
+      // Set loop attribute
+      techVideo.loop = true;
+      techVideo.setAttribute('loop', '');
+      
+      // Multiple event listeners to ensure seamless looping
+      const restartVideo = () => {
+        techVideo.currentTime = 0;
+        const playPromise = techVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Ignore play errors (video might be paused or not ready)
+          });
+        }
+      };
+      
+      // Listen for 'ended' event as fallback
+      techVideo.addEventListener('ended', restartVideo, { once: false });
+      
+      // Also listen for 'timeupdate' to catch near-end and restart early for seamless loop
+      techVideo.addEventListener('timeupdate', () => {
+        // If video is very close to end (within 0.05 seconds), restart immediately
+        // This prevents any visible gap at the end
+        if (techVideo.duration && techVideo.currentTime >= techVideo.duration - 0.05) {
+          techVideo.currentTime = 0;
+        }
+      });
+      
+      // Ensure video is playing
+      const playPromise = techVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Ignore initial play errors (autoplay might be blocked)
+        });
+      }
+      
+      // Monitor and restart if video stops for any reason
+      let lastTime = techVideo.currentTime;
+      const monitorInterval = setInterval(() => {
+        if (techVideo.paused && !techVideo.ended) {
+          techVideo.play().catch(() => {});
+        }
+        // If video time hasn't changed but it's not paused, restart
+        if (techVideo.currentTime === lastTime && !techVideo.paused && techVideo.readyState >= 2) {
+          if (techVideo.currentTime > 0.1) {
+            restartVideo();
+          }
+        }
+        lastTime = techVideo.currentTime;
+      }, 1000);
+      
+      // Clean up interval when video element is removed
+      techVideo.addEventListener('loadstart', () => {
+        clearInterval(monitorInterval);
+      });
+    }
+  }
+  
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) {
+    // If reduced motion, just show content immediately
+    const techHeading = document.querySelector('.technology-heading');
+    const techText = document.querySelector('.technology-text');
+    if (techHeading) techHeading.classList.add('animate-in');
+    if (techText) techText.classList.add('animate-in');
+    return;
+  }
+  
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const techHeading = entry.target.querySelector('.technology-heading');
+        const techText = entry.target.querySelector('.technology-text');
+        
+        if (techHeading) {
+          techHeading.classList.add('animate-in');
+        }
+        
+        if (techText) {
+          techText.classList.add('animate-in');
+        }
+        
+        observer.unobserve(entry.target); // Stop observing once animated
+      }
+    });
+  }, observerOptions);
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setupVideoLoop();
+      const techSection = document.getElementById('technology');
+      if (techSection) {
+        observer.observe(techSection);
+      }
+    });
+  } else {
+    setupVideoLoop();
+    const techSection = document.getElementById('technology');
+    if (techSection) {
+      observer.observe(techSection);
+    }
   }
 })();
