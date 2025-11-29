@@ -2007,7 +2007,7 @@ a:hover {
   position: relative;
   border-radius: var(--r-lg);
   overflow: visible;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
   background: #FFFFFF;
 }
 
@@ -2134,6 +2134,56 @@ a:hover {
 .pause-motion-btn:focus {
   outline: 2px solid #4A9EFF;
   outline-offset: 2px;
+}
+
+/* Globe pause/restart button */
+.globe-pause-btn {
+  position: absolute;
+  bottom: var(--gap-2);
+  right: var(--gap-2);
+  padding: var(--gap-2) var(--gap-3);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #0C1218;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-1);
+  font-size: var(--body-sm);
+  font-weight: 500;
+  transition: all var(--fast) var(--easing);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.globe-pause-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.globe-pause-btn:focus {
+  outline: 2px solid #4A9EFF;
+  outline-offset: 2px;
+}
+
+.globe-pause-btn.paused .pause-icon::before {
+  content: '▶';
+}
+
+.globe-pause-btn:not(.paused) .pause-icon::before {
+  content: '⏸';
+}
+
+.globe-pause-btn .pause-text {
+  display: inline-block;
+}
+
+.pause-icon {
+  font-size: 1em;
+  line-height: 1;
 }
 
 /* Responsive */

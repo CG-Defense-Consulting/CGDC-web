@@ -141,23 +141,23 @@
       </div>
     </section>
 
-    <!-- ===== Global Strategy ===== -->
+    <!-- ===== Our Process ===== -->
     <section id="global-strategy" class="section global-strategy">
       <div class="container-wide">
-        <h2 class="global-strategy-heading">Global Strategy</h2>
+        <h2 class="global-strategy-heading">Our Process</h2>
       </div>
       <div class="global-strategy-layout">
         <div class="global-strategy-content">
-          <div class="globe-legend" role="list" aria-label="Global strategy phases">
-            <div class="legend-item" data-phase="source" role="listitem" tabindex="0">
+          <div class="globe-legend" role="list" aria-label="Our process phases">
+            <div class="legend-item" data-phase="source" role="listitem" tabindex="0" style="cursor: pointer;">
               <div class="legend-dot active" aria-hidden="true"></div>
               <span>Source</span>
             </div>
-            <div class="legend-item" data-phase="coordinate" role="listitem" tabindex="0">
+            <div class="legend-item" data-phase="coordinate" role="listitem" tabindex="0" style="cursor: pointer;">
               <div class="legend-dot" aria-hidden="true"></div>
               <span>Coordinate</span>
             </div>
-            <div class="legend-item" data-phase="deliver" role="listitem" tabindex="0">
+            <div class="legend-item" data-phase="deliver" role="listitem" tabindex="0" style="cursor: pointer;">
               <div class="legend-dot" aria-hidden="true"></div>
               <span>Deliver</span>
             </div>
@@ -168,6 +168,10 @@
         </div>
         <div class="globe-container">
           <div id="globe-container" class="globe-canvas-wrapper"></div>
+          <button id="globe-pause-btn" class="globe-pause-btn" aria-label="Pause animation">
+            <span class="pause-icon"></span>
+            <span class="pause-text">Pause</span>
+          </button>
         </div>
       </div>
     </section>
