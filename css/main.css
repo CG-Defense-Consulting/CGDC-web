@@ -1919,7 +1919,7 @@ a:hover {
   padding: var(--gap-2) var(--gap-3);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
-  background: var(--bg-1);
+  background: linear-gradient(135deg, rgba(77,214,255,0.08), rgba(15,23,42,0.4));
   box-shadow: var(--shadow-1);
 }
 
@@ -1927,6 +1927,48 @@ a:hover {
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
+  display: flex;
+  gap: var(--gap-2);
+  align-items: baseline;
+}
+
+.phase-label {
+  display: none;
+}
+
+.phase-body {
+  color: var(--ink);
+  font-size: var(--body);
+}
+
+/* HUD boxes for coordinate phase */
+.hud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hud-box {
+  position: absolute;
+  background: rgba(15, 20, 30, 0.85);
+  border: 1px solid rgba(80, 125, 255, 0.6);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: "IBM Plex Mono", "Inter Tight", monospace;
+  font-size: 11px;
+  color: #C8D2FF;
+  box-shadow: 0 0 6px rgba(80,125,255,0.4);
+  transform: translate(-50%, -100%) scale(0.9);
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(.33,1,.68,1), transform 350ms cubic-bezier(.33,1,.68,1);
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.hud-box.visible {
+  opacity: 1;
+  transform: translate(-50%, -100%) scale(1);
 }
 
 .ai-strategy-legend .legend-item {
