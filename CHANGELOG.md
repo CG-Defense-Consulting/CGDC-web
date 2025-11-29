@@ -1,7 +1,7 @@
-# CGDC Website Redesign - Changelog
+# CG Group Website Redesign - Changelog
 
 ## Overview
-Complete visual and UX overhaul of the CG Defense Consulting website, implementing a modern, Palantir-inspired design system with dark-first UI and premium micro-interactions.
+Complete visual and UX overhaul of the CG Group website, implementing a modern, Palantir-inspired design system with dark-first UI and premium micro-interactions.
 
 ## Design System & Visual Changes
 

@@ -1,4 +1,4 @@
-# CGDC Rebrand
+# CG Group Rebrand
 
 **Structure**
 

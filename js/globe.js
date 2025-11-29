@@ -1,1078 +1,582 @@
-/* ============= Global Strategy 3D Globe ============= */
+/* ============= AI Operational Picture Globe ============= */
 (function() {
   'use strict';
 
-  // Coordinates (lat, lng) - Internal notes for tuning destinations
-  const NYC_COORDS = { lat: 40.7128, lng: -74.0060 }; // New York City
-  const NY_STATE_CENTER = { lat: 42.1657, lng: -74.9481 }; // New York State center
-  
-  // All 50 US States with approximate center coordinates
-  const ALL_US_STATES = [
-    { name: 'Alabama', lat: 32.806671, lng: -86.791130 },
-    { name: 'Alaska', lat: 61.370716, lng: -152.404419 },
-    { name: 'Arizona', lat: 33.729759, lng: -111.431221 },
-    { name: 'Arkansas', lat: 34.969704, lng: -92.373123 },
-    { name: 'California', lat: 36.116203, lng: -119.681564 },
-    { name: 'Colorado', lat: 39.059811, lng: -105.311104 },
-    { name: 'Connecticut', lat: 41.597782, lng: -72.755371 },
-    { name: 'Delaware', lat: 39.318523, lng: -75.507141 },
-    { name: 'Florida', lat: 27.766279, lng: -81.686783 },
-    { name: 'Georgia', lat: 33.040619, lng: -83.643074 },
-    { name: 'Hawaii', lat: 21.094318, lng: -157.498337 },
-    { name: 'Idaho', lat: 44.240459, lng: -114.478828 },
-    { name: 'Illinois', lat: 40.349457, lng: -88.986137 },
-    { name: 'Indiana', lat: 39.849426, lng: -86.258278 },
-    { name: 'Iowa', lat: 42.011539, lng: -93.210526 },
-    { name: 'Kansas', lat: 38.526600, lng: -96.726486 },
-    { name: 'Kentucky', lat: 37.668140, lng: -84.670067 },
-    { name: 'Louisiana', lat: 31.169546, lng: -91.867805 },
-    { name: 'Maine', lat: 44.323535, lng: -69.765261 },
-    { name: 'Maryland', lat: 39.063946, lng: -76.802101 },
-    { name: 'Massachusetts', lat: 42.230171, lng: -71.530106 },
-    { name: 'Michigan', lat: 43.326618, lng: -84.536095 },
-    { name: 'Minnesota', lat: 45.694454, lng: -93.900192 },
-    { name: 'Mississippi', lat: 32.741646, lng: -89.678696 },
-    { name: 'Missouri', lat: 38.456085, lng: -92.288368 },
-    { name: 'Montana', lat: 46.921925, lng: -110.454353 },
-    { name: 'Nebraska', lat: 41.125370, lng: -98.268082 },
-    { name: 'Nevada', lat: 38.313515, lng: -117.055374 },
-    { name: 'New Hampshire', lat: 43.452492, lng: -71.563896 },
-    { name: 'New Jersey', lat: 40.298904, lng: -74.521011 },
-    { name: 'New Mexico', lat: 34.840515, lng: -106.248482 },
-    { name: 'New York', lat: 42.165726, lng: -74.948051 },
-    { name: 'North Carolina', lat: 35.630066, lng: -79.806419 },
-    { name: 'North Dakota', lat: 47.528912, lng: -99.784012 },
-    { name: 'Ohio', lat: 40.388783, lng: -82.764915 },
-    { name: 'Oklahoma', lat: 35.565342, lng: -96.928917 },
-    { name: 'Oregon', lat: 44.572021, lng: -122.070938 },
-    { name: 'Pennsylvania', lat: 40.590752, lng: -77.209755 },
-    { name: 'Rhode Island', lat: 41.680893, lng: -71.51178 },
-    { name: 'South Carolina', lat: 33.856892, lng: -80.945007 },
-    { name: 'South Dakota', lat: 44.299782, lng: -99.438828 },
-    { name: 'Tennessee', lat: 35.747845, lng: -86.692345 },
-    { name: 'Texas', lat: 31.054487, lng: -97.563461 },
-    { name: 'Utah', lat: 40.150032, lng: -111.862434 },
-    { name: 'Vermont', lat: 44.26639, lng: -72.580536 },
-    { name: 'Virginia', lat: 37.769337, lng: -78.169968 },
-    { name: 'Washington', lat: 47.400902, lng: -121.490494 },
-    { name: 'West Virginia', lat: 38.491226, lng: -80.954453 },
-    { name: 'Wisconsin', lat: 44.268543, lng: -89.616508 },
-    { name: 'Wyoming', lat: 41.145548, lng: -107.302490 }
-  ];
-  
-  // Current random states for this animation cycle
-  let currentCoordinateStates = [];
-  let currentDeliverState = null;
-
-  let globe = null;
-  let isPaused = false;
-  let isInitialized = false;
-  let animationFrameId = null;
-  let arcAnimationTimers = [];
-  let countriesData = null;
-  let usStatesData = null;
-  let currentPhase = 'source'; // 'source', 'coordinate', 'deliver'
-  let animationSequenceStarted = false;
-  
-  // Generate random coordinate states (2-6 states)
-  function getRandomCoordinateStates() {
-    const numStates = Math.floor(Math.random() * 5) + 2; // 2-6 states
-    const shuffled = [...ALL_US_STATES].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, numStates);
-  }
-  
-  // Generate random deliver state (1 state)
-  function getRandomDeliverState() {
-    const randomIndex = Math.floor(Math.random() * ALL_US_STATES.length);
-    return ALL_US_STATES[randomIndex];
-  }
-
-  // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!window.VisualUtils) { console.warn('VisualUtils missing'); return; }
+  let countriesCache = null;
+  let globe = null;
+  let beam = null;
+  let scanline = null;
+  let particleMesh = null;
+  let burstMesh = null;
+  let coordRingsGroup = null;
+  let animationId = null;
+  let currentPhase = 'source';
+  let loopTimer = null;
+  let lastUserInteraction = Date.now();
+  const PARTICLE_COUNT = 18;
+  const BURST_COUNT = 12;
+  let particleState = [];
+  let burstState = [];
 
-  // Load US states GeoJSON data
-  async function loadUSStatesData() {
-    if (usStatesData) return Promise.resolve();
-    
-    // Try multiple reliable sources
-    const sources = [
-      'https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json',
-      'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json',
-      'https://raw.githubusercontent.com/geojson/geojson-rewind/master/test/data/us-states.geojson'
-    ];
-    
-    for (const source of sources) {
-      try {
-        const response = await fetch(source);
-        if (!response.ok) continue;
-        const data = await response.json();
-        // Check if it's a FeatureCollection with features array
-        if (data.features && Array.isArray(data.features)) {
-          usStatesData = data.features;
-          return Promise.resolve();
-        }
-        // If it's already an array of features
-        if (Array.isArray(data)) {
-          usStatesData = data;
-          return Promise.resolve();
-        }
-      } catch (error) {
-        console.warn(`Failed to load from ${source}:`, error);
-        continue;
-      }
-    }
-    
-    console.warn('Could not load US states data from any source');
-    usStatesData = [];
-    return Promise.resolve();
-  }
-  
-  // Load country GeoJSON data (for world context)
-  async function loadCountryData() {
-    if (countriesData) return Promise.resolve();
-    
-    try {
-      const response = await fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson');
-      const data = await response.json();
-      countriesData = data.features;
-      return Promise.resolve();
-    } catch (error) {
-      console.warn('Could not load country data, using fallback:', error);
-      countriesData = [];
-      return Promise.resolve();
-    }
-  }
+  // Core nodes for phases
+  const NODES = [
+    { id: 'nyc', label: 'NYC Hub', lat: 40.71, lng: -74.0, type: 'hub' },
+    { id: 'la', label: 'West Coast Supplier', lat: 34.05, lng: -118.25, type: 'supplier' },
+    { id: 'dfw', label: 'QA / DCMA', lat: 32.7767, lng: -96.7970, type: 'qa' },
+    { id: 'frankfurt', label: 'EU Logistics', lat: 50.1109, lng: 8.6821, type: 'logistics' },
+    { id: 'seoul', label: 'APAC Supplier', lat: 37.5665, lng: 126.9780, type: 'supplier' },
+    { id: 'singapore', label: 'Forward Staging', lat: 1.3521, lng: 103.8198, type: 'delivery' },
+    { id: 'anchorage', label: 'Polar Transit', lat: 61.2181, lng: -149.9003, type: 'logistics' }
+  ];
 
-  // Create globe with US state outlines
-  function createGlobeWithStates(container) {
-    if (!container) {
-      console.error('Cannot create globe: container missing');
-      return;
+  // Phase configurations
+  const PHASES = {
+    source: {
+      rings: ['la', 'seoul'],
+      highlightNodes: ['la', 'seoul', 'nyc'],
+      arcs: [
+        { from: 'la', to: 'nyc', color: ['#4DD6FF', '#4DD6FF'] },
+        { from: 'seoul', to: 'nyc', color: ['#4DD6FF', '#4DD6FF'] }
+      ]
+    },
+    coordinate: {
+      rings: ['nyc', 'frankfurt', 'dfw'],
+      highlightNodes: ['nyc', 'frankfurt', 'dfw'],
+      arcs: [
+        { from: 'nyc', to: 'frankfurt', color: ['#4DD6FF', '#F37514'] },
+        { from: 'nyc', to: 'dfw', color: ['#4DD6FF', '#4DD6FF'] },
+        { from: 'frankfurt', to: 'anchorage', color: ['#F37514', '#4DD6FF'] }
+      ]
+    },
+    deliver: {
+      rings: ['singapore', 'anchorage'],
+      highlightNodes: ['singapore', 'anchorage', 'nyc'],
+      arcs: [
+        { from: 'nyc', to: 'singapore', color: ['#F37514', '#F37514'] },
+        { from: 'anchorage', to: 'singapore', color: ['#4DD6FF', '#F37514'] }
+      ]
     }
-
-    try {
-      // Combine US states and countries for full context
-      const allPolygons = [...(usStatesData || []), ...(countriesData || [])];
-      
-      // Optimize: Cache US state names for faster lookup
-      const usStateNames = new Set();
-      if (usStatesData && usStatesData.length > 0) {
-        usStatesData.forEach(state => {
-          if (state.properties && state.properties.name) {
-            usStateNames.add(state.properties.name);
-          }
-        });
-      }
-      
-      // Track highlighted states for filling
-      let highlightedStates = new Set();
-      let stateColors = new Map();
-      
-      // Create globe instance with solid, opaque globe
-      globe = Globe()
-        .globeImageUrl(null) // No texture for clean vectorized look
-        .backgroundImageUrl(null)
-        .backgroundColor('#FFFFFF')
-        .showAtmosphere(true)
-        .atmosphereColor('#4A9EFF')
-        .atmosphereAltitude(0.15)
-        .polygonsData(allPolygons)
-        .polygonCapColor((d) => {
-          // Fill highlighted states with their colors, otherwise use solid white
-          const stateName = d.properties && d.properties.name;
-          if (stateName && highlightedStates.has(stateName)) {
-            // Return the color for this state from the map
-            return stateColors.get(stateName) || 'rgba(255, 255, 255, 0.95)';
-          }
-          return 'rgba(255, 255, 255, 0.95)'; // Solid white fill for opaque globe
-        })
-        .polygonSideColor(() => 'rgba(255, 255, 255, 0.9)') // Solid white sides
-        .polygonStrokeColor((d) => {
-          // US states get slightly bolder outlines (optimized lookup)
-          const isUSState = d.properties && d.properties.name && usStateNames.has(d.properties.name);
-          return isUSState ? 'rgba(74, 158, 255, 0.6)' : 'rgba(74, 158, 255, 0.3)';
-        })
-        .polygonAltitude(0.01) // Slight elevation for depth
-        (container);
-      
-      // Store highlighted states set and color map on globe for access
-      globe._highlightedStates = highlightedStates;
-      globe._stateColors = stateColors;
-
-      if (!globe) {
-        console.error('Failed to create globe instance');
-        return;
-      }
-    } catch (error) {
-      console.error('Error creating globe:', error);
-      return;
+  };
+  const PHASE_VISUALS = {
+    source: {
+      particleColor: '#4DD6FF',
+      arcStroke: 1.4,
+      arcDashTime: 5200,
+      heatTop: 'rgba(77,214,255,0.18)',
+      heatSide: 'rgba(77,214,255,0.12)'
+    },
+    coordinate: {
+      particleColor: '#4DD6FF',
+      arcStroke: 1.8,
+      arcDashTime: 4200,
+      heatTop: 'rgba(77,214,255,0.14)',
+      heatSide: 'rgba(77,214,255,0.1)'
+    },
+    deliver: {
+      particleColor: '#F37514',
+      arcStroke: 2.1,
+      arcDashTime: 3600,
+      heatTop: 'rgba(243,117,20,0.18)',
+      heatSide: 'rgba(77,214,255,0.12)'
     }
+  };
+  const PHASE_TEXT = {
+    source: 'Source: Discovery, intake, and supplier alignment initiated.',
+    coordinate: 'Coordinate: QA/DCMA workflows, logistics, and compliance sequencing.',
+    deliver: 'Deliver: Final packaging, transit execution, and readiness confirmation.'
+  };
 
-    // Set white background on renderer and ensure proper sizing
-    try {
-      const renderer = globe.renderer();
-      if (renderer) {
-        renderer.setClearColor(0xFFFFFF, 1);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // Cap at 2x for performance
-        
-        // Ensure renderer uses container dimensions
-        const containerWidth = container.offsetWidth;
-        const containerHeight = container.offsetHeight;
-        if (containerWidth > 0 && containerHeight > 0) {
-          renderer.setSize(containerWidth, containerHeight);
-          globe.width(containerWidth);
-          globe.height(containerHeight);
-        }
-        
-        // Configure canvas for proper display
-        const canvas = renderer.domElement;
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.display = 'block';
-        canvas.setAttribute('aria-hidden', 'true');
-        canvas.setAttribute('tabindex', '-1');
-      }
-    } catch (error) {
-      console.warn('Could not configure renderer:', error);
-    }
+  // Heatmap points (activity)
+  const HEAT_POINTS = [
+    { lat: 34.05, lng: -118.25, weight: 2.0 },
+    { lat: 40.71, lng: -74.0, weight: 3.2 },
+    { lat: 50.11, lng: 8.68, weight: 1.8 },
+    { lat: 37.56, lng: 126.97, weight: 2.4 },
+    { lat: 1.35, lng: 103.82, weight: 1.6 },
+    { lat: 32.77, lng: -96.79, weight: 1.4 },
+    { lat: 61.21, lng: -149.90, weight: 1.1 }
+  ];
 
-    // Initial camera position: Zoomed in on New York State (Source phase) - more zoomed in
-    globe.pointOfView(
-      { lat: NY_STATE_CENTER.lat, lng: NY_STATE_CENTER.lng, altitude: 0.4 },
-      0 // Instant positioning
-    );
-    
-    // Ensure controls are enabled
-    try {
-      const controls = globe.controls();
-      if (controls) {
-        controls.enableRotate = true;
-        controls.enableZoom = true;
-        controls.enablePan = false;
-        controls.autoRotate = false; // No auto-rotate initially
-        globe._controls = controls;
-      }
-    } catch (error) {
-      console.warn('Could not configure controls:', error);
-    }
-
-    // Create NYC info card for Source phase (with error handling)
-    createNYCCard();
-    
-    // Setup arc hover tooltips (with error handling)
-    try {
-      setupArcTooltips();
-    } catch (error) {
-      console.warn('Could not setup arc tooltips:', error);
-    }
-    
-    // Setup scroll-triggered animation
-    setupScrollAnimation();
-    
-    isInitialized = true;
-    console.log('Globe initialized successfully');
+  function resolveNode(id) {
+    return NODES.find(n => n.id === id);
   }
 
-  // Initialize globe when section is near viewport
-  function initGlobe() {
-    if (isInitialized) return;
-    
-    // Check if Globe function is available
-    if (typeof Globe === 'undefined') {
-      console.error('Globe.gl library not loaded. Please check the script tag.');
-      return;
-    }
-    
-    const section = document.getElementById('global-strategy');
-    if (!section) {
-      console.warn('Global strategy section not found');
-      return;
-    }
-
-    const container = document.getElementById('globe-container');
-    if (!container) {
-      console.warn('Globe container not found');
-      return;
-    }
-
-    try {
-      // Ensure container has dimensions
-      if (container.offsetWidth === 0 || container.offsetHeight === 0) {
-        console.warn('Globe container has no dimensions, retrying...');
-        setTimeout(initGlobe, 100);
-        return;
-      }
-
-      // Load US states data first, then initialize globe
-      Promise.all([loadUSStatesData(), loadCountryData()])
-        .then(() => {
-          createGlobeWithStates(container);
-        })
-        .catch(err => {
-          console.error('Failed to load geographic data:', err);
-          // Fallback: create globe without outlines (still functional)
-          createGlobeWithStates(container);
-        });
-
-    } catch (error) {
-      console.error('Error initializing globe:', error);
-    }
-  }
-
-  // Create glass info card anchored to NYC
-  function createNYCCard() {
-    const container = document.getElementById('globe-info-cards-container');
-    if (!container) {
-      console.warn('Cannot create NYC card: container not found');
-      return;
-    }
-
-    // Remove any existing cards
-    container.innerHTML = '';
-
-    const card = document.createElement('div');
-    card.className = 'globe-info-card';
-    card.id = 'nyc-card';
-    card.innerHTML = `
-      <h3>Step 1: Analysis & Sourcing</h3>
-      <p>Our global network identifies and coordinates defense procurement opportunities across strategic locations.</p>
-    `;
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'region');
-    card.setAttribute('aria-label', 'Sourcing and Coordination information');
-    
-    container.appendChild(card);
-    
-    // Fade in
-    setTimeout(() => {
-      card.style.opacity = '1';
-    }, 100);
-  }
-
-  // Create Coordinate phase info card
-  function createCoordinateCard() {
-    const container = document.getElementById('globe-info-cards-container');
-    if (!container) {
-      console.warn('Cannot create Coordinate card: container not found');
-      return;
-    }
-
-    // Remove any existing cards
-    container.innerHTML = '';
-
-    const card = document.createElement('div');
-    card.className = 'globe-info-card';
-    card.id = 'coordinate-card';
-    card.innerHTML = `
-      <h3>Step 2: Smart Coordination</h3>
-      <p>GUILD uses predictive analysis to use the most efficient production options</p>
-    `;
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'region');
-    card.setAttribute('aria-label', 'Coordinate phase information');
-    
-    container.appendChild(card);
-    
-    // Fade in after a brief delay
-    setTimeout(() => {
-      card.style.opacity = '1';
-    }, 200);
-  }
-
-  // Create Deliver phase info card
-  function createDeliverCard() {
-    const container = document.getElementById('globe-info-cards-container');
-    if (!container) {
-      console.warn('Cannot create Deliver card: container not found');
-      return;
-    }
-
-    // Remove any existing cards
-    container.innerHTML = '';
-
-    const card = document.createElement('div');
-    card.className = 'globe-info-card';
-    card.id = 'deliver-card';
-    card.innerHTML = `
-      <h3>Step 3: Time Efficient Delivery</h3>
-      <p>CG Defense Consulting provides the full end-to-end delivery in support of our defense readiness mission</p>
-    `;
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'region');
-    card.setAttribute('aria-label', 'Deliver phase information');
-    
-    container.appendChild(card);
-    
-    // Fade in after a brief delay
-    setTimeout(() => {
-      card.style.opacity = '1';
-    }, 200);
-  }
-
-  // Setup scroll-triggered animation sequence
-  function setupScrollAnimation() {
-    const section = document.getElementById('global-strategy');
-    if (!section || !globe) {
-      console.warn('Cannot setup scroll animation: section or globe missing');
-      return;
-    }
-
-    // Check if section is already visible when globe is created
-    const rect = section.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isVisible && !animationSequenceStarted) {
-      console.log('Section already visible, starting animation immediately');
-      animationSequenceStarted = true;
-      setTimeout(() => {
-        if (globe && !isPaused) {
-          startAnimationSequence();
-        }
-      }, 500); // Give globe time to fully render
-    }
-
-    // Also set up observer for when section becomes visible
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.2 && !animationSequenceStarted && globe) {
-          animationSequenceStarted = true;
-          console.log('Section visible, starting animation sequence');
-          // Small delay to ensure globe is fully rendered
-          setTimeout(() => {
-            if (globe && !isPaused) {
-              startAnimationSequence();
-            }
-          }, 500);
-        }
-      });
-    }, {
-      threshold: [0.2, 0.3, 0.5],
-      rootMargin: '100px'
-    });
-
-    observer.observe(section);
-  }
-
-  // Start the three-phase animation sequence
-  function startAnimationSequence() {
-    console.log('startAnimationSequence called', { isPaused, prefersReducedMotion, globe: !!globe });
-    
-    if (isPaused || prefersReducedMotion) {
-      console.log('Animation paused or reduced motion, setting up static globe');
-      setupStaticGlobe();
-      return;
-    }
-
-    if (!globe) {
-      console.warn('Globe not initialized, cannot start animation');
-      return;
-    }
-
-    // Generate random states for this animation cycle
-    currentCoordinateStates = getRandomCoordinateStates();
-    currentDeliverState = getRandomDeliverState();
-    console.log('Random coordinate states:', currentCoordinateStates.map(s => s.name));
-    console.log('Random deliver state:', currentDeliverState.name);
-
-    console.log('Starting animation sequence - Phase 1: Source');
-    
-    // Phase 1: Source (already zoomed in on NY State)
-    currentPhase = 'source';
-    updateLegendPhase('source');
-    
-    // Wait 2 seconds, then fade out Source card and transition to Coordinate phase
-    setTimeout(() => {
-      if (!isPaused && globe) {
-        // Fade out Source card
-        const sourceCard = document.getElementById('nyc-card');
-        if (sourceCard) {
-          sourceCard.style.transition = 'opacity 0.5s ease-out';
-          sourceCard.style.opacity = '0';
-        }
-        
-        // Wait for fade out, then transition
-        setTimeout(() => {
-          if (!isPaused && globe) {
-            console.log('Transitioning to Coordinate phase');
-            transitionToCoordinatePhase();
-          }
-        }, 500);
-      } else {
-        console.warn('Cannot transition: isPaused =', isPaused, 'globe =', !!globe);
-      }
-    }, 2000);
-  }
-
-  // Transition to Coordinate phase: Highlight states in blue, draw lines from NYC
-  function transitionToCoordinatePhase() {
-    console.log('transitionToCoordinatePhase called', { isPaused, globe: !!globe });
-    
-    if (isPaused || !globe) {
-      console.warn('Cannot transition to coordinate: isPaused =', isPaused, 'globe =', !!globe);
-      return;
-    }
-    
-    currentPhase = 'coordinate';
-    updateLegendPhase('coordinate');
-    console.log('Updated phase to coordinate');
-
-    // Zoom out to show US region - more zoomed in (slower transition)
-    console.log('Zooming out to US center');
-    globe.pointOfView(
-      { lat: 39.8283, lng: -98.5795, altitude: 1.4 }, // Center of US - more zoomed in
-      5000 // Slower transition - 5 seconds
-    );
-
-    // Create Coordinate phase info card after zoom
-    setTimeout(() => {
-      createCoordinateCard();
-    }, 5000); // Wait for camera transition to complete
-    
-    // Highlight coordinate states in blue and draw arcs
-    setTimeout(() => {
-      if (isPaused || !globe) {
-        console.warn('Skipping coordinate highlights: isPaused =', isPaused, 'globe =', !!globe);
-        return;
-      }
-      console.log('Highlighting coordinate states and animating arcs');
-      fillStatesWithColor(currentCoordinateStates, '#4A9EFF'); // Blue fill
-      highlightStates(currentCoordinateStates, '#4A9EFF'); // Blue highlight points
-      animateCoordinateArcs();
-      
-      // After all coordinate arcs are drawn, fade out Coordinate card and transition to Deliver
-      const numStates = currentCoordinateStates.length;
-      const arcDuration = numStates * 400; // Time for all arcs to animate
-      setTimeout(() => {
-        if (!isPaused && globe) {
-          // Fade out Coordinate card
-          const coordinateCard = document.getElementById('coordinate-card');
-          if (coordinateCard) {
-            coordinateCard.style.opacity = '0';
-          }
-          
-          // Wait for fade out, then transition
-          setTimeout(() => {
-            if (!isPaused && globe) {
-              console.log('Transitioning to Deliver phase');
-              transitionToDeliverPhase();
-            }
-          }, 500);
-        } else {
-          console.warn('Cannot transition to deliver: isPaused =', isPaused, 'globe =', !!globe);
-        }
-      }, arcDuration + 3000); // Arcs duration + 3 seconds to see them
-    }, 5000); // Wait for camera transition to complete
-  }
-
-  // Transition to Deliver phase: Lines from coordinate states to deliver state
-  function transitionToDeliverPhase() {
-    console.log('transitionToDeliverPhase called', { isPaused, globe: !!globe });
-    
-    if (isPaused || !globe) {
-      console.warn('Cannot transition to deliver: isPaused =', isPaused, 'globe =', !!globe);
-      return;
-    }
-    
-    currentPhase = 'deliver';
-    updateLegendPhase('deliver');
-    console.log('Updated phase to deliver');
-
-    // Create Deliver phase info card
-    createDeliverCard();
-
-    // Highlight deliver state in green
-    fillStatesWithColor([currentDeliverState], '#10B981'); // Green fill
-    highlightStates([currentDeliverState], '#10B981'); // Green highlight
-
-    // Clear coordinate arcs before drawing deliver arcs
-    setTimeout(() => {
-      if (isPaused || !globe) {
-        console.warn('Skipping deliver arcs: isPaused =', isPaused, 'globe =', !!globe);
-        return;
-      }
-      // Clear previous arcs
-      globe.arcsData([]);
-      console.log('Cleared previous arcs, starting deliver arcs');
-      
-      // Small delay before drawing deliver arcs
-      setTimeout(() => {
-        if (!isPaused && globe) {
-          animateDeliverArcs();
-        } else {
-          console.warn('Cannot animate deliver arcs: isPaused =', isPaused, 'globe =', !!globe);
-        }
-      }, 300);
-    }, 500);
-  }
-
-  // Fill states with color by updating polygon fill
-  function fillStatesWithColor(states, color) {
-    if (!globe || !states || states.length === 0) {
-      console.warn('Cannot fill states: missing globe or states');
-      return;
-    }
-    
-    try {
-      const highlightedStates = globe._highlightedStates;
-      const stateColors = globe._stateColors;
-      
-      if (!highlightedStates || !stateColors) {
-        console.warn('Highlighted states set or color map not found');
-        return;
-      }
-      
-      // Mark states as highlighted and store their colors
-      states.forEach(state => {
-        highlightedStates.add(state.name);
-        stateColors.set(state.name, color);
-      });
-      
-      // Update polygon cap color function to use the stored colors
-      globe.polygonCapColor((d) => {
-        const stateName = d.properties && d.properties.name;
-        if (stateName && highlightedStates.has(stateName)) {
-          // Get color from map
-          return stateColors.get(stateName) || color;
-        }
-        return 'rgba(255, 255, 255, 0.95)'; // Solid white for non-highlighted
-      });
-    } catch (error) {
-      console.warn('Error filling states with color:', error);
-    }
-  }
-
-  // Highlight states by adding markers/points
-  function highlightStates(states, color) {
-    if (!globe || !states || states.length === 0) {
-      console.warn('Cannot highlight states: missing globe or states');
-      return;
-    }
-    
-    try {
-      // Get existing points or start fresh
-      const existingPoints = globe.pointsData() || [];
-      const newPoints = states.map(state => ({
-        lat: state.lat,
-        lng: state.lng,
-        color: color,
-        size: 0.12
-      }));
-      
-      // Combine existing and new points
-      const allPoints = [...existingPoints, ...newPoints];
-
-      globe.pointsData(allPoints)
-        .pointLat(d => d.lat)
-        .pointLng(d => d.lng)
-        .pointColor(d => d.color)
-        .pointRadius(d => d.size)
-        .pointAltitude(0.01);
-    } catch (error) {
-      console.warn('Error highlighting states:', error);
-    }
-  }
-
-  // Animate arcs from NYC to coordinate states
-  function animateCoordinateArcs() {
-    if (isPaused || !globe) return;
-
-    const arcs = currentCoordinateStates.map((state, index) => ({
-      startLat: NYC_COORDS.lat,
-      startLng: NYC_COORDS.lng,
-      endLat: state.lat,
-      endLng: state.lng,
-      color: ['#4A9EFF', '#60A5FA'], // Blue gradient
-      state: state.name
-    }));
-
-    // Clear any existing arcs first
-    globe.arcsData([]);
-
-    // Sequence arcs with delays
-    arcs.forEach((arc, index) => {
-      const timer = setTimeout(() => {
-        if (!isPaused && globe) {
-          addArc(arc, index);
-        }
-      }, index * 400); // 400ms between each arc
-      
-      arcAnimationTimers.push(timer);
-    });
-    
-    console.log('Coordinate phase arcs animation started');
-  }
-
-  // Animate arcs from coordinate states to deliver state
-  function animateDeliverArcs() {
-    if (isPaused || !globe) return;
-
-    const arcs = currentCoordinateStates.map((state, index) => ({
-      startLat: state.lat,
-      startLng: state.lng,
-      endLat: currentDeliverState.lat,
-      endLng: currentDeliverState.lng,
-      color: ['#10B981', '#34D399'], // Green gradient
-      state: currentDeliverState.name
-    }));
-
-    // Sequence arcs with delays
-    arcs.forEach((arc, index) => {
-      const timer = setTimeout(() => {
-        if (!isPaused && globe) {
-          addArc(arc, index);
-        }
-      }, index * 300); // 300ms between each arc
-      
-      arcAnimationTimers.push(timer);
-    });
-    
-    // Log completion
-    console.log('Deliver phase animation started');
-    
-    // After all deliver arcs are drawn, wait a bit then loop back to start
-    const numStates = currentCoordinateStates.length;
-    const arcDuration = numStates * 300; // Time for all arcs to animate
-    setTimeout(() => {
-      if (!isPaused && globe) {
-        console.log('Deliver phase complete, looping back to start');
-        // Wait 10 seconds to show the final state, then reset and loop
-        setTimeout(() => {
-          if (!isPaused && globe) {
-            resetAndLoopAnimation();
-          }
-        }, 10000); // 10 seconds to see the final deliver state
-      }
-    }, arcDuration);
-  }
-  
-  // Reset animation state and loop back to start
-  function resetAndLoopAnimation() {
-    if (isPaused || !globe) return;
-    
-    console.log('Resetting animation and looping back to start');
-    
-    // Clear all arcs
-    globe.arcsData([]);
-    
-    // Clear all highlighted states and colors
-    const highlightedStates = globe._highlightedStates;
-    const stateColors = globe._stateColors;
-    if (highlightedStates) {
-      highlightedStates.clear();
-    }
-    if (stateColors) {
-      stateColors.clear();
-    }
-    
-    // Reset polygon colors to default (white)
-    globe.polygonCapColor(() => 'rgba(255, 255, 255, 0.95)');
-    
-    // Clear all points
-    globe.pointsData([]);
-    
-    // Fade out Deliver card
-    const deliverCard = document.getElementById('deliver-card');
-    if (deliverCard) {
-      deliverCard.style.opacity = '0';
-    }
-    
-    // Reset camera to initial position (zoomed in on NY State) - slower transition
-    globe.pointOfView(
-      { lat: NY_STATE_CENTER.lat, lng: NY_STATE_CENTER.lng, altitude: 0.4 },
-      5000 // Slower transition - 5 seconds
-    );
-    
-    // Reset animation sequence flag so it can start again
-    animationSequenceStarted = false;
-    currentPhase = 'source';
-    updateLegendPhase('source');
-    
-    // Wait for camera to reset, then start animation again
-    setTimeout(() => {
-      if (!isPaused && globe) {
-        console.log('Restarting animation sequence');
-        startAnimationSequence();
-      }
-    }, 5500); // Wait for camera transition to complete
-  }
-
-
-  // Add individual arc
-  function addArc(arcData, index) {
-    if (!globe || isPaused) return;
-    
-    const currentArcs = globe.arcsData() || [];
-    
-    try {
-      globe.arcsData([...currentArcs, arcData])
-        .arcStartLat(d => d.startLat)
-        .arcStartLng(d => d.startLng)
-        .arcEndLat(d => d.endLat)
-        .arcEndLng(d => d.endLng)
-        .arcColor(d => d.color)
-        .arcDashLength(0.4)
-        .arcDashGap(0.2)
-        .arcDashAnimateTime(2000)
-        .arcStroke(2)
-        .arcAltitude(d => {
-          // Auto-scale altitude with great-circle distance
-          const distance = getGreatCircleDistance(
-            d.startLat, d.startLng,
-            d.endLat, d.endLng
-          );
-          return Math.min(distance / 400, 0.3); // Scale to reasonable altitude
-        });
-    } catch (error) {
-      console.warn('Error adding arc:', error);
-    }
-  }
-
-  // Setup arc hover tooltips (called once during globe initialization)
-  function setupArcTooltips() {
-    if (!globe) {
-      console.warn('Cannot setup arc tooltips: globe not initialized');
-      return;
-    }
-    
-    try {
-      // Add hover tooltip for arcs
-      if (typeof globe.onArcHover === 'function') {
-        globe.onArcHover((arc, prevArc) => {
-          if (arc && arc.state) {
-            document.body.style.cursor = 'pointer';
-            // Create or update tooltip
-            let tooltip = document.getElementById('arc-tooltip');
-            if (!tooltip) {
-              tooltip = document.createElement('div');
-              tooltip.id = 'arc-tooltip';
-              tooltip.className = 'arc-tooltip';
-              tooltip.setAttribute('role', 'tooltip');
-              document.body.appendChild(tooltip);
-            }
-            tooltip.textContent = arc.state;
-            tooltip.style.display = 'block';
-          } else {
-            document.body.style.cursor = 'default';
-            const tooltip = document.getElementById('arc-tooltip');
-            if (tooltip) {
-              tooltip.style.display = 'none';
-            }
-          }
-        });
-        
-        // Track mouse for tooltip positioning
-        const renderer = globe.renderer();
-        if (renderer && renderer.domElement) {
-          const canvas = renderer.domElement;
-          canvas.addEventListener('mousemove', (e) => {
-            const tooltip = document.getElementById('arc-tooltip');
-            if (tooltip && tooltip.style.display === 'block') {
-              tooltip.style.left = (e.clientX + 10) + 'px';
-              tooltip.style.top = (e.clientY - 10) + 'px';
-            }
-          });
-        }
-      } else {
-        console.warn('globe.onArcHover is not available');
-      }
-    } catch (error) {
-      console.warn('Error setting up arc tooltips:', error);
-    }
-  }
-
-  // Calculate great circle distance
-  function getGreatCircleDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Earth radius in km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  }
-
-  // Create ping ripple at NYC
-  function createNYCRipple() {
-    if (isPaused || prefersReducedMotion) return;
-
-    globe.ringsData([NYC_COORDS])
-      .ringLat(d => d.lat)
-      .ringLng(d => d.lng)
-      .ringAltitude(0.01)
-      .ringMaxRadius(3)
-      .ringPropagationSpeed(2)
-      .ringRepeatPeriod(2000)
-      .ringColor(() => '#4A9EFF')
-      .ringResolution(64);
-  }
-
-  // Update legend phase indicator
-  function updateLegendPhase(phase) {
-    const phases = ['source', 'coordinate', 'deliver'];
-    phases.forEach((p) => {
-      const item = document.querySelector(`[data-phase="${p}"]`);
-      if (item) {
-        const dot = item.querySelector('.legend-dot');
-        if (p === phase) {
-          dot.classList.add('active');
-          item.setAttribute('aria-current', 'true');
-        } else {
-          dot.classList.remove('active');
-          item.removeAttribute('aria-current');
-        }
-      }
+  function buildArcs(phaseKey) {
+    const phase = PHASES[phaseKey];
+    if (!phase) return [];
+    return phase.arcs.map(a => {
+      const from = resolveNode(a.from);
+      const to = resolveNode(a.to);
+      return {
+        ...VisualUtils.createArc(from,to,a.color),
+        phase: phaseKey
+      };
     });
   }
 
-  // Setup static globe for reduced motion
-  function setupStaticGlobe() {
-    // Generate random states for static view
-    const staticCoordinateStates = getRandomCoordinateStates();
-    const staticDeliverState = getRandomDeliverState();
-    
-    // Show NYC card permanently
-    const card = document.getElementById('nyc-card');
-    if (card) {
-      card.style.opacity = '1';
-    }
+  function buildRings(phaseKey) {
+    const phase = PHASES[phaseKey];
+    if (!phase) return [];
+    return phase.rings.map(id => resolveNode(id)).filter(Boolean);
+  }
 
-    // No rotation, no animations
-    if (globe && globe.controls()) {
-      globe.controls().autoRotate = false;
-      globe.controls().enableRotate = false;
-    }
-    
-    // Zoom to show US region - more zoomed in
-    globe.pointOfView(
-      { lat: 39.8283, lng: -98.5795, altitude: 1.4 },
-      0
-    );
-    
-    // Fill and highlight all states
-    fillStatesWithColor(staticCoordinateStates, '#4A9EFF'); // Blue fill
-    fillStatesWithColor([staticDeliverState], '#10B981'); // Green fill
-    highlightStates(staticCoordinateStates, '#4A9EFF'); // Blue
-    highlightStates([staticDeliverState], '#10B981'); // Green
-    
-    // Disable arc animations
-    globe.arcDashAnimateTime(0);
-    
-    // Show all arcs immediately without animation (static view)
-    const coordinateArcs = staticCoordinateStates.map((state) => ({
-      startLat: NYC_COORDS.lat,
-      startLng: NYC_COORDS.lng,
-      endLat: state.lat,
-      endLng: state.lng,
-      color: ['#4A9EFF', '#60A5FA'],
-      state: state.name
-    }));
-    
-    const deliverArcs = staticCoordinateStates.map((state) => ({
-      startLat: state.lat,
-      startLng: state.lng,
-      endLat: staticDeliverState.lat,
-      endLng: staticDeliverState.lng,
-      color: ['#10B981', '#34D399'],
-      state: staticDeliverState.name
-    }));
-    
-    const arcs = [...coordinateArcs, ...deliverArcs];
-    
-    globe.arcsData(arcs)
+  function buildPoints(phaseKey) {
+    const phase = PHASES[phaseKey];
+    const active = phase ? new Set(phase.highlightNodes) : new Set();
+    return NODES.map(n => VisualUtils.pulseNode(n, active.has(n.id)));
+  }
+
+  function initLegendInteraction(applyPhase) {
+    document.querySelectorAll('.legend-item').forEach(item => {
+      const phase = item.dataset.phase;
+      const activate = () => applyPhase(phase);
+      const wrapped = () => {
+        lastUserInteraction = Date.now();
+        activate();
+        restartLoop();
+      };
+      item.addEventListener('click', wrapped);
+      item.addEventListener('mouseenter', wrapped);
+    });
+  }
+
+  function applyPhase(phaseKey) {
+    const arcs = buildArcs(phaseKey);
+    const rings = buildRings(phaseKey);
+    const points = buildPoints(phaseKey);
+    currentPhase = phaseKey;
+    resetBursts();
+    const phaseCfg = PHASE_VISUALS[phaseKey] || {};
+
+    // Update arcs with dash animation
+    globe
+      .arcsData(arcs)
       .arcStartLat(d => d.startLat)
       .arcStartLng(d => d.startLng)
       .arcEndLat(d => d.endLat)
       .arcEndLng(d => d.endLng)
       .arcColor(d => d.color)
-      .arcDashLength(0.4)
-      .arcDashGap(0.2)
-      .arcDashAnimateTime(0) // No animation
-      .arcStroke(2)
-      .arcAltitude(d => {
-        const distance = getGreatCircleDistance(
-          d.startLat, d.startLng,
-          d.endLat, d.endLng
-        );
-        return Math.min(distance / 400, 0.3);
+      .arcStroke(phaseCfg.arcStroke || 1.8)
+      .arcAltitude(0.18)
+      .arcDashLength(0.22)
+      .arcDashGap(0.7)
+      .arcDashAnimateTime(prefersReducedMotion ? 0 : (phaseCfg.arcDashTime || parseInt(getComputedStyle(document.documentElement).getPropertyValue('--viz-duration-slow')) || 4200));
+
+    // Points
+    globe
+      .pointsData(points)
+      .pointLat(d => d.lat)
+      .pointLng(d => d.lng)
+      .pointAltitude(d => (d.active ? 0.12 : 0))
+      .pointRadius(d => (d.active ? 0.8 : 0))
+      .pointColor(d => {
+        if (d.active) return d.type === 'delivery' ? '#F37514' : '#4DD6FF';
+        return 'rgba(255,255,255,0)';
       });
-  }
 
-  // Pause motion toggle - REMOVED: No pause button functionality
-  // Function kept for compatibility but does nothing
-  function togglePause() {
-    // Pause functionality removed - animation always runs
-  }
+    // Rings (analysis)
+    if (prefersReducedMotion) {
+      globe.ringsData([]);
+    } else {
+      globe
+        .ringsData(rings)
+        .ringLat(d => d.lat)
+        .ringLng(d => d.lng)
+        .ringAltitude(0.01)
+        .ringMaxRadius(3)
+        .ringPropagationSpeed(1.5)
+        .ringRepeatPeriod(2600)
+        .ringColor(d => d.id === 'singapore' ? '#F37514' : '#4DD6FF')
+        .ringResolution(72);
+    }
 
-  // Lazy initialization with Intersection Observer
-  function setupLazyInit() {
-    const section = document.getElementById('global-strategy');
-    if (!section) return;
+    // Dispatch custom event for external UI (insight cards)
+    const descEl = document.getElementById('phase-desc-text');
+    if (descEl && PHASE_TEXT[phaseKey]) {
+      descEl.textContent = PHASE_TEXT[phaseKey];
+    }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !isInitialized) {
-          initGlobe();
-          observer.disconnect();
-        }
-      });
-    }, {
-      rootMargin: '200px' // Start loading when section is 200px away
+    // Highlight legend state
+    document.querySelectorAll('.legend-item').forEach(item => {
+      const dot = item.querySelector('.legend-dot');
+      if (item.dataset.phase === phaseKey) {
+        dot?.classList.add('active');
+        item.setAttribute('aria-current', 'true');
+      } else {
+        dot?.classList.remove('active');
+        item.removeAttribute('aria-current');
+      }
     });
 
-    observer.observe(section);
+    // Sync extra overlays
+    configureParticlesForPhase(phaseKey);
+    configureCoordRings(phaseKey);
+    configureHeatmap(phaseCfg);
   }
 
-  // Handle window resize
-  function handleResize() {
-    if (globe) {
-      const container = document.getElementById('globe-container');
-      if (container && container.offsetWidth > 0 && container.offsetHeight > 0) {
-        // Use actual container dimensions
-        const width = container.offsetWidth;
-        const height = container.offsetHeight;
-        
-        // Update globe dimensions
-        globe.width(width);
-        globe.height(height);
-        
-        // Update renderer size to match
-        try {
-          const renderer = globe.renderer();
-          if (renderer) {
-            renderer.setSize(width, height);
-            // Ensure canvas fills container
-            const canvas = renderer.domElement;
-            if (canvas) {
-              canvas.style.width = width + 'px';
-              canvas.style.height = height + 'px';
-            }
-          }
-        } catch (error) {
-          console.warn('Error resizing renderer:', error);
-        }
+  function addScanningBeam(scene) {
+    if (prefersReducedMotion) return;
+    beam = VisualUtils.createScanRing(THREE, 0.6, 0.62, 0x4dd6ff, 0.08);
+    beam.rotation.x = Math.PI / 2;
+    beam.rotation.z = Math.PI / 4;
+    beam.position.set(0, 0, 0);
+    scene.add(beam);
+
+    // Scanline sweep
+    const lineGeom = new THREE.RingGeometry(1.2, 1.35, 64, 1);
+    const lineMat = new THREE.MeshBasicMaterial({ color: 0x4dd6ff, opacity: 0.06, transparent: true, side: THREE.DoubleSide });
+    scanline = new THREE.Mesh(lineGeom, lineMat);
+    scanline.rotation.x = Math.PI / 2.3;
+    scanline.position.set(0,0,0);
+    scene.add(scanline);
+  }
+
+  function animateLayers() {
+    if (prefersReducedMotion) return;
+    const tick = (ts) => {
+      const dt = animationId ? (ts - animationId.prev) / 1000 : 0.016;
+      animationId = requestAnimationFrame(tick);
+      animationId.prev = ts;
+      if (beam) beam.rotation.z += 0.0009;
+      if (scanline) scanline.rotation.z += 0.0004;
+      updateParticles(dt);
+      updateBursts(dt);
+    };
+    animationId = requestAnimationFrame(tick);
+  }
+
+  function stopBeam() {
+    if (animationId) cancelAnimationFrame(animationId);
+    animationId = null;
+  }
+
+  function nextPhase() {
+    const order = ['source', 'coordinate', 'deliver'];
+    const idx = order.indexOf(currentPhase);
+    const next = order[(idx + 1) % order.length];
+    applyPhase(next);
+    scheduleLoop();
+  }
+
+  function scheduleLoop() {
+    clearTimeout(loopTimer);
+    const now = Date.now();
+    const inactiveFor = now - lastUserInteraction;
+    const duration = 8000; // ~8s per phase (6–10s range)
+    loopTimer = setTimeout(nextPhase, duration);
+  }
+
+  function restartLoop() {
+    clearTimeout(loopTimer);
+    loopTimer = null;
+    scheduleLoop();
+  }
+
+  function latLngToVec3(lat, lng, radius) {
+    const r = radius || globe.getGlobeRadius?.() || 100;
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lng + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -r * Math.sin(phi) * Math.sin(theta),
+      r * Math.cos(phi),
+      r * Math.sin(phi) * Math.cos(theta)
+    );
+  }
+
+  function ensureParticleMesh() {
+    if (particleMesh || prefersReducedMotion || !globe) return;
+    const geom = new THREE.SphereGeometry(0.6, 6, 6);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x4dd6ff, transparent: true, opacity: 0.9 });
+    particleMesh = new THREE.InstancedMesh(geom, mat, PARTICLE_COUNT);
+    particleMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    particleMesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(PARTICLE_COUNT * 3), 3);
+    globe.scene().add(particleMesh);
+  }
+
+  function ensureBurstMesh() {
+    if (burstMesh || prefersReducedMotion || !globe) return;
+    const geom = new THREE.SphereGeometry(1.2, 6, 6);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xF37514, transparent: true, opacity: 0.0 });
+    burstMesh = new THREE.InstancedMesh(geom, mat, BURST_COUNT);
+    burstMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    burstMesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(BURST_COUNT * 3), 3);
+    globe.scene().add(burstMesh);
+  }
+
+  function configureParticlesForPhase(phaseKey) {
+    if (prefersReducedMotion || !globe) return;
+    ensureParticleMesh();
+    ensureBurstMesh();
+    const arcs = buildArcs(phaseKey);
+    if (!arcs.length) return;
+    const phaseCfg = PHASE_VISUALS[phaseKey] || {};
+    const radius = globe.getGlobeRadius?.() || 100;
+    particleState = new Array(PARTICLE_COUNT).fill(0).map((_, i) => {
+      const arc = arcs[i % arcs.length];
+      const start = latLngToVec3(arc.startLat, arc.startLng, radius);
+      const end = latLngToVec3(arc.endLat, arc.endLng, radius);
+      const mid = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(radius * 1.2);
+      const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+      const reverse = i % 2 === 0 && phaseKey !== 'deliver';
+      return {
+        curve,
+        t: Math.random(),
+        speed: 0.08 + Math.random() * 0.06,
+        color: phaseCfg.particleColor || arc.color[arc.color.length - 1],
+        reverse
+      };
+    });
+    burstState = new Array(BURST_COUNT).fill(0).map(() => ({
+      active: false,
+      life: 0,
+      pos: new THREE.Vector3()
+    }));
+  }
+
+  function configureCoordRings(phaseKey) {
+    if (!globe || prefersReducedMotion) return;
+    if (!coordRingsGroup) {
+      coordRingsGroup = new THREE.Group();
+      globe.scene().add(coordRingsGroup);
+    }
+    coordRingsGroup.visible = phaseKey === 'coordinate';
+    coordRingsGroup.clear();
+    if (phaseKey !== 'coordinate') return;
+    const hubs = ['nyc', 'frankfurt', 'dfw'];
+    const radius = globe.getGlobeRadius?.() || 100;
+    hubs.forEach(id => {
+      const n = resolveNode(id);
+      if (!n) return;
+      const ring = VisualUtils.createScanRing(THREE, 1.05, 1.08, 0x4dd6ff, 0.1);
+      const pos = latLngToVec3(n.lat, n.lng, radius * 1.01);
+      ring.position.copy(pos);
+      ring.lookAt(new THREE.Vector3(0,0,0));
+      coordRingsGroup.add(ring);
+    });
+  }
+
+  function updateParticles(dt) {
+    if (prefersReducedMotion || !particleMesh) return;
+    const dummy = new THREE.Object3D();
+    const color = new THREE.Color();
+    particleState.forEach((p, idx) => {
+      p.t += p.speed * dt * (p.reverse ? -1 : 1);
+      if (p.t > 1) p.t = 0;
+      if (p.t < 0) p.t = 1;
+      const pos = p.curve.getPoint(p.t);
+      dummy.position.copy(pos);
+      dummy.scale.setScalar(1);
+      dummy.updateMatrix();
+      particleMesh.setMatrixAt(idx, dummy.matrix);
+      color.setStyle(p.color || '#4DD6FF');
+      particleMesh.setColorAt(idx, color);
+
+      // Delivery burst trigger near end point for deliver phase
+      if (currentPhase === 'deliver' && p.t > 0.96) {
+        triggerBurst(pos);
       }
+    });
+    particleMesh.instanceMatrix.needsUpdate = true;
+    if (particleMesh.instanceColor) particleMesh.instanceColor.needsUpdate = true;
+  }
+
+  function triggerBurst(pos) {
+    if (!burstMesh || prefersReducedMotion) return;
+    const available = burstState.find(b => !b.active);
+    if (!available) return;
+    available.active = true;
+    available.life = 1;
+    available.pos.copy(pos);
+  }
+
+  function updateBursts(dt) {
+    if (!burstMesh || prefersReducedMotion) return;
+    const dummy = new THREE.Object3D();
+    const color = new THREE.Color('#F37514');
+    burstState.forEach((b, idx) => {
+      if (!b.active) {
+        dummy.scale.setScalar(0);
+        dummy.updateMatrix();
+        burstMesh.setMatrixAt(idx, dummy.matrix);
+        return;
+      }
+      b.life -= dt * 1.5;
+      if (b.life <= 0) {
+        b.active = false;
+        dummy.scale.setScalar(0);
+        dummy.updateMatrix();
+        burstMesh.setMatrixAt(idx, dummy.matrix);
+        return;
+      }
+      const s = 1 + (1 - b.life) * 2;
+      dummy.position.copy(b.pos);
+      dummy.scale.setScalar(s);
+      dummy.updateMatrix();
+      burstMesh.setMatrixAt(idx, dummy.matrix);
+      const opacity = b.life * 0.6;
+      burstMesh.material.opacity = opacity;
+      burstMesh.setColorAt(idx, color);
+    });
+    burstMesh.instanceMatrix.needsUpdate = true;
+    if (burstMesh.instanceColor) burstMesh.instanceColor.needsUpdate = true;
+  }
+
+  function resetBursts() {
+    burstState.forEach(b => { b.active = false; b.life = 0; });
+    if (burstMesh) {
+      const dummy = new THREE.Object3D();
+      for (let i = 0; i < BURST_COUNT; i++) {
+        dummy.scale.setScalar(0);
+        dummy.updateMatrix();
+        burstMesh.setMatrixAt(i, dummy.matrix);
+      }
+      burstMesh.instanceMatrix.needsUpdate = true;
     }
   }
 
-  // Initialize on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setupLazyInit();
-      
-      // Setup pause button
-      // Pause button removed - no longer needed
-
-      // Setup resize handler
-      window.addEventListener('resize', handleResize);
-    });
-  } else {
-    setupLazyInit();
-    
-    // Pause button removed - no longer needed
-
-    window.addEventListener('resize', handleResize);
+  function setupHeatmap() {
+    globe
+      .hexBinPointsData(HEAT_POINTS)
+      .hexBinPointLat(d => d.lat)
+      .hexBinPointLng(d => d.lng)
+      .hexBinPointWeight(d => d.weight)
+      .hexAltitude(d => 0.01 + d.sumWeight / 60)
+      .hexBinResolution(3)
+      .hexTopColor(() => 'rgba(243,117,20,0.15)')
+      .hexSideColor(() => 'rgba(77,214,255,0.12)')
+      .hexBinMerge(false);
   }
-})();
 
+  function configureHeatmap(phaseCfg) {
+    if (!globe) return;
+    const top = phaseCfg?.heatTop || 'rgba(243,117,20,0.15)';
+    const side = phaseCfg?.heatSide || 'rgba(77,214,255,0.12)';
+    globe.hexTopColor(() => top).hexSideColor(() => side);
+  }
+
+  async function loadCountries() {
+    if (countriesCache) return countriesCache;
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson');
+      const data = await res.json();
+      countriesCache = data.features || [];
+    } catch (e) {
+      console.warn('Country data failed to load for land contrast; continuing without outlines.', e);
+      countriesCache = [];
+    }
+    return countriesCache;
+  }
+
+  function createGlobe(container) {
+    if (!container || typeof Globe === 'undefined' || typeof THREE === 'undefined') return;
+
+    globe = Globe()(container)
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+      .backgroundColor('#0B0D11')
+      .showAtmosphere(true)
+      .atmosphereColor('#4DD6FF')
+      .atmosphereAltitude(0.18)
+      .polygonsData([]);
+
+    // Configure renderer
+    const renderer = globe.renderer();
+    if (renderer) {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      const { offsetWidth: w, offsetHeight: h } = container;
+      if (w && h) {
+        renderer.setSize(w, h);
+        globe.width(w);
+        globe.height(h);
+      }
+    }
+
+    // Camera & controls
+    const pov = { lat: 25, lng: -20, altitude: 2.4 };
+    globe.pointOfView(pov, 0);
+    const controls = globe.controls();
+    if (controls) {
+      controls.autoRotate = !prefersReducedMotion;
+      controls.autoRotateSpeed = 0.15;
+      controls.enableZoom = false;
+      controls.enablePan = false;
+    }
+
+    // Water/land contrast tweak on material
+    try {
+      const mat = globe.globeMaterial();
+      mat.color = new THREE.Color('#070a12');
+      mat.emissive = new THREE.Color('#070a12');
+      mat.emissiveIntensity = 0.25;
+    } catch (e) {
+      console.warn('Globe material tweak failed', e);
+    }
+
+    // Heatmap layer
+    setupHeatmap();
+
+    // Add scanning beam to scene
+    addScanningBeam(globe.scene());
+    animateLayers();
+
+    // Land outlines for contrast
+    loadCountries().then(features => {
+      if (!globe || !features?.length) return;
+      globe
+        .polygonsData(features)
+        .polygonCapColor(() => 'rgba(255,255,255,0.06)')
+        .polygonSideColor(() => 'rgba(77,214,255,0.06)')
+        .polygonStrokeColor(() => 'rgba(77,214,255,0.35)')
+        .polygonAltitude(() => 0.006);
+    });
+  }
+
+  function init() {
+    const container = document.getElementById('globe-container');
+    if (!container) return;
+    if (!window.WebGLRenderingContext) {
+      console.warn('WebGL not supported; globe disabled');
+      return;
+    }
+
+    createGlobe(container);
+    if (!globe) return;
+
+    // Initial phase
+    applyPhase('source');
+
+    // Legend interaction
+    initLegendInteraction(applyPhase);
+
+    // Auto loop through phases
+    restartLoop();
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+      if (!globe) return;
+      const { offsetWidth: w, offsetHeight: h } = container;
+      if (w && h) {
+        globe.width(w);
+        globe.height(h);
+        globe.renderer()?.setSize(w, h);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Cleanup if needed (not currently used, but provided for safety)
+  window.cleanupGlobe = function cleanupGlobe() {
+    stopBeam();
+    if (beam && globe && globe.scene()) {
+      globe.scene().remove(beam);
+    }
+    globe = null;
+  };
+})();

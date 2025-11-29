@@ -1,9 +1,11 @@
-/* ============= Theme System (Dark Mode Default) ============= */
+/* ============= Theme System (Dual Mode) ============= */
 (function() {
   const html = document.documentElement;
   
-  // Set dark theme as default
-  html.setAttribute('data-theme', 'dark');
+  // Respect system preference; default to light to showcase glass mode
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const defaultTheme = prefersDark ? 'dark' : 'light';
+  html.setAttribute('data-theme', defaultTheme);
 })();
 
 /* ============= Typing Animation System (Hero Only) ============= */
@@ -254,7 +256,7 @@
         const navProgress = Math.max(0, (scrolled / heroHeight - navStartProgress) / (1 - navStartProgress));
         const navOpacity = Math.min(1, navProgress);
         
-        // Get the Guild Login button
+        // Get the GUILD Login button
         const guildLoginBtn = mainNav.querySelector('.nav-btn-guild');
         
         if (navOpacity > 0) {
@@ -262,7 +264,7 @@
           mainNav.style.transform = `translateY(${-20 * (1 - navOpacity)}px)`;
           mainNav.style.pointerEvents = navOpacity > 0.5 ? 'auto' : 'none';
           
-          // Change "Guild Login" to "Login" when menu appears
+          // Change "GUILD Login" to "Login" when menu appears
           if (guildLoginBtn && navOpacity > 0.5) {
             guildLoginBtn.textContent = 'Login';
           }
@@ -271,9 +273,9 @@
           mainNav.style.transform = 'translateY(-20px)';
           mainNav.style.pointerEvents = 'none';
           
-          // Change back to "Guild Login" when menu is hidden
+          // Change back to "GUILD Login" when menu is hidden
           if (guildLoginBtn) {
-            guildLoginBtn.textContent = 'Guild Login';
+            guildLoginBtn.textContent = 'GUILD Login';
           }
         }
       }
@@ -331,54 +333,6 @@
   const currentYearElement = document.getElementById('current-year');
   if (currentYearElement) {
     currentYearElement.textContent = new Date().getFullYear();
-  }
-})();
-
-/* ============= Spinning Hardware 3D Component ============= */
-(function() {
-  'use strict';
-  
-  // Initialize 3D hardware component in company overview section
-  function initHardware3D() {
-    const container = document.getElementById('company-intro-3d');
-    if (!container || typeof window.SpinningHardware3D === 'undefined') {
-      return;
-    }
-    
-    // Create and initialize the component
-    const hardware3D = new window.SpinningHardware3D({
-      variant: 'screw',
-      size: 300,
-      color: '#666666',
-      speed: 0.015,
-      container: container
-    });
-    
-    // Store reference for cleanup if needed
-    window.companyIntroHardware3D = hardware3D;
-  }
-  
-  // Wait for DOM and Three.js to be ready
-  function waitForThreeJS(callback, maxAttempts = 50) {
-    let attempts = 0;
-    const checkInterval = setInterval(() => {
-      attempts++;
-      if (typeof window.THREE !== 'undefined' && typeof window.SpinningHardware3D !== 'undefined') {
-        clearInterval(checkInterval);
-        callback();
-      } else if (attempts >= maxAttempts) {
-        clearInterval(checkInterval);
-        console.warn('SpinningHardware3D: Three.js or component not loaded after timeout');
-      }
-    }, 50);
-  }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      waitForThreeJS(initHardware3D);
-    });
-  } else {
-    waitForThreeJS(initHardware3D);
   }
 })();
 
@@ -452,10 +406,23 @@
     return outer;
   });
 
+  // Optional line break hint: data-line-break-after="3" (1-based index)
+  let breakIndex = null;
+  const breakAttr = h1.dataset.lineBreakAfter;
+  if (breakAttr) {
+    const parsed = parseInt(breakAttr, 10);
+    if (!Number.isNaN(parsed) && parsed > 0) {
+      breakIndex = parsed - 1; // convert to zero-based
+    }
+  }
+
   // Replace H1 content
   h1.textContent = '';
   h1Words.forEach((w, index) => {
     h1.appendChild(w);
+    if (breakIndex !== null && index === breakIndex) {
+      h1.appendChild(document.createElement('br'));
+    }
     // Add space between words (except after the last word)
     if (index < h1Words.length - 1) {
       h1.appendChild(document.createTextNode(' '));
@@ -632,7 +599,7 @@
   });
 })();
 
-// Coming Soon overlay for Mentat
+// Coming Soon overlay for MENTAT
 (function () {
   const mentatLink = document.getElementById('mentat-link');
   const comingSoonOverlay = document.getElementById('coming-soon-overlay');
@@ -640,7 +607,7 @@
   
   if (!mentatLink || !comingSoonOverlay || !returnBtn) return;
 
-  // Show coming soon overlay when Mentat link is clicked
+  // Show coming soon overlay when MENTAT link is clicked
   mentatLink.addEventListener('click', (e) => {
     e.preventDefault();
     comingSoonOverlay.removeAttribute('hidden');
@@ -721,7 +688,7 @@
         if (panel) panel.hidden = !selected;
       });
 
-      // Guild section image is static - no dynamic switching
+      // GUILD section image is static - no dynamic switching
 
       // Optional image swap (only if data present) - for other sections
       const src = tab.dataset.img;
