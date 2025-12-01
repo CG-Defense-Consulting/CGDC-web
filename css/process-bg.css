@@ -1,0 +1,327 @@
+/* ============= Animated Gradient Background Controller ============= */
+
+/* Shared Keyframes for Gradient Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Fixed background container sitting behind content */
+.section-background-controller {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Behind everything */
+  pointer-events: none;
+}
+
+/* Individual Background Layers */
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  background-size: 400% 400%;
+  animation: gradientShift 30s ease infinite;
+}
+
+/* Layer 1: Our Process Gradient (Blue/Teal/Purple) */
+#bg-layer-process {
+  background-image: linear-gradient(
+    270deg,
+    #0B0D11 0%,    /* Dark Navy */
+    #0F172A 25%,   /* Slate */
+    #112233 50%,   /* Deep Teal-ish */
+    #151525 75%,   /* Muted Purple-ish */
+    #0B0D11 100%   /* Back to Dark Navy */
+  );
+}
+
+/* Layer 2: Technology Gradient (Muted Red / Deep Green / Dark Orange) */
+#bg-layer-tech {
+  background-image: linear-gradient(
+    270deg,
+    #1a0f0f 0%,    /* Very Dark Red base */
+    #3A1D1D 25%,   /* Muted Red */
+    #12261E 50%,   /* Deep Green */
+    #332011 75%,   /* Dark Orange/Brown */
+    #1a0f0f 100%   /* Back to base */
+  );
+}
+
+/* Active state utility */
+.bg-layer.active {
+  opacity: 1;
+}
+
+
+/* ============= Section Overrides ============= */
+
+/* Remove local background and borders to allow fixed bg to show through */
+.section.company-intro {
+  background: transparent !important;
+  animation: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#technology {
+  background: transparent !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  position: relative;
+}
+
+
+/* Ensure content stays readable */
+.section.company-intro .company-intro-heading,
+.section.company-intro .company-intro-text,
+.section.company-intro .eyebrow,
+#technology .ai-strategy-heading,
+#technology .ai-strategy-subhead,
+#technology .eyebrow {
+  position: relative;
+  z-index: 2;
+}
+
+/* Typography adjustments from previous steps */
+.section.company-intro .company-intro-content {
+  max-width: 100%;
+}
+
+.section.company-intro .company-intro-text {
+  max-width: 720px;
+}
+
+.company-intro-visual {
+  transform: scale(0.85);
+  transform-origin: center;
+}
+
+.company-intro-heading br {
+  display: block;
+}
+
+.company-intro-heading strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Glass Banner Box */
+.process-glass-banner {
+  grid-column: 1 / -1; 
+  width: 100%;
+  margin-top: var(--gap-3);
+  padding: var(--gap-4) var(--gap-5);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.process-banner-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.5;
+  font-weight: 500;
+  margin: 0;
+  max-width: 900px;
+}
+
+/* Light Theme Handling */
+[data-theme="light"] .section.company-intro .company-intro-heading,
+[data-theme="light"] #technology .ai-strategy-heading {
+  color: #ffffff;
+}
+
+[data-theme="light"] .section.company-intro .company-intro-text,
+[data-theme="light"] #technology .ai-strategy-subhead {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .section.company-intro .eyebrow,
+[data-theme="light"] #technology .eyebrow {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="light"] .process-glass-banner {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .process-banner-text {
+  color: #ffffff;
+}
+
+/* ============= Globe Alignment ============= */
+.globe-canvas-wrapper {
+  /* Ensure the canvas wrapper allows the canvas to be centered */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.globe-canvas-wrapper canvas {
+  /* Override any absolute positioning that might shift it */
+  position: static !important; 
+}
+
+/* ============= Process Expandable Section (Now Permanently Visible) ============= */
+.process-expand-wrapper {
+  /* Removed as trigger is gone */
+  display: none;
+}
+
+.process-expand-trigger {
+  /* Removed as trigger is gone */
+  display: none;
+}
+
+.process-expandable-content {
+  grid-column: 1 / -1;
+  /* Reset max-height/opacity for permanent display */
+  max-height: none; 
+  opacity: 1;
+  overflow: visible;
+  margin-top: var(--gap-5); /* Add spacing from Technology content above */
+}
+
+/* Ensure it's visible by default now */
+.process-expandable-content.expanded {
+  max-height: none;
+  opacity: 1;
+  margin-top: var(--gap-5);
+}
+
+.process-expanded-inner {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: var(--gap-5);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--r-lg);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
+  position: relative;
+}
+
+/* Raise and Glow on Hover */
+.process-expanded-inner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 0 20px rgba(77, 214, 255, 0.15);
+  border-color: rgba(77, 214, 255, 0.3);
+}
+
+.process-expanded-inner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  padding: 1px; /* Border width */
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(255, 255, 255, 0.4), 
+    transparent 40%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.process-expanded-inner:hover::before {
+  opacity: 1;
+}
+
+.guild-empowers-heading {
+  font-size: clamp(32px, 4vw, 48px);
+  color: #ffffff;
+  margin-bottom: var(--gap-3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #4DD6FF 0%, #2563EB 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #F37514 0%, #FB923C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.gradient-text-purple {
+  background: linear-gradient(135deg, #F37514 0%, #FB923C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.gradient-text-green {
+  background: linear-gradient(135deg, #F37514 0%, #FB923C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.guild-empowers-text {
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Light mode overrides for expanded section */
+[data-theme="light"] .process-expand-trigger {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--ink);
+  border-color: rgba(0,0,0,0.1);
+}
+
+[data-theme="light"] .process-expanded-inner {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .guild-empowers-heading {
+  color: var(--ink);
+}
+
+[data-theme="light"] .guild-empowers-text {
+  color: var(--muted);
+}

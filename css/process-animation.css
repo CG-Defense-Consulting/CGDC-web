@@ -1,0 +1,52 @@
+/* ============= Process Animation Styles ============= */
+
+/* Title Animation: Vertical Slide Down by Letter */
+.process-heading-ready .char-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.1; /* Match heading line-height */
+  margin-bottom: -0.1em; /* Fix descender clipping issues */
+  padding-bottom: 0.1em;
+}
+
+.process-heading-ready .char-slide {
+  display: inline-block;
+  transform: translateY(-110%);
+  will-change: transform;
+  /* Transition is set via JS or class when active */
+}
+
+.animate-process .process-heading-ready .char-slide {
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Subtext Animation: Left to Right Fade In */
+.process-text-ready {
+  /* Initial state */
+  opacity: 0.1; /* Start slightly visible to avoid layout shift issues or flash, but effectively invisible */
+  clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); /* Fully clipped */
+  will-change: clip-path, opacity;
+}
+
+.animate-process .process-text-ready {
+  opacity: 1;
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); /* Fully revealed */
+  transition: clip-path 1.4s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.8s ease-out;
+  transition-delay: 0.4s; /* Wait for title to start */
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .process-heading-ready .char-slide {
+    transform: none !important;
+    transition: none !important;
+  }
+  .process-text-ready {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
+

@@ -1,0 +1,108 @@
+/* 1) Global reset & smooth scroll */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Oxanium', sans-serif;
+  color: #1a1a1a;
+  line-height: 1.6;
+  background: #fff;
+}
+
+/* 2) Header */
+.report-header {
+  background: #f9f9f9;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+.report-header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.report-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.report-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+.report-download {
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1a1a1a;
+  transition: background 0.3s, color 0.3s;
+}
+.report-download:hover {
+  background: #0062ff;
+  color: #fff;
+}
+
+/* 3) Layout */
+.report-layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  gap: 2rem;
+}
+
+/* 3a) Sidebar */
+.report-sidebar {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 2rem;
+}
+.report-sidebar nav ul {
+  list-style: none;
+}
+.report-sidebar nav ul li + li {
+  margin-top: 1rem;
+}
+.report-sidebar nav ul li a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+.report-sidebar nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* 3b) Main article */
+.report-content {
+  flex: 1 1 auto;
+}
+.report-content section + section {
+  margin-top: 3rem;
+}
+.report-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.report-content p {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* 4) Responsive tweaks */
+@media (max-width: 900px) {
+  .report-layout {
+    flex-direction: column;
+  }
+  .report-sidebar {
+    position: relative;
+    top: auto;
+    margin-bottom: 2rem;
+  }
+}

@@ -1,0 +1,281 @@
+/* ============= Partners Carousel ============= */
+.partners-carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* Wider container to allow side cards */
+  margin: 0 auto 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0; /* Gap handled by positioning */
+}
+
+/* Track holds the cards */
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Explicit height for absolute positioning */
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Navigation Arrows */
+.carousel-arrow {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  z-index: 20;
+  backdrop-filter: blur(4px);
+  margin: 0 20px;
+}
+
+.carousel-arrow:hover {
+  background: var(--bg-1);
+  color: var(--accent-1);
+  border-color: var(--accent-1);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(77, 214, 255, 0.2);
+}
+
+/* Card Styles */
+.carousel-card {
+  position: absolute;
+  width: 60%; /* Main card width relative to container */
+  max-width: 500px;
+  height: 320px; /* Fixed height for consistency */
+  padding: 40px;
+  border-radius: 24px;
+  
+  /* Glass Style Background */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  /* Default State (Hidden/behind) */
+  opacity: 0;
+  transform: translateX(0) scale(0.8);
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  
+  /* Flashlight setup */
+  overflow: hidden;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  left: 50%; /* Center origin */
+  margin-left: -30%; /* Offset by half width (if width is 60%, half is 30%) */
+  /* If max-width hits, margin-left needs calc. 
+     Better approach: Use transform: translateX(-50%) in the states.
+  */
+  left: 50%;
+  margin-left: 0;
+}
+
+/* Explicit Positioning States */
+
+/* Active (Center) */
+.carousel-card.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1) rotateY(0deg);
+  z-index: 10;
+  filter: blur(0);
+}
+
+/* Prev (Left) */
+.carousel-card.prev {
+  opacity: 0.6;
+  transform: translateX(-110%) scale(0.85) rotateY(15deg); /* -50% (center) - 60% (shift) = -110% */
+  z-index: 5;
+  filter: blur(2px);
+  cursor: pointer;
+}
+
+/* Next (Right) */
+.carousel-card.next {
+  opacity: 0.6;
+  transform: translateX(10%) scale(0.85) rotateY(-15deg); /* -50% (center) + 60% (shift) = 10% */
+  z-index: 5;
+  filter: blur(2px);
+  cursor: pointer;
+}
+
+/* Hover on side cards */
+.carousel-card.prev:hover,
+.carousel-card.next:hover {
+  opacity: 0.8;
+  filter: blur(0px);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .carousel-card {
+  background: rgba(17, 23, 34, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Text Styles */
+.carousel-card-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Removed Gradient Text for Card Titles */
+/* .carousel-card:nth-child(1) .carousel-card-title { ... } */
+/* .carousel-card:nth-child(2) .carousel-card-title { ... } */
+/* .carousel-card:nth-child(3) .carousel-card-title { ... } */
+
+/* Section Title Gradients handled in main/inline CSS or below */
+/* We need to target the section title in index.html */
+
+.carousel-card-text {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Flashlight Effect */
+.carousel-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(255, 255, 255, 0.8),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+[data-theme="dark"] .carousel-card::after {
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(77, 214, 255, 0.15),
+    transparent 40%
+  );
+}
+
+.carousel-card:hover::after {
+  opacity: 1;
+}
+
+/* Border Glow */
+.carousel-card-border-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: radial-gradient(
+    400px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(77, 214, 255, 0.8), 
+    transparent 50%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.carousel-card:hover .carousel-card-border-glow {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .partners-carousel-container {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+  
+  .carousel-track {
+    height: 320px; /* Reduced height */
+    width: 100%;
+    overflow: hidden; /* Hide side cards significantly on mobile or stack them? */
+  }
+  
+  .carousel-card {
+    width: 85%;
+    max-width: 100%;
+    height: 280px;
+    padding: 24px;
+  }
+  
+  /* Adjust transforms for mobile to be less wide */
+  .carousel-card.prev {
+    transform: translateX(-150%) scale(0.8);
+    opacity: 0; /* Hide neighbors on small screens to avoid clutter */
+  }
+  
+  .carousel-card.next {
+    transform: translateX(50%) scale(0.8);
+    opacity: 0;
+  }
+  
+  .carousel-card.active {
+    transform: translateX(-50%) scale(1);
+  }
+  
+  .carousel-card-title {
+    font-size: 24px;
+  }
+  
+  .carousel-card-text {
+    font-size: 16px;
+  }
+  
+  .carousel-arrow {
+    order: 2;
+    margin: 10px;
+    display: inline-flex;
+  }
+  
+  .partners-carousel-container {
+    flex-wrap: wrap;
+  }
+  
+  .carousel-track {
+    order: 1;
+  }
+}

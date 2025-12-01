@@ -1,0 +1,545 @@
+/* ============= Careers Styles ============= */
+/* Import after main.css to inherit design tokens */
+
+/* ============= Careers Hero ============= */
+.careers-hero {
+  padding: var(--gap-5) 0;
+  background: var(--bg);
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.careers-hero h1 {
+  margin-bottom: var(--gap-3);
+  color: var(--ink);
+}
+
+.careers-hero p {
+  font-size: var(--body-lg);
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============= Controls Bar ============= */
+.careers-controls {
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  padding: var(--gap-4) 0;
+}
+
+.controls-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls-left {
+  display: flex;
+  gap: var(--gap-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.controls-right {
+  display: flex;
+  gap: var(--gap-2);
+  align-items: center;
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 2px;
+  position: relative;
+}
+
+.category-btn {
+  background: transparent;
+  border: none;
+  padding: var(--gap-2) var(--gap-3);
+  border-radius: calc(var(--r-sm) - 2px);
+  color: var(--muted);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--normal) var(--easing);
+  position: relative;
+  z-index: 1;
+}
+
+.category-btn:hover {
+  color: var(--ink);
+}
+
+.category-btn.active {
+  background: var(--accent-1);
+  color: white;
+  box-shadow: 0 2px 8px rgba(58, 160, 255, 0.3);
+}
+
+/* Search Input */
+.search-container {
+  position: relative;
+  min-width: 280px;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--gap-2) var(--gap-3);
+  padding-left: 40px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-size: var(--body);
+  transition: all var(--normal) var(--easing);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1), 0 0 20px var(--glow);
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--gap-2);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Sort Select */
+.sort-select {
+  padding: var(--gap-2) var(--gap-3);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-size: var(--body);
+  cursor: pointer;
+  transition: all var(--normal) var(--easing);
+  min-width: 140px;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1);
+}
+
+/* ============= Results Section ============= */
+.careers-results {
+  padding: var(--gap-5) 0;
+  background: var(--bg);
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--gap-4);
+}
+
+.results-count {
+  color: var(--muted);
+  font-size: var(--body-sm);
+}
+
+.clear-filters {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: var(--gap-1) var(--gap-2);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: var(--body-sm);
+  transition: all var(--fast) var(--easing);
+}
+
+.clear-filters:hover {
+  color: var(--ink);
+  border-color: var(--accent-1);
+}
+
+/* Job Cards Grid */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--gap-3);
+  margin-bottom: var(--gap-4);
+}
+
+.job-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--gap-4);
+  transition: all var(--normal) var(--easing);
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card:hover {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1), 0 20px 60px var(--glow);
+  transform: translateY(-4px);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--gap-2);
+}
+
+.job-title {
+  font-size: var(--h3);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--gap-1);
+  line-height: 1.3;
+}
+
+.job-code {
+  font-size: var(--body-sm);
+  color: var(--muted);
+  font-weight: 500;
+  font-family: monospace;
+}
+
+.job-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-1);
+  margin-bottom: var(--gap-3);
+}
+
+.job-badge {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 4px var(--gap-1);
+  border-radius: calc(var(--r-sm) / 2);
+  font-size: var(--body-sm);
+  font-weight: 500;
+  transition: all var(--fast) var(--easing);
+}
+
+.job-badge.category {
+  background: var(--accent-1);
+  color: white;
+  border-color: var(--accent-1);
+}
+
+.job-badge.remote {
+  background: var(--accent-2);
+  color: white;
+  border-color: var(--accent-2);
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2);
+  margin-bottom: var(--gap-3);
+  font-size: var(--body-sm);
+  color: var(--muted);
+}
+
+.job-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.job-summary {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: var(--gap-3);
+}
+
+.job-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-1);
+  color: var(--accent-1);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--fast) var(--easing);
+}
+
+.job-link:hover {
+  color: var(--accent-2);
+  transform: translateX(4px);
+}
+
+.job-arrow {
+  transition: transform var(--fast) var(--easing);
+}
+
+.job-link:hover .job-arrow {
+  transform: translate(2px, -2px);
+}
+
+.job-posted {
+  font-size: var(--body-sm);
+  color: var(--muted);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: var(--gap-5) 0;
+  color: var(--muted);
+}
+
+.empty-state h3 {
+  margin-bottom: var(--gap-2);
+  color: var(--ink);
+}
+
+.empty-state p {
+  margin-bottom: var(--gap-3);
+}
+
+/* ============= Role Page Styles ============= */
+.role-main {
+  padding: var(--gap-5) 0;
+  background: var(--bg);
+}
+
+.breadcrumbs {
+  margin-bottom: var(--gap-4);
+  font-size: var(--body-sm);
+  color: var(--muted);
+}
+
+.breadcrumbs a {
+  color: var(--accent-1);
+  text-decoration: none;
+  transition: color var(--fast) var(--easing);
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent-2);
+}
+
+.role-hero {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--gap-5);
+  margin-bottom: var(--gap-5);
+  text-align: center;
+}
+
+.role-hero h1 {
+  margin-bottom: var(--gap-3);
+  color: var(--ink);
+}
+
+.role-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2);
+  justify-content: center;
+  margin-bottom: var(--gap-3);
+}
+
+.role-badges .badge {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: var(--gap-1) var(--gap-2);
+  border-radius: var(--r-sm);
+  font-size: var(--body-sm);
+  font-weight: 500;
+}
+
+.role-badges .badge:first-child {
+  background: var(--accent-1);
+  color: white;
+  border-color: var(--accent-1);
+}
+
+.role-summary {
+  font-size: var(--body-lg);
+  color: var(--muted);
+  margin-bottom: var(--gap-4);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.role-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.role-content section {
+  margin-bottom: var(--gap-5);
+  padding-bottom: var(--gap-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.role-content section:last-child {
+  border-bottom: none;
+}
+
+.role-content h2 {
+  margin-bottom: var(--gap-3);
+  color: var(--ink);
+}
+
+.role-content h3 {
+  margin-bottom: var(--gap-2);
+  color: var(--ink);
+  font-size: var(--body-lg);
+}
+
+.role-content ul {
+  margin: 0 0 var(--gap-3);
+  padding-left: var(--gap-3);
+}
+
+.role-content li {
+  margin-bottom: var(--gap-1);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.apply-cta {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--gap-4);
+  text-align: center;
+  margin-top: var(--gap-5);
+}
+
+.apply-note {
+  margin-top: var(--gap-2);
+  font-size: var(--body-sm);
+  color: var(--muted);
+}
+
+/* ============= Responsive Design ============= */
+@media (max-width: 1024px) {
+  .controls-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-2);
+  }
+  
+  .controls-left,
+  .controls-right {
+    justify-content: center;
+  }
+  
+  .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-filter {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .category-btn {
+    text-align: center;
+  }
+  
+  .search-container {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .job-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-1);
+  }
+  
+  .job-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-2);
+  }
+  
+  .role-badges {
+    justify-content: flex-start;
+  }
+  
+  .role-hero {
+    padding: var(--gap-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .careers-hero {
+    padding: var(--gap-4) 0;
+  }
+  
+  .careers-controls {
+    padding: var(--gap-3) 0;
+  }
+  
+  .job-card {
+    padding: var(--gap-3);
+  }
+  
+  .role-content section {
+    margin-bottom: var(--gap-4);
+    padding-bottom: var(--gap-3);
+  }
+}
+
+/* ============= Accessibility ============= */
+@media (prefers-reduced-motion: reduce) {
+  .job-card:hover {
+    transform: none;
+  }
+  
+  .job-link:hover {
+    transform: none;
+  }
+  
+  .job-link:hover .job-arrow {
+    transform: none;
+  }
+}
+
+/* Focus styles for interactive elements */
+.category-btn:focus-visible,
+.search-input:focus-visible,
+.sort-select:focus-visible,
+.clear-filters:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .job-card {
+    border-width: 2px;
+  }
+  
+  .job-card:hover {
+    border-width: 3px;
+  }
+}

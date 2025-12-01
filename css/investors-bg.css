@@ -1,0 +1,265 @@
+/* ============= Investors Background Controller ============= */
+
+/* Reuse keyframes from process-bg if available, or redefine */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ensure body allows background to show */
+body.investors-page {
+  background: transparent !important;
+  min-height: 100vh;
+  position: relative; /* For logo absolute positioning context if needed, though we use fixed */
+}
+
+.section-background-controller {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 400% 400%;
+  transition: opacity 0.5s ease;
+}
+
+/* Base Layer: Animated Gradient (Same as Our Process) */
+#bg-layer-base {
+  background-image: linear-gradient(
+    270deg,
+    #0B0D11 0%,    /* Dark Navy */
+    #0F172A 25%,   /* Slate */
+    #112233 50%,   /* Deep Teal-ish */
+    #151525 75%,   /* Muted Purple-ish */
+    #0B0D11 100%   /* Back to Dark Navy */
+  );
+  animation: gradientShift 30s ease infinite;
+  opacity: 1;
+}
+
+/* Light Layer: Fades in on scroll to lighten the page */
+#bg-layer-light {
+  /* 
+     Using the SAME gradient structure but with lighter colors.
+     Instead of a white overlay, we define the lighter version of the gradient here.
+     This ensures the "same animation, same colors but lighter" effect.
+  */
+  background-image: linear-gradient(
+    270deg,
+    #1B202B 0%,    /* Lighter Navy */
+    #222F45 25%,   /* Lighter Slate */
+    #224455 50%,   /* Lighter Teal */
+    #2A2A40 75%,   /* Lighter Purple */
+    #1B202B 100%   /* Back to Lighter Navy */
+  );
+  animation: gradientShift 30s ease infinite; /* Sync animation */
+  opacity: 0; /* Starts invisible */
+}
+
+/* ============= Regal Hero Styles ============= */
+
+/* Override existing investors-header */
+.investors-header {
+  height: auto;
+  min-height: 40vh; /* Condensed hero */
+  background: transparent !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--gap-4) var(--gap-3);
+  position: relative;
+}
+
+/* Logo Overlay - Top Left Fixed/Absolute */
+.investors-logo-overlay {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  z-index: 10;
+}
+
+.investors-corner-logo {
+  width: 60px;
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.investors-corner-logo:hover {
+  opacity: 1;
+}
+
+
+/* Framed Hero Content */
+.investors-hero-frame {
+  position: relative;
+  padding: var(--gap-5) var(--gap-4);
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-frame-content {
+  padding: var(--gap-4) 0;
+}
+
+/* Top and Bottom Borders with Patterns */
+.hero-frame-border {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3); /* Main white line */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-frame-border.top {
+  top: 0;
+}
+
+.hero-frame-border.bottom {
+  bottom: 0;
+}
+
+/* Add decorative pattern in the middle of the lines */
+.hero-frame-border::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 6px;
+  background: #ffffff; /* Solid white accent */
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* Optional: small gap in the main line for the accent */
+.hero-frame-border::before {
+  content: '';
+  position: absolute;
+  width: 140px; /* Slightly wider than accent to create gap */
+  height: 4px;
+  background: transparent; /* Or match bg color if it was solid, but here it's transparent */
+  /* Since bg is gradient, we can't easily mask. Instead, let's use the accent ON TOP of the line */
+}
+
+
+.investors-header-title {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: var(--gap-2);
+  max-width: 900px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  text-transform: uppercase; /* More regal/formal */
+  letter-spacing: 0.05em;
+}
+
+.investors-header-subtitle {
+  font-size: clamp(16px, 1.5vw, 18px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Ensure content sections are transparent so bg shows */
+.investors-section {
+  background: transparent !important;
+}
+
+/* Ensure text is readable on dark background initially */
+.investors-section-heading {
+  color: #ffffff;
+}
+
+.investors-lead-blurb p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.investors-subheading {
+  color: #ffffff;
+}
+
+.investors-list li {
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.investors-micro-disclaimer {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Contact strip overrides */
+.investors-contact-strip {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-strip-heading {
+  color: #ffffff;
+}
+
+/* Disclaimer footer overrides */
+.investors-disclaimer {
+  background: rgba(11, 13, 17, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.disclaimer-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Site Footer Override for Investors Page */
+.investors-page .site-footer {
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.investors-page .site-footer p, 
+.investors-page .site-footer a {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.investors-page .site-footer a:hover {
+  color: #ffffff;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .investors-logo-overlay {
+    top: 20px;
+    left: 20px;
+  }
+  
+  .investors-corner-logo {
+    width: 40px;
+  }
+  
+  .investors-header-title {
+    font-size: 32px;
+  }
+}

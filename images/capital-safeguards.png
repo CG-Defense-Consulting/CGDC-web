@@ -1,0 +1,79 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0b0f14;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3aa0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6ba07a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" text-anchor="middle" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="24" font-weight="600">Safeguards & Controls</text>
+  
+  <!-- Checklist Container -->
+  <rect x="50" y="80" width="500" height="280" rx="16" fill="#121820" stroke="#1d2630" stroke-width="2"/>
+  
+  <!-- Checklist Items -->
+  <!-- Milestone Releases -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#6ba07a" stroke="#6ba07a" stroke-width="2"/>
+    <path d="M 5 10 L 9 14 L 15 6" stroke="white" stroke-width="2" fill="none"/>
+    <text x="30" y="15" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="600">Milestone-based Capital Releases</text>
+    <text x="30" y="35" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="14">Funds released only upon verified progress</text>
+  </g>
+  
+  <!-- Document Controls -->
+  <g transform="translate(80, 160)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#6ba07a" stroke="#6ba07a" stroke-width="2"/>
+    <path d="M 5 10 L 9 14 L 15 6" stroke="white" stroke-width="2" fill="none"/>
+    <text x="30" y="15" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="600">Document Controls & Verification</text>
+    <text x="30" y="35" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="14">All transactions tracked and verified</text>
+  </g>
+  
+  <!-- Partner Confirmations -->
+  <g transform="translate(80, 200)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#6ba07a" stroke="#6ba07a" stroke-width="2"/>
+    <path d="M 5 10 L 9 14 L 15 6" stroke="white" stroke-width="2" fill="none"/>
+    <text x="30" y="15" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="600">Partner Confirmations Required</text>
+    <text x="30" y="35" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="14">Multi-party verification at each stage</text>
+  </g>
+  
+  <!-- Real-time Tracking -->
+  <g transform="translate(80, 240)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#6ba07a" stroke="#6ba07a" stroke-width="2"/>
+    <path d="M 5 10 L 9 14 L 15 6" stroke="white" stroke-width="2" fill="none"/>
+    <text x="30" y="15" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="600">Real-time Progress Tracking</text>
+    <text x="30" y="35" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="14">Continuous monitoring and reporting</text>
+  </g>
+  
+  <!-- Compliance Verification -->
+  <g transform="translate(80, 280)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#6ba07a" stroke="#6ba07a" stroke-width="2"/>
+    <path d="M 5 10 L 9 14 L 15 6" stroke="white" stroke-width="2" fill="none"/>
+    <text x="30" y="15" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="600">Compliance Verification</text>
+    <text x="30" y="35" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="14">ITAR, DFARS, and regulatory compliance</text>
+  </g>
+  
+  <!-- Security Badge -->
+  <g transform="translate(400, 120)">
+    <circle cx="50" cy="50" r="40" fill="url(#accentGradient)" opacity="0.1" stroke="#3aa0ff" stroke-width="2"/>
+    <path d="M 35 50 L 45 60 L 65 40" stroke="#3aa0ff" stroke-width="3" fill="none"/>
+    <text x="50" y="100" text-anchor="middle" fill="#3aa0ff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">SECURE</text>
+  </g>
+  
+  <!-- Audit Trail -->
+  <g transform="translate(400, 200)">
+    <rect x="0" y="0" width="100" height="60" rx="8" fill="#121820" stroke="#1d2630" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#e6eef7" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600">Audit Trail</text>
+    <text x="50" y="35" text-anchor="middle" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="10">Complete transaction</text>
+    <text x="50" y="48" text-anchor="middle" fill="#9aa7b2" font-family="IBM Plex Sans, sans-serif" font-size="10">history maintained</text>
+  </g>
+</svg>
+
+

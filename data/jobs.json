@@ -1,0 +1,62 @@
+[
+  {
+    "code": "OPS-001",
+    "title": "Operations Analyst, Defense Supply Chain",
+    "category": "Operations",
+    "location": "Türkiye (Remote)",
+    "type": "Full-time",
+    "posted": "2025-01-15",
+    "summary": "Own day-to-day vendor coordination, and quality workflows for defense supply chain management.",
+    "url": "/careers/roles/OPS-001.html",
+    "keywords": ["procurement", "logistics", "quality", "supply chain", "operations", "türkiye"],
+    "remote": true
+  },
+  {
+    "code": "TECH-002",
+    "title": "Machine Learning Engineer (Pricing & Ontology)",
+    "category": "Tech",
+    "location": "New York, NY (Hybrid)",
+    "type": "Full-time",
+    "posted": "2025-01-14",
+    "summary": "Build ML models powering bid pricing and graph/ontology services for automated procurement intelligence.",
+    "url": "/careers/roles/TECH-002.html",
+    "keywords": ["ML", "graph", "ontology", "Python", "machine learning", "pricing", "AI"],
+    "remote": false
+  },
+  {
+    "code": "SALES-003",
+    "title": "Business Development Manager",
+    "category": "Sales",
+    "location": "New York, NY (Hybrid)",
+    "type": "Full-time",
+    "posted": "2025-01-13",
+    "summary": "Drive growth by identifying and securing new defense contractor partnerships and procurement opportunities.",
+    "url": "/careers/roles/SALES-003.html",
+    "keywords": ["business development", "sales", "defense", "contractors", "partnerships"],
+    "remote": false
+  },
+  {
+    "code": "LEGAL-004",
+    "title": "Compliance Specialist",
+    "category": "Legal",
+    "location": "New York, NY (Hybrid)",
+    "type": "Full-time",
+    "posted": "2025-01-12",
+    "summary": "Ensure regulatory compliance with ITAR, DFARS, and federal procurement requirements across all operations.",
+    "url": "/careers/roles/LEGAL-004.html",
+    "keywords": ["compliance", "ITAR", "DFARS", "legal", "regulatory", "federal"],
+    "remote": false
+  },
+  {
+    "code": "TECH-005",
+    "title": "Frontend Developer (React/TypeScript)",
+    "category": "Tech",
+    "location": "Remote (US)",
+    "type": "Full-time",
+    "posted": "2025-01-11",
+    "summary": "Build intuitive user interfaces for our AI-powered procurement platforms using modern web technologies.",
+    "url": "/careers/roles/TECH-005.html",
+    "keywords": ["React", "TypeScript", "frontend", "UI", "web development", "JavaScript"],
+    "remote": true
+  }
+]
