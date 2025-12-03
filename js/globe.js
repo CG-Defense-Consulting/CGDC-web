@@ -3,7 +3,7 @@
   'use strict';
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const INITIAL_POV = { lat: 39.0, lng: 35.0, altitude: 0.9 }; // Centered over Turkey
+  const INITIAL_POV = { lat: 39.0, lng: 65.0, altitude: 0.9 }; // Start slightly further east
 
   const SUPPLIERS = [
     { id: 'berlin', lat: 52.52, lng: 13.405 },
@@ -24,7 +24,15 @@
     { id: 'sandiego', lat: 32.7157, lng: -117.1611 },
     { id: 'chicago', lat: 41.8781, lng: -87.6298 },
     { id: 'tampa', lat: 27.9506, lng: -82.4572 },
-    { id: 'alabama', lat: 32.3182, lng: -86.9023 }
+    { id: 'alabama', lat: 32.3182, lng: -86.9023 },
+    { id: 'seattle', lat: 47.6062, lng: -122.3321 },
+    { id: 'trenton', lat: 40.2171, lng: -74.7429 },
+    { id: 'durham', lat: 35.9940, lng: -78.8986 },
+    { id: 'atlanta', lat: 33.7490, lng: -84.3880 },
+    { id: 'albuquerque', lat: 35.0844, lng: -106.6504 },
+    { id: 'northdakota', lat: 47.5515, lng: -101.0020 },
+    { id: 'dallas', lat: 32.7767, lng: -96.7970 },
+    { id: 'austin', lat: 30.2672, lng: -97.7431 }
   ];
   const SLICE_WIDTH_DEG = 5;       // total width of slice
   const ALT_MIN = 0.01;
@@ -36,9 +44,9 @@
   let currentAlt = INITIAL_POV.altitude;
   let animationId = null;
   let lastProgressLog = {};
-  const ROTATE_SPEED_DEG = -9;
+  const ROTATE_SPEED_DEG = -15;
   let motionPaused = false;
-  const STOP_LNG = -120; // stop once we’re over California
+  const STOP_LNG = -95; // stop once we’re centered over the US
 
   function renderSliceGuide(){
     if(!globe) return;
@@ -141,7 +149,7 @@
     const half = SLICE_WIDTH_DEG / 2;
     const eastEdgeRaw = nodeLng - half;
     const westEdgeRaw = nodeLng + half;
-    const angle = normalizeLng(currentLng);
+    const angle = normalizeLng(currentLng) - 10; // offset by 20 degrees to the right for visuals
     const east = normalizeLng(eastEdgeRaw);
     const west = normalizeLng(westEdgeRaw);
 
