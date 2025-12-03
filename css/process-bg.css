@@ -142,7 +142,8 @@
   max-width: 900px;
 }
 
-/* Light Theme Handling */
+/* Light Theme Handling - DISABLED: Site forced to dark mode */
+/*
 [data-theme="light"] .section.company-intro .company-intro-heading,
 [data-theme="light"] #technology .ai-strategy-heading {
   color: #ffffff;
@@ -166,6 +167,7 @@
 [data-theme="light"] .process-banner-text {
   color: #ffffff;
 }
+*/
 
 /* ============= Globe Alignment ============= */
 .globe-canvas-wrapper {
@@ -306,7 +308,8 @@
   margin: 0 auto;
 }
 
-/* Light mode overrides for expanded section */
+/* Light mode overrides for expanded section - DISABLED: Site forced to dark mode */
+/*
 [data-theme="light"] .process-expand-trigger {
   background: rgba(255, 255, 255, 0.6);
   color: var(--ink);
@@ -325,3 +328,4 @@
 [data-theme="light"] .guild-empowers-text {
   color: var(--muted);
 }
+*/

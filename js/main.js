@@ -1,11 +1,9 @@
-/* ============= Theme System (Dual Mode) ============= */
+/* ============= Theme System (Dark Mode Only) ============= */
 (function() {
   const html = document.documentElement;
   
-  // Respect system preference; default to light to showcase glass mode
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const defaultTheme = prefersDark ? 'dark' : 'light';
-  html.setAttribute('data-theme', defaultTheme);
+  // Force dark mode regardless of system preference
+  html.setAttribute('data-theme', 'dark');
 })();
 
 /* ============= Typing Animation System (Hero Only) ============= */
